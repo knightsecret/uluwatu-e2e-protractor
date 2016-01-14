@@ -1,0 +1,6 @@
+.idea
+.deps
+build
+target
+*.iml
+bin
