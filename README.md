@@ -4,8 +4,8 @@ Cloudbreak web application functional smoke test project.
 
 ## Technology stack
 - [Protractor](https://angular.github.io/protractor/#/)
--- WebDriverJS
--- NodeJS
+  - WebDriverJS
+  - NodeJS
 - Jasmine
 
 ## Prerequisites

@@ -1,6 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="protractor" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/protractor/lib/cli.js" application-parameters="e2e.conf.js" working-dir="$PROJECT_DIR$">
-    <browser url="http://localhost:3000/" />
-    <method />
-  </configuration>
-</component>
