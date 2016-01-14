@@ -34,7 +34,7 @@ launchctl setenv SSHKEY $SSHKEY
 Please do not forget you should reopen your project and restart your IDEA.
 
 ## Executing tests
-Please follow the [Protractor Tutorial[(https://angular.github.io/protractor/#/tutorial).
+Please follow the [Protractor Tutorial](https://angular.github.io/protractor/#/tutorial).
 
 Start the WebDriver before start testing:
 ```webdriver-manager start```
