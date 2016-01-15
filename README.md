@@ -36,7 +36,12 @@ Please do not forget you should reopen your project and restart your IDEA.
 ## Executing tests
 If your Protractor test environment has not set up, please check the [Protractor Tutorial](https://angular.github.io/protractor/#/tutorial) first.
 
-Start the WebDriver before start testing:
-```webdriver-manager start```
+Launch WebDriver before start testing:
+```
+webdriver-manager start
+```
+
 Execute the tests based on the configuration:
-```protractor e2e.conf.js```
+```
+protractor e2e.conf.js
+```
