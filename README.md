@@ -3,10 +3,10 @@
 Cloudbreak web application functional smoke test project.
 
 ## Technology stack
-- [Protractor](https://angular.github.io/protractor/#/)
-  - WebDriverJS
-  - NodeJS
-- Jasmine
+- [Protractor](https://angular.github.io/protractor/#/api)
+  - [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs)
+  - [NodeJS](https://nodejs.org/api/)
+- [Jasmine](http://jasmine.github.io/)
 
 ## Prerequisites
 The following environment variables should be present with valid values:
@@ -34,7 +34,7 @@ launchctl setenv SSHKEY $SSHKEY
 Please do not forget you should reopen your project and restart your IDEA.
 
 ## Executing tests
-Please follow the [Protractor Tutorial](https://angular.github.io/protractor/#/tutorial).
+If your Protractor test environment has not set up, please check the [Protractor Tutorial](https://angular.github.io/protractor/#/tutorial) first.
 
 Start the WebDriver before start testing:
 ```webdriver-manager start```

@@ -21,7 +21,8 @@ exports.config = {
   specs: [
       'utils/slowdown.conf.js',
       'tests/LoginSpec.js',
-      'tests/BlueprintSpec.js'
+      'tests/BlueprintSpec.js',
+      'tests/CredentialSpec.js'
   ],
   /**
    * Define suits with the name of the Spec patterns.

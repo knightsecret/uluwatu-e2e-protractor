@@ -13,5 +13,7 @@ browser.driver.controlFlow().execute = function () {
         return protractor.promise.delayed(200);
     });
 
+    console.log('Flow is controlled.');
+
     return origFn.apply(browser.driver.controlFlow(), args);
 };

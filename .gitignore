@@ -6,3 +6,6 @@ target
 bin
 node_modules
 backup
+routes
+app.js
+public

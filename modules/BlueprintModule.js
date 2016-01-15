@@ -1,5 +1,7 @@
 /**
  * Created by aszegedi on 1/14/16.
+ *
+ * Page Objects for the Manage Blueprints pane on the Cloudbreak Dashboard.
  */
 
 'use strict';
@@ -11,16 +13,16 @@ var BlueprintModule = ( function () {
     this.urlBox = element(by.css('form[name=blueprintForm] input#url'));
     this.createButton = element(by.css('form[name=blueprintForm] a#createBlueprint'));
 
-    this.typeName = function (keys) {
-        return this.nameBox.sendKeys(keys);
+    this.typeName = function (name) {
+        return this.nameBox.sendKeys(name);
     };
 
-    this.typeDescription = function (keys) {
-        return this.descriptionBox.sendKeys(keys);
+    this.typeDescription = function (description) {
+        return this.descriptionBox.sendKeys(description);
     };
 
-    this.typeUrl = function (keys) {
-        return this.urlBox.sendKeys(keys);
+    this.typeUrl = function (url) {
+        return this.urlBox.sendKeys(url);
     };
 
     this.createBlueprint = function (name, description, rawurl) {
@@ -30,10 +32,13 @@ var BlueprintModule = ( function () {
         this.typeUrl(rawurl);
         this.createButton.click().then(function() {
             return browser.driver.wait(function () {
-                return browser.element(by.xpath('//a[@class="ng-binding collapsed" and text()="' + name + '"]'));
+                return browser.element(by.xpath('//a[text()="' + name + '"]'));
             }, 20000);
         });
         browser.waitForAngular();
+    };
+    this.getBlueprintID = function (name) {
+        return browser.element(by.xpath('//a[text()="' + name + '"]')).getAttribute('data-target');
     };
 });
 module.exports = BlueprintModule;
