@@ -45,3 +45,5 @@ Execute the tests based on the configuration:
 ```
 protractor e2e.conf.js
 ```
+## Structure
+![](utils/images/UluwatuPageObjects.png)
