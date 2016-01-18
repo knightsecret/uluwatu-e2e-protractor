@@ -32,13 +32,13 @@ var BlueprintModule = ( function () {
         this.typeUrl(rawurl);
         this.createButton.click().then(function() {
             return browser.driver.wait(function () {
-                return browser.element(by.xpath('//a[text()="' + name + '"]'));
+                return browser.element(by.cssContainingText('a', name)).isDisplayed();
             }, 20000);
         });
         browser.waitForAngular();
     };
     this.getBlueprintID = function (name) {
-        return browser.element(by.xpath('//a[text()="' + name + '"]')).getAttribute('data-target');
+        return browser.element(by.cssContainingText('a', name)).getAttribute('data-target');
     };
 });
 module.exports = BlueprintModule;

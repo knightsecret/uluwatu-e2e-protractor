@@ -1,7 +1,7 @@
 'use strict';
 
 var DashboardPage = function () {
-  browser.get('https://pre-prod-cloudbreak.sequenceiq.com/#/');
+  browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
 };
 
 DashboardPage.prototype  = Object.create({}, {
@@ -11,14 +11,14 @@ DashboardPage.prototype  = Object.create({}, {
   expandBlueprints:        { value: function ()  {
     return this.blueprintsexpandButton.click().then(function() {
       return browser.driver.wait(function () {
-        return browser.element(by.css('a#panel-create-blueprints-collapse-btn'));
+        return browser.element(by.css('a#panel-create-blueprints-collapse-btn')).isDisplayed();
       }, 20000);
     });
   }},
   expandCredentials:       { value: function ()  {
     return this.credentialexpandButton.click().then(function() {
       return browser.driver.wait(function () {
-        return browser.element(by.css('a#panel-create-credentials-collapse-btn'));
+        return browser.element(by.css('a#panel-create-credentials-collapse-btn')).isDisplayed();
       }, 20000);
     });
   }},

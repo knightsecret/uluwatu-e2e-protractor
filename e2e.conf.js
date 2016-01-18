@@ -12,7 +12,7 @@ exports.config = {
   //The address of the running selenium server.
   seleniumAddress: 'http://localhost:4444/wd/hub',
   //Capabilities to be passed to the WebDriverJS instance.
-  capabilities: { 'browserName': 'chrome' },
+  capabilities: { 'browserName': 'firefox' },
 
   /**
    * Specify the name of the specs files.
@@ -22,7 +22,8 @@ exports.config = {
       'utils/slowdown.conf.js',
       'tests/LoginSpec.js',
       'tests/BlueprintSpec.js',
-      'tests/CredentialSpec.js'
+      'tests/CredentialSpec.js',
+      'tests/ClusterSpec.js'
   ],
   /**
    * Define suits with the name of the Spec patterns.
@@ -60,9 +61,8 @@ exports.config = {
 
   /**
    * Protractor starts directly Chrome or Firefox. Do not need to start the WebDriver.
-   *
+   */
   directConnect: true,
-  */
 
   onPrepare: function() {
       // WebDriver general settings for browsers.
@@ -104,21 +104,21 @@ exports.config = {
       // Format the Console test result report.
       var SpecReporter = require('jasmine-spec-reporter');
       jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'spec'}));
-      // It generates the HTML report for the test run. In case of failure it saves a screenshot about the related page.
-      var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
-      jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-          savePath: './test-results/jasmine-reports',
-          filePrefix: 'htmlReport',
-          takeScreenshots: true,
-          takeScreenshotsOnlyOnFailures: true
-      }));
-      // This does not work with Protractor 3.
+      // The following two generate HTML reports for the test run. In case of failure these save screenshot about the related page.
+      // https://github.com/jintoppy/protractor-html-screenshot-reporter/issues/74
       var HtmlReporter = require('protractor-html-screenshot-reporter');
       jasmine.getEnv().addReporter(new HtmlReporter({
           baseDirectory: './test-results/protractor-reports',
           docTitle: 'protractor report',
           docName: 'protractorReport.html',
           takeScreenShotsOnlyForFailedSpecs: true
+      }));
+      var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+      jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+          savePath: './test-results/jasmine-reports',
+          filePrefix: 'htmlReport',
+          takeScreenshots: true,
+          takeScreenshotsOnlyOnFailures: true
       }));
   }
 };

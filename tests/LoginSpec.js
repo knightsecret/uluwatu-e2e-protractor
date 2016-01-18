@@ -14,7 +14,7 @@ describe('Cloudbreak login', function () {
 
     it('should see default blueprints', function () {
       dashboardPage.getBadgeValue(3).then(function (value) {
-        expect(value).toEqual(4);
+        expect(value).toEqual(3);
       });
     });
 

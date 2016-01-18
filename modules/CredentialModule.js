@@ -6,7 +6,7 @@
 
 'use strict';
 
-var BlueprintModule = ( function () {
+var CredentialModule = ( function () {
     this.newcredentialButton = element(by.css('a#panel-create-credentials-collapse-btn'));
     // Tab pages
     this.awsTab = element(by.css('a#awsChange'));
@@ -112,28 +112,28 @@ var BlueprintModule = ( function () {
             case 'AWS':
                 this.awscreateButton.click().then(function() {
                     return browser.driver.wait(function () {
-                        return browser.element(by.xpath('//a[text()="' + newName + '"]'));
+                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
             case 'Azure':
                 this.azurecreateButton.click().then(function() {
                     return browser.driver.wait(function () {
-                        return browser.element(by.xpath('//a[text()="' + newName + '"]'));
+                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
             case 'GCP':
                 this.gcpcreateButton.click().then(function() {
                     return browser.driver.wait(function () {
-                        return browser.element(by.xpath('//a[text()="' + newName + '"]'));
+                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
             case 'OpenStack':
                 this.openstackcreateButton.click().then(function() {
                     return browser.driver.wait(function () {
-                        return browser.element(by.xpath('//a[text()="' + newName + '"]'));
+                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
@@ -260,4 +260,4 @@ var BlueprintModule = ( function () {
         return browser.element(by.xpath('//a[text()="' + name + '"]')).getAttribute('data-target');
     };
 });
-module.exports = BlueprintModule;
+module.exports = CredentialModule;
