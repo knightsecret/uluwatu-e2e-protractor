@@ -14,38 +14,41 @@ var CredentialModule = ( function () {
     this.gcpTab = element(by.css('a#gcpChange'));
     this.openstackTab = element(by.css('a#openstackChange'));
     // AWS credential pane
-    this.awsnameBox = element(by.css('form[name=awsCredentialForm] input#awscname'));
-    this.awsdescriptionBox = element(by.css('form[name=awsCredentialForm] input#awscdescription'));
-    this.awsiamroleBox = element(by.css('form[name=awsCredentialForm] input#croleArn'));
-    this.awssshBox = element(by.css('form[name=awsCredentialForm] textarea#aws_sshPublicKey'));
-    this.awscreateButton = element(by.css('form[name=awsCredentialForm] a#createAwsCredential'));
+    this.awscredentialForm = element(by.css('form[name=awsCredentialForm]'));
+    this.awsnameBox = this.awscredentialForm.element(by.css('input#awscname'));
+    this.awsdescriptionBox = this.awscredentialForm.element(by.css('input#awscdescription'));
+    this.awsiamroleBox = this.awscredentialForm.element(by.css('input#croleArn'));
+    this.awssshBox = this.awscredentialForm.element(by.css('textarea#aws_sshPublicKey'));
+    this.awscreateButton = this.awscredentialForm.element(by.css('a#createAwsCredential'));
     // Azure credential pane
-    this.azurenameBox = element(by.css('form[name=azureRmCredentialForm] input#cname'));
-    this.azuredescriptionBox = element(by.css('form[name=azureRmCredentialForm] input#cdescription'));
-    this.azuresubscriptionBox = element(by.css('form[name=azureRmCredentialForm] input[id*=subscriptionId]'));
-    this.azureappBox = element(by.css('form[name=azureRmCredentialForm] input[id*=accesKey]'));
-    this.azurepasswordBox = element(by.css('form[name=azureRmCredentialForm] input[id*=secretKey]'));
-    this.azuretenantBox = element(by.css('form[name=azureRmCredentialForm] input[id*=tenantId]'));
-    this.azuresshBox = element(by.css('form[name=azureRmCredentialForm] textarea#azure_sshPublicKey'));
-    this.azurecreateButton = element(by.css('form[name=azureRmCredentialForm] a#createAzureRmCredential'));
+    this.azurecredentialForm = element(by.css('form[name=azureRmCredentialForm]'));
+    this.azurenameBox = this.azurecredentialForm.element(by.css('form[name=azureRmCredentialForm] input#cname'));
+    this.azuredescriptionBox = this.azurecredentialForm.element(by.css('input#cdescription'));
+    this.azuresubscriptionBox = this.azurecredentialForm.element(by.css('input[id*=subscriptionId]'));
+    this.azureappBox = this.azurecredentialForm.element(by.css('input[id*=accesKey]'));
+    this.azurepasswordBox = this.azurecredentialForm.element(by.css('input[id*=secretKey]'));
+    this.azuretenantBox = this.azurecredentialForm.element(by.css('input[id*=tenantId]'));
+    this.azuresshBox = this.azurecredentialForm.element(by.css('textarea#azure_sshPublicKey'));
+    this.azurecreateButton = this.azurecredentialForm.element(by.css('a#createAzureRmCredential'));
     // GCP credential pane
-    this.gcpnameBox = element(by.css('form[name=gcpCredentialForm] input#gcpcname'));
-    this.gcpdescriptionBox = element(by.css('form[name=gcpCredentialForm] input#gcpcdescription'));
-    this.gcpprojectBox = element(by.css('form[name=gcpCredentialForm] input#gcp_tprojectId'));
-    this.gcpemailBox = element(by.css('form[name=gcpCredentialForm] input#gcpcsubscriptionId'));
-    this.gcpprivatekeyBox = element(by.css('form[name=gcpCredentialForm] input.ng-isolate-scope'));
-    this.gcpsshBox = element(by.css('form[name=gcpCredentialForm] textarea#gcp_sshPublicKey'));
-    this.gcpcreateButton = element(by.css('form[name=gcpCredentialForm] a#createGcpCredential'));
+    this.gcpcredentialForm = element(by.css('form[name=gcpCredentialForm]'));
+    this.gcpnameBox = this.gcpcredentialForm.element(by.css('input#gcpcname'));
+    this.gcpdescriptionBox = this.gcpcredentialForm.element(by.css('input#gcpcdescription'));
+    this.gcpprojectBox = this.gcpcredentialForm.element(by.css('input#gcp_tprojectId'));
+    this.gcpemailBox = this.gcpcredentialForm.element(by.css('input#gcpcsubscriptionId'));
+    this.gcpprivatekeyBox = this.gcpcredentialForm.element(by.css('input.ng-isolate-scope'));
+    this.gcpsshBox = this.gcpcredentialForm.element(by.css('textarea#gcp_sshPublicKey'));
+    this.gcpcreateButton = this.gcpcredentialForm.element(by.css('a#createGcpCredential'));
     // OpenStack
-    this.openstacknameBox = element(by.css('form[name=openstackCredentialForm] input#openstackcname'));
-    this.openstackdescriptionBox = element(by.css('form[name=openstackCredentialForm] input#openstackcdescription'));
-    this.openstackuserBox = element(by.css('form[name=openstackCredentialForm] input#ouser'));
-    this.openstackpasswordBox = element(by.css('form[name=openstackCredentialForm] input#opassword'));
-    this.openstacktenantBox = element(by.css('form[name=openstackCredentialForm] input#otenantName'));
-    this.openstackendpointBox = element(by.css('form[name=openstackCredentialForm] input#oendpoint'));
-    this.openstacksshBox = element(by.css('form[name=openstackCredentialForm] textarea#openstack_sshPublicKey'));
-    this.openstackcreateButton = element(by.css('form[name=openstackCredentialForm] a#createopenstackCredential'));
-
+    this.openstackcredentialForm = element(by.css('form[name=openstackCredentialForm]'));
+    this.openstacknameBox = this.openstackcredentialForm.element(by.css('input#openstackcname'));
+    this.openstackdescriptionBox = this.openstackcredentialForm.element(by.css('input#openstackcdescription'));
+    this.openstackuserBox = this.openstackcredentialForm.element(by.css('input#ouser'));
+    this.openstackpasswordBox = this.openstackcredentialForm.element(by.css('input#opassword'));
+    this.openstacktenantBox = this.openstackcredentialForm.element(by.css('input#otenantName'));
+    this.openstackendpointBox = this.openstackcredentialForm.element(by.css('input#oendpoint'));
+    this.openstacksshBox = this.openstackcredentialForm.element(by.css('textarea#openstack_sshPublicKey'));
+    this.openstackcreateButton = this.openstackcredentialForm.element(by.css('a#createopenstackCredential'));
 
     this.typeName = function (provider, name) {
         switch (provider) {
@@ -111,29 +114,33 @@ var CredentialModule = ( function () {
         switch (provider) {
             case 'AWS':
                 this.awscreateButton.click().then(function() {
+                    browser.waitForAngular();
                     return browser.driver.wait(function () {
-                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
+                        return browser.element(by.cssContainingText('div>h5>a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
             case 'Azure':
                 this.azurecreateButton.click().then(function() {
+                    browser.waitForAngular();
                     return browser.driver.wait(function () {
-                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
+                        return browser.element(by.cssContainingText('div>h5>a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
             case 'GCP':
                 this.gcpcreateButton.click().then(function() {
+                    browser.waitForAngular();
                     return browser.driver.wait(function () {
-                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
+                        return browser.element(by.cssContainingText('div>h5>a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
             case 'OpenStack':
                 this.openstackcreateButton.click().then(function() {
+                    browser.waitForAngular();
                     return browser.driver.wait(function () {
-                        return browser.element(by.cssContainingText('a', newName)).isDisplayed();
+                        return browser.element(by.cssContainingText('div>h5>a', newName)).isDisplayed();
                     }, 20000);
                 });
                 break;
@@ -257,7 +264,7 @@ var CredentialModule = ( function () {
     };
 
     this.getCredentialID = function (name) {
-        return browser.element(by.xpath('//a[text()="' + name + '"]')).getAttribute('data-target');
+        return browser.element(by.cssContainingText('div>h5>a', name)).getAttribute('data-target');
     };
 });
 module.exports = CredentialModule;

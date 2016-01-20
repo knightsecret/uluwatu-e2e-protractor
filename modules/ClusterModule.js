@@ -80,6 +80,10 @@ var ClusterModule = ( function () {
         return this.startclusterButton.isDisplayed();
     };
 
+    this.startCluster = function () {
+      return this.startclusterButton.click();
+    };
+
     this.createNewAWSCluster = function (clusterName, regionName, networkName, securityGroup, blueprintName) {
         this.typeName(clusterName);
         this.selectRegion(regionName);
@@ -91,6 +95,7 @@ var ClusterModule = ( function () {
 
         this.selectBlueprint(blueprintName);
         this.clickReviewAndLauch();
+        this.startCluster();
     };
 });
 module.exports = ClusterModule;

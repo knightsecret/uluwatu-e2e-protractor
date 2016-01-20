@@ -8,10 +8,11 @@
 
 var BlueprintModule = ( function () {
     this.newblueprintButton = element(by.css('a#panel-create-blueprints-collapse-btn'));
-    this.nameBox = element(by.css('form[name=blueprintForm] input#name'));
-    this.descriptionBox = element(by.css('form[name=blueprintForm] input#description'));
-    this.urlBox = element(by.css('form[name=blueprintForm] input#url'));
-    this.createButton = element(by.css('form[name=blueprintForm] a#createBlueprint'));
+    this.blueprintForm = element(by.css('form[name=blueprintForm]'));
+    this.nameBox = this.blueprintForm.element(by.css('input#name'));
+    this.descriptionBox = this.blueprintForm.element(by.css('input#description'));
+    this.urlBox = this.blueprintForm.element(by.css('input#url'));
+    this.createButton = this.blueprintForm.element(by.css('a#createBlueprint'));
 
     this.typeName = function (name) {
         return this.nameBox.sendKeys(name);
@@ -32,13 +33,14 @@ var BlueprintModule = ( function () {
         this.typeUrl(rawurl);
         this.createButton.click().then(function() {
             return browser.driver.wait(function () {
-                return browser.element(by.cssContainingText('a', name)).isDisplayed();
+                browser.waitForAngular();
+                return browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed();
             }, 20000);
         });
         browser.waitForAngular();
     };
     this.getBlueprintID = function (name) {
-        return browser.element(by.cssContainingText('a', name)).getAttribute('data-target');
+        return browser.element(by.cssContainingText('div>h5>a', name)).getAttribute('data-target');
     };
 });
 module.exports = BlueprintModule;
