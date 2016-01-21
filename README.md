@@ -40,6 +40,7 @@ Launch WebDriver before start testing:
 ```
 webdriver-manager start
 ```
+> You can ignore this step if the `directConnect` is `true` in the Protractor configuration. In this case the Protractor starts directly Chrome or Firefox and you do not need to start the WebDriver.
 
 Execute the tests based on the configuration:
 ```

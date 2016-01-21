@@ -1,4 +1,6 @@
 'use strict';
+var CredentialModule = require('../modules/CredentialModule.js');
+var BlueprintModule = require('../modules/BlueprintModule.js');
 
 var DashboardPage = function () {
   browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
@@ -26,6 +28,14 @@ DashboardPage.prototype  = Object.create({}, {
     return element.all(by.css('span.badge.pull-right.ng-binding')).get(idx).getText().then(function(value){
       return parseInt(value.trim(), 10);
     });
+  }},
+  createAWSCredential:     { value: function (name, description, iamRole, sshKey)  {
+    var credentialModule = new CredentialModule();
+    return credentialModule.createAWSCredential(name, description, iamRole, sshKey);
+  }},
+  createBlueprint:         { value: function (name, description, url)  {
+     var blueprintModule = new BlueprintModule();
+     return blueprintModule.createBlueprint(name, description, url);
   }}
 });
 

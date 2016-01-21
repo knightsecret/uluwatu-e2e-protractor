@@ -22,9 +22,7 @@ var ClusterModule = ( function () {
     this.securitygroupSelect = element(by.css('select#select-cluster-securitygroup'));
     this.blueprintButton = element(by.cssContainingText('div#configure_security_group .btn.btn-sm.btn-default.ng-binding', 'Choose Blueprint'));
     // Choose Blueprint tab
-    this.reviewlaunchButton = element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
     // Review and Launch
-    this.startclusterButton = element(by.css('a#createCluster'));
 
     this.typeName = function (name) {
         return this.clusternameBox.sendKeys(name);
@@ -59,29 +57,72 @@ var ClusterModule = ( function () {
     };
 
     this.selectBlueprint = function (name) {
-        return this.clustercreateForm.element(by.cssContainingText('option', name)).click().then(function() {
-            browser.waitForAngular();
-            return browser.wait(function() {
-                return browser.element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch')).isDisplayed();
-            }, 20000);
-        });
+        return this.clustercreateForm.element(by.cssContainingText('option', name)).click();
+    };
+
+    this.isBlueprintSelected = function (name) {
+        browser.waitForAngular();
+        return browser.wait(function() {
+            return browser.element(by.cssContainingText('div#create-cluster-panel-collapse option', name)).isSelected();
+        }, 20000, 'Cannot select ' + name + ' blueprint!');
     };
 
     this.clickReviewAndLauch = function () {
-        return this.reviewlaunchButton.click().then(function() {
-            browser.waitForAngular();
+        var EC = protractor.ExpectedConditions;
+        var launchBitton = browser.element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
+
+        // We need to fix the GUI here. Something goes wrong with Angular here.
+        launchBitton.click();
+        browser.waitForAngular();
+        launchBitton.click();
+        browser.wait(EC.elementToBeClickable(launchBitton), 20000);
+        launchBitton.click();
+    };
+
+    this.isReviewAndLaunchOpened = function () {
+        browser.wait(function() {
+            return browser.element(by.css('a#createCluster')).isPresent();
+        }, 20000);
+        return browser.wait(function() {
+            return browser.element(by.css('a#createCluster')).isDisplayed();
+        }, 20000);
+    };
+
+    this.isClusterDetailsOpened = function () {
+        browser.waitForAngular();
+        return browser.wait(function() {
+            return browser.element(by.css('a#terminate-btn')).isDisplayed();
+        }, 20000);
+    };
+
+    this.clickTerminateButton = function () {
+        browser.wait(function() {
+            return browser.element(by.css('a#terminate-btn')).isDisplayed();
+        }, 2000);
+        browser.waitForAngular();
+        return browser.element(by.css('a#terminate-btn')).click().then(function() {
             return browser.wait(function() {
-                return browser.element(by.css('a#createCluster')).isDisplayed();
+                return browser.element(by.css('button#terminateStackBtn')).isDisplayed();
             }, 20000);
         });
     };
 
-    this.isReviewAndLaunchOpened = function () {
-        return this.startclusterButton.isDisplayed();
+    this.clickConfirmTerminateButton = function () {
+        browser.element(by.css('input#modal-terminate-forced')).click();
+        browser.element(by.css('button#terminateStackBtn')).click();
+        return browser.waitForAngular();
     };
 
     this.startCluster = function () {
-      return this.startclusterButton.click();
+        var EC = protractor.ExpectedConditions;
+        var startButton = browser.element(by.css('a#createCluster'));
+
+        // We need to fix the GUI here. Something goes wrong with Angular here.
+        startButton.click();
+        browser.waitForAngular();
+        startButton.click();
+        browser.wait(EC.elementToBeClickable(startButton), 20000);
+        return startButton.click();
     };
 
     this.createNewAWSCluster = function (clusterName, regionName, networkName, securityGroup, blueprintName) {

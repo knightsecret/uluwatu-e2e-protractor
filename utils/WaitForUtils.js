@@ -6,7 +6,7 @@
  */
 var WaitForUtils = ( function () {
 
-    this.waitForElementWithCSS = function (csslocator, attribute, attempts) {
+    this.waitForElementWithAttribute = function (csslocator, attribute, attempts) {
         if (attempts == null) {
             attempts = 3;
         }
@@ -25,7 +25,7 @@ var WaitForUtils = ( function () {
                     }
                 }, function(err) {
                     if (attempts > 0) {
-                        return waitForElementWithCSS(csslocator, attribute, attempts - 1);
+                        return this.waitForElementWithAttribute(csslocator, attribute, attempts - 1);
                     } else {
                         throw err;
                     }
@@ -33,7 +33,7 @@ var WaitForUtils = ( function () {
                 browser.manage().timeouts().implicitlyWait(browser.params.timeouts.implicitlyWait);
             }, 20000, function(err) {
                 if (attempts > 0) {
-                    return waitForElementWithCSS(csslocator, attribute, attempts - 1);
+                    return this.waitForElementWithAttribute(csslocator, attribute, attempts - 1);
                 } else {
                     throw err;
                 }
@@ -41,45 +41,6 @@ var WaitForUtils = ( function () {
         });
     };
 
-    this.waitForElementWithText = function(elm, txt, attempts) {
-        if (attempts == null) {
-            attempts = 3;
-        }
-
-        // first wait for element to be present
-        return browser.driver.findElement(elm).then(function(found) {
-            // now wait for it to be visible
-            browser.manage().timeouts().implicitlyWait(5000); // we need this to be faster now
-            return browser.driver.wait(function() {
-                return found.isDisplayed().then(function(visible) {
-                    // First wait for it to become visible
-                    if (visible) {
-                        // Then wait for text to be populated
-                        return found.getText().then(function(gotTxt) {
-                            return gotTxt === txt;
-                        });
-                    } else {
-                        browser.sleep(5000); // give it a break
-                        return false;
-                    }
-                }, function(err) { /* err hnd */
-                    if (attempts > 0) {
-                        return waitForElementWithText(elm, txt, attempts - 1);
-                    } else {
-                        throw err;
-                    }
-                });
-            }, browser.params.timeouts.waitBecomeVisible, 'Expectation error: waiting for element to getText(): '+elm);
-            // restore implicit wait
-            browser.manage().timeouts().implicitlyWait(browser.params.timeouts.implicitlyWait);
-        }, function(err) { /* err hnd */
-            if (attempts > 0) {
-                return waitForElementWithText(elm, txt, attempts - 1);
-            } else {
-                throw err;
-            }
-        });
-    };
 });
 
 module.exports = WaitForUtils;

@@ -1,7 +1,9 @@
 'use strict';
+var ClusterModule = require('../modules/ClusterModule.js');
+var WidgetModule = require('../modules/WidgetModule.js');
 
 var BasePage = function () {
-  browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
+    browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
 };
 
 BasePage.prototype  = Object.create({}, {
@@ -50,6 +52,31 @@ BasePage.prototype  = Object.create({}, {
     return browser.element(by.css('input#notification-n-filtering')).getAttribute('value').then(function(value) {
       console.log(value);
     });
+  }},
+  createNewAWSCluster:                        { value: function (name, region, network, securityGroup, blueprint)  {
+      var clusterModule = new ClusterModule();
+      this.openClusterCreate();
+      clusterModule.createNewAWSCluster(name, region, network, securityGroup, blueprint);
+      var widgetModule = new WidgetModule();
+      return widgetModule.isClusterPresent(name);
+  }},
+  openClusterDetails:                         { value: function (name)  {
+      var widgetModule = new WidgetModule();
+      return widgetModule.getClusterStarted(name);
+  }},
+  isClusterDone:                              { value: function (name)  {
+      var widgetModule = new WidgetModule();
+      return widgetModule.getClusterStarted(name);
+  }},
+  terminateCluster:                          { value: function (name)  {
+      var widgetModule = new WidgetModule();
+      widgetModule.openCluster(name);
+
+      var clusterModule = new ClusterModule();
+      clusterModule.clickTerminateButton();
+      clusterModule.clickConfirmTerminateButton();
+
+      return widgetModule.isClusterTerminated(name);
   }}
 });
 module.exports = BasePage;

@@ -12,20 +12,40 @@ var WidgetModule = ( function () {
 
     this.isClusterPresent = function (name) {
         return this.clusterWidgets.filter(function (cluster) {
-            return cluster.element(by.cssContainingText('a', name));
-        }).isDisplayed();
-    };
-
-    this.getClusterStarted = function (name) {
-        return this.clusterWidgets.filter(function (cluster, index) {
             cluster.element(by.cssContainingText('a', name));
             return browser.wait(function() {
-                console.log('The cluster is running.')
-                return cluster.element(by.css('div.mod-LED>span.state5-run')).isDisplayed();
-            }, 30 * 60000, 'Cannot find this element!', function(err) {
-                console.log('The cluster is stopped.')
-                return cluster.element(by.css('div.mod-LED>span.state3-stop')).isDisplayed();
+                return cluster.element(by.cssContainingText('a', name)).isDisplayed();
+            }, 20000, 'Cluster with this name is NOT present!', function(err) {
+                console.log(err);
+                return false;
             });
+        });
+    };
+
+    this.isClusterTerminated = function (name) {
+        browser.waitForAngular();
+        browser.wait(function() {
+            return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
+        }, 30 * 20000, 'Cannot find this element!');
+        return browser.wait(function() {
+            return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
+        }, 30 * 20000, 'Cannot see this element!');
+    };
+
+    this.getClusterStarted = function () {
+        browser.waitForAngular();
+        browser.wait(function() {
+            return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isPresent();
+        }, 30 * 20000, 'Cannot find this element!');
+        return browser.wait(function() {
+            return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isDisplayed();
+        }, 30 * 20000, 'Cannot see this element!');
+    };
+
+    this.openCluster = function (name) {
+        browser.waitForAngular();
+        return browser.element(by.cssContainingText('a#btn-cluster', name)).click().then(function() {
+            return browser.waitForAngular();
         });
     };
 });

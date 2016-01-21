@@ -19,7 +19,7 @@ exports.config = {
    * Note: The spec patterns are relative to the root directory (app parent dir)!
    */
   specs: [
-      'utils/slowdown.conf.js',
+      //'utils/slowdown.conf.js',
       'tests/LoginSpec.js',
       'tests/BlueprintSpec.js',
       'tests/CredentialSpec.js',
