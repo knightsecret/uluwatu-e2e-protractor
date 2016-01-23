@@ -69,14 +69,23 @@ var ClusterModule = ( function () {
 
     this.clickReviewAndLauch = function () {
         var EC = protractor.ExpectedConditions;
-        var launchBitton = browser.element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
-
+        var launchButton = browser.element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
-        launchBitton.click();
-        browser.waitForAngular();
-        launchBitton.click();
-        browser.wait(EC.elementToBeClickable(launchBitton), 20000);
-        launchBitton.click();
+       browser.driver.wait(EC.elementToBeClickable(launchButton)).then(function() {
+           console.log('Launch button is clicked 1st!');
+           return browser.driver.actions().doubleClick(launchButton).perform();
+       }, 20000).then(function() {
+           return browser.driver.wait(function() {
+               return launchButton.isDisplayed();
+           }, 20000).then(function (isDisplayed) {
+               if (isDisplayed) {
+                   console.log('Launch button is clicked 2nd!');
+                   browser.driver.actions().click(launchButton).perform();
+               } else {
+                   console.log('Launch button has already clicked at 1st!');
+               }
+           });
+       });
     };
 
     this.isReviewAndLaunchOpened = function () {
@@ -116,13 +125,22 @@ var ClusterModule = ( function () {
     this.startCluster = function () {
         var EC = protractor.ExpectedConditions;
         var startButton = browser.element(by.css('a#createCluster'));
-
         // We need to fix the GUI here. Something goes wrong with Angular here.
-        startButton.click();
-        browser.waitForAngular();
-        startButton.click();
-        browser.wait(EC.elementToBeClickable(startButton), 20000);
-        return startButton.click();
+        browser.driver.wait(EC.elementToBeClickable(startButton)).then(function() {
+            console.log('start button is clicked 1st!');
+            return browser.driver.actions().doubleClick(startButton).perform();
+        }, 20000).then(function() {
+            return browser.driver.wait(function() {
+                return startButton.isDisplayed();
+            }, 20000).then(function (isDisplayed) {
+                if (isDisplayed) {
+                    console.log('Start button is clicked 2nd!');
+                    browser.driver.actions().click(startButton).perform();
+                } else {
+                    console.log('Start button has already clicked at 1st!');
+                }
+            });
+        });
     };
 
     this.createNewAWSCluster = function (clusterName, regionName, networkName, securityGroup, blueprintName) {
@@ -137,6 +155,7 @@ var ClusterModule = ( function () {
         this.selectBlueprint(blueprintName);
         this.clickReviewAndLauch();
         this.startCluster();
+
     };
 });
 module.exports = ClusterModule;

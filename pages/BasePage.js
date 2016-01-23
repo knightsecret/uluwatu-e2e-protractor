@@ -62,9 +62,9 @@ BasePage.prototype  = Object.create({}, {
   }},
   openClusterDetails:                         { value: function (name)  {
       var widgetModule = new WidgetModule();
-      return widgetModule.getClusterStarted(name);
+      return widgetModule.openCluster(name);
   }},
-  isClusterDone:                              { value: function (name)  {
+  isClusterStarted:                              { value: function (name)  {
       var widgetModule = new WidgetModule();
       return widgetModule.getClusterStarted(name);
   }},

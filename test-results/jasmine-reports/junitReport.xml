@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
- <testsuite name="Cloudbreak login" timestamp="2016-01-21T17:50:14" hostname="localhost" time="19.226" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Cloudbreak login" timestamp="2016-01-23T12:11:46" hostname="localhost" time="20.071" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Cloudbreak login.launch application" timestamp="2016-01-21T17:50:14" hostname="localhost" time="19.224" errors="0" tests="2" skipped="0" disabled="0" failures="0">
-  <testcase classname="Cloudbreak login.launch application" name="should be at the Dashboard page" time="19.183" />
-  <testcase classname="Cloudbreak login.launch application" name="should see default blueprints" time="0.04" />
+ <testsuite name="Cloudbreak login.launch application" timestamp="2016-01-23T12:11:46" hostname="localhost" time="20.071" errors="0" tests="2" skipped="0" disabled="0" failures="0">
+  <testcase classname="Cloudbreak login.launch application" name="should be at the Dashboard page" time="20.026" />
+  <testcase classname="Cloudbreak login.launch application" name="should see default blueprints" time="0.042" />
  </testsuite>
- <testsuite name="Testing Blueprints on Dashboard" timestamp="2016-01-21T17:50:33" hostname="localhost" time="7.703" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Testing Blueprints on Dashboard" timestamp="2016-01-23T12:12:06" hostname="localhost" time="8.11" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Testing Blueprints on Dashboard.Create a new blueprint" timestamp="2016-01-21T17:50:33" hostname="localhost" time="7.703" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Testing Blueprints on Dashboard.Create a new blueprint" name="autotest-multi-node-hdfs-yarn" time="7.703" />
+ <testsuite name="Testing Blueprints on Dashboard.Create a new blueprint" timestamp="2016-01-23T12:12:06" hostname="localhost" time="8.11" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Testing Blueprints on Dashboard.Create a new blueprint" name="autotest-multi-node-hdfs-yarn" time="8.11" />
  </testsuite>
- <testsuite name="Testing Credentials on Dashboard" timestamp="2016-01-21T17:50:41" hostname="localhost" time="13.903" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Testing Credentials on Dashboard" timestamp="2016-01-23T12:12:14" hostname="localhost" time="13.754" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Testing Credentials on Dashboard.Create a new credential" timestamp="2016-01-21T17:50:41" hostname="localhost" time="13.903" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Testing Credentials on Dashboard.Create a new credential" name="autotest-aws" time="13.903" />
+ <testsuite name="Testing Credentials on Dashboard.Create a new credential" timestamp="2016-01-23T12:12:14" hostname="localhost" time="13.754" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Testing Credentials on Dashboard.Create a new credential" name="autotest-aws" time="13.754" />
  </testsuite>
- <testsuite name="Cluster testing" timestamp="2016-01-21T17:50:55" hostname="localhost" time="36.485" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Cluster testing" timestamp="2016-01-23T12:12:28" hostname="localhost" time="31.107" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Cluster testing.create new cluster" timestamp="2016-01-21T17:50:55" hostname="localhost" time="36.485" errors="0" tests="4" skipped="0" disabled="0" failures="1">
-  <testcase classname="Cluster testing.create new cluster" name="AWS credential should be selected" time="0.358" />
-  <testcase classname="Cluster testing.create new cluster" name="AWS cluster should be started" time="22.843">
-   <failure type="exception" message="Failed: Wait timed out after 20096ms"><![CDATA[Error: Wait timed out after 20096ms
+ <testsuite name="Cluster testing.create new cluster" timestamp="2016-01-23T12:12:28" hostname="localhost" time="31.107" errors="0" tests="4" skipped="0" disabled="0" failures="1">
+  <testcase classname="Cluster testing.create new cluster" name="AWS credential should be selected" time="0.415" />
+  <testcase classname="Cluster testing.create new cluster" name="AWS cluster should be started" time="23.578">
+   <failure type="exception" message="Failed: Wait timed out after 20057ms"><![CDATA[Error: Wait timed out after 20057ms
     at eval (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2238:22)
     at [object Object].promise.Promise.goog.defineClass.invokeCallback_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:1337:14)
     at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_.execute_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2776:14)
@@ -31,14 +31,12 @@
 From: Task: <anonymous wait>
     at [object Object].promise.ControlFlow.goog.defineClass.getSchedule.indent.wait (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2226:17)
     at [object Object].webdriver.WebDriver.wait (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver/webdriver.js:716:21)
-    at [object Object].to.(anonymous function) [as wait] (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/lib/protractor.js:65:25)
-    at [object Object].ClusterModule.clickReviewAndLauch (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/modules/ClusterModule.js:77:17)
-    at [object Object].ClusterModule.createNewAWSCluster (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/modules/ClusterModule.js:136:14)
-    at Object.create.createNewAWSCluster.value (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/pages/BasePage.js:59:21)
-    at Object.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/ClusterSpec.js:24:27)
-    at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasminewd2/index.js:96:23
-    at [object Object].promise.Promise.goog.defineClass.constructor (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:1056:7)
-    at new wrappedCtr (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/base.js:2468:26)
+    at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/modules/ClusterModule.js:133:35
+    at [object Object].promise.Promise.goog.defineClass.invokeCallback_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:1337:14)
+    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_.execute_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2776:14)
+    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2758:21)
+    at goog.async.run.processWorkQueue (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/async/run.js:124:15)
+    at process._tickCallback (node.js:356:9)
 From: Task: Run it("AWS cluster should be started") in control flow
     at Object.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasminewd2/index.js:81:14)
     at attemptAsync (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1819:24)
@@ -63,7 +61,7 @@ Error
     at Object.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/ClusterSpec.js:5:1)]]>
    </failure>
   </testcase>
-  <testcase classname="Cluster testing.create new cluster" name="AWS cluster should be done" time="3.334" />
-  <testcase classname="Cluster testing.create new cluster" name="selected cluster should be terminated" time="9.947" />
+  <testcase classname="Cluster testing.create new cluster" name="AWS cluster should be started" time="0.315" />
+  <testcase classname="Cluster testing.create new cluster" name="selected cluster should be terminated" time="6.797" />
  </testsuite>
 </testsuites>

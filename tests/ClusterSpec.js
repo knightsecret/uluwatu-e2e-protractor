@@ -24,8 +24,8 @@ describe('Cluster testing', function () {
           expect(basePage.createNewAWSCluster(clusterName, regionName, networkName, securityGroup, blueprintName)).toBeTruthy();
       });
 
-      it('AWS cluster should be done', function () {
-          expect(basePage.isClusterDone(clusterName)).toBeTruthy();
+      it('AWS cluster should be started', function () {
+          expect(basePage.isClusterStarted(clusterName)).toBeTruthy();
       });
 
       it('selected cluster should be terminated', function () {

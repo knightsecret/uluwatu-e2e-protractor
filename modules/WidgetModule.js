@@ -11,33 +11,33 @@ var WidgetModule = ( function () {
     this.clusterWidgets = element.all(by.repeater('cluster in $root.clusters'));
 
     this.isClusterPresent = function (name) {
-        return this.clusterWidgets.filter(function (cluster) {
-            cluster.element(by.cssContainingText('a', name));
-            return browser.wait(function() {
-                return cluster.element(by.cssContainingText('a', name)).isDisplayed();
-            }, 20000, 'Cluster with this name is NOT present!', function(err) {
-                console.log(err);
-                return false;
-            });
-        });
+        browser.waitForAngular();
+        browser.driver.wait(function() {
+            return cluster.element(by.cssContainingText('a', name)).isPresent();
+        }, 20000, 'Cluster with this name is NOT present!');
+        return browser.driver.wait(function() {
+            return cluster.element(by.cssContainingText('a', name)).isDisplayed();
+        }, 20000, 'Cluster with this name is NOT displayed!');
     };
 
-    this.isClusterTerminated = function (name) {
+    this.isClusterTerminated = function () {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
         browser.waitForAngular();
-        browser.wait(function() {
+        browser.driver.wait(function() {
             return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
-        return browser.wait(function() {
+        return browser.driver.wait(function() {
             return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     };
 
     this.getClusterStarted = function () {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
         browser.waitForAngular();
-        browser.wait(function() {
+        browser.driver.wait(function() {
             return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
-        return browser.wait(function() {
+        return browser.driver.wait(function() {
             return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     };

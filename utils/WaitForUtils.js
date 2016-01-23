@@ -6,6 +6,29 @@
  */
 var WaitForUtils = ( function () {
 
+    this.waitforsomething = function (cssLocator) {
+        var elementByCSS = browsre.element(by.css(cssLocator));
+        browser.wait(protractor.until.elementIsNotVisible(elementByCSS));
+    };
+
+    this.isWarningDisplayed = function (expectedVisibility) {
+        return browser.driver.wait(function () {
+            if (expectedVisibility) {
+                return element(by.css('.warning')).isDisplayed().then(function(visibility) {
+                    return visibility === expectedVisibility;
+                });
+            } else {
+                return element.all(by.css('.warning .collapse.in')).then(function(items) {
+                    return items.length === 0;
+                });
+            }
+        }, 20000).then(function() {
+            return element.all(by.css('.warning .collapse.in'));
+        }).then(function (items) {
+            return items.length > 0;
+        });
+    };
+
     this.waitForElementWithAttribute = function (csslocator, attribute, attempts) {
         if (attempts == null) {
             attempts = 3;
