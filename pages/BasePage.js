@@ -1,6 +1,7 @@
 'use strict';
 var ClusterModule = require('../modules/ClusterModule.js');
 var WidgetModule = require('../modules/WidgetModule.js');
+var WaitForUtils = require('../utils/WaitForUtils.js');
 
 var BasePage = function () {
     browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
@@ -65,6 +66,8 @@ BasePage.prototype  = Object.create({}, {
       return widgetModule.openCluster(name);
   }},
   isClusterStarted:                              { value: function (name)  {
+      //var waitForUtils = new WaitForUtils();
+      //return waitForUtils.waitForElementCSS('div.mod-LED>span.state5-run', 20);
       var widgetModule = new WidgetModule();
       return widgetModule.getClusterStarted(name);
   }},

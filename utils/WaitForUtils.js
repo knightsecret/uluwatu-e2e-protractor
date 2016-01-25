@@ -6,11 +6,6 @@
  */
 var WaitForUtils = ( function () {
 
-    this.waitforsomething = function (cssLocator) {
-        var elementByCSS = browsre.element(by.css(cssLocator));
-        browser.wait(protractor.until.elementIsNotVisible(elementByCSS));
-    };
-
     this.isWarningDisplayed = function (expectedVisibility) {
         return browser.driver.wait(function () {
             if (expectedVisibility) {
@@ -29,39 +24,30 @@ var WaitForUtils = ( function () {
         });
     };
 
-    this.waitForElementWithAttribute = function (csslocator, attribute, attempts) {
-        if (attempts == null) {
-            attempts = 3;
-        }
+    this.waitForElementCSS = function (csslocator, attempts) {
+        browser.driver.ignoreSynchronization = true;
+        var EC = protractor.ExpectedConditions;
+        browser.driver.manage().timeouts().implicitlyWait(20000);
+        if (attempts == null) attempts = 3;
+        var whatWeWaitFor = browser.element(by.css(csslocator));
 
-        return browser.driver.findElement(by.css(csslocator)).then(function(found) {
-            browser.driver.manage().timeouts().implicitlyWait(10000);
-            return browser.wait(function() {
-                return found.isDisplayed().then(function(visible) {
-                    if (visible) {
-                        return found.getAttribute(attribute).then(function(gotAttribute) {
-                            return gotAttribute === attribute;
-                        });
-                    } else {
-                        browser.sleep(10000);
-                        return false;
-                    }
-                }, function(err) {
-                    if (attempts > 0) {
-                        return this.waitForElementWithAttribute(csslocator, attribute, attempts - 1);
-                    } else {
-                        throw err;
-                    }
-                });
-                browser.manage().timeouts().implicitlyWait(browser.params.timeouts.implicitlyWait);
-            }, 20000, function(err) {
-                if (attempts > 0) {
-                    return this.waitForElementWithAttribute(csslocator, attribute, attempts - 1);
+        var looping = function (idx) {
+            return browser.driver.wait(EC.visibilityOf(whatWeWaitFor), 20000, 'The element ' + csslocator + ' is NOT visible! first').then(function() {
+                console.log('The element ' + csslocator + ' is visible!');
+                return browser.element(by.css(csslocator)).isDisplayed();
+            }, function(err) {
+                console.log('The element ' + csslocator + ' is NOT visible! second');
+                if (idx > 0) {
+                    browser.driver.sleep(30000);
+                    return looping(idx - 1);
                 } else {
-                    throw err;
+                    console.log('The element ' + csslocator + ' is NOT visible! in ' + idx.toString() + ' attempts!');
+                    browser.driver.ignoreSynchronization = false;
+                    return browser.element(by.css(csslocator)).isDisplayed();
                 }
             });
-        });
+        }
+        return looping(attempts);
     };
 
 });

@@ -71,19 +71,15 @@ var ClusterModule = ( function () {
         var EC = protractor.ExpectedConditions;
         var launchButton = browser.element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
-       browser.driver.wait(EC.elementToBeClickable(launchButton)).then(function() {
+       return browser.driver.wait(EC.elementToBeClickable(launchButton), 5000, 'Launch button is NOT click able!').then(function() {
            console.log('Launch button is clicked 1st!');
            return browser.driver.actions().doubleClick(launchButton).perform();
-       }, 20000).then(function() {
-           return browser.driver.wait(function() {
-               return launchButton.isDisplayed();
-           }, 20000).then(function (isDisplayed) {
-               if (isDisplayed) {
-                   console.log('Launch button is clicked 2nd!');
-                   browser.driver.actions().click(launchButton).perform();
-               } else {
-                   console.log('Launch button has already clicked at 1st!');
-               }
+       }).then(function() {
+           return browser.driver.wait(EC.invisibilityOf(launchButton), 5000, 'Launch button has NOT clicked at 1st!').then(function() {
+               console.log('Launch button has already clicked at 1st!');
+           }, function(err) {
+               console.log('Launch button is clicked 2nd!');
+               return browser.driver.actions().click(launchButton).perform();
            });
        });
     };
@@ -126,19 +122,15 @@ var ClusterModule = ( function () {
         var EC = protractor.ExpectedConditions;
         var startButton = browser.element(by.css('a#createCluster'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
-        browser.driver.wait(EC.elementToBeClickable(startButton)).then(function() {
-            console.log('start button is clicked 1st!');
+        return browser.driver.wait(EC.elementToBeClickable(startButton), 5000, 'Start button is NOT click able!').then(function() {
+            console.log('Start button is clicked 1st!');
             return browser.driver.actions().doubleClick(startButton).perform();
-        }, 20000).then(function() {
-            return browser.driver.wait(function() {
-                return startButton.isDisplayed();
-            }, 20000).then(function (isDisplayed) {
-                if (isDisplayed) {
-                    console.log('Start button is clicked 2nd!');
-                    browser.driver.actions().click(startButton).perform();
-                } else {
-                    console.log('Start button has already clicked at 1st!');
-                }
+        }).then(function() {
+            return browser.driver.wait(EC.invisibilityOf(startButton), 5000,'Start button has NOT clicked at 1st!').then(function() {
+                console.log('Start button has already clicked at 1st!');
+            }, function(err) {
+                console.log('Start button is clicked 2nd!');
+                return browser.driver.actions().click(startButton).perform();
             });
         });
     };

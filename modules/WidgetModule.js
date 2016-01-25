@@ -13,10 +13,10 @@ var WidgetModule = ( function () {
     this.isClusterPresent = function (name) {
         browser.waitForAngular();
         browser.driver.wait(function() {
-            return cluster.element(by.cssContainingText('a', name)).isPresent();
+            return browser.element(by.cssContainingText('a#btn-cluster', name)).isPresent();
         }, 20000, 'Cluster with this name is NOT present!');
         return browser.driver.wait(function() {
-            return cluster.element(by.cssContainingText('a', name)).isDisplayed();
+            return browser.element(by.cssContainingText('a#btn-cluster', name)).isDisplayed();
         }, 20000, 'Cluster with this name is NOT displayed!');
     };
 

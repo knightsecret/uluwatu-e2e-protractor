@@ -20,7 +20,7 @@ describe('Cluster testing', function () {
           expect(basePage.getSelectedCredential()).toEqual(credentialName);
       });
 
-      it('AWS cluster should be started', function () {
+      it('AWS cluster should be created', function () {
           expect(basePage.createNewAWSCluster(clusterName, regionName, networkName, securityGroup, blueprintName)).toBeTruthy();
       });
 
