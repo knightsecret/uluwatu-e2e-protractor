@@ -1,23 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
- <testsuite name="Cloudbreak login" timestamp="2016-01-24T18:05:51" hostname="localhost" time="150.051" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Cloudbreak login" timestamp="2016-01-25T14:50:17" hostname="localhost" time="20.185" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Cloudbreak login.launch application" timestamp="2016-01-24T18:05:51" hostname="localhost" time="150.05" errors="0" tests="2" skipped="0" disabled="0" failures="3">
-  <testcase classname="Cloudbreak login.launch application" name="should be at the Dashboard page" time="50.038">
-   <failure type="exception" message="Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL."><![CDATA[Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-    at [object Object]._onTimeout (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1812:23)
-    at Timer.listOnTimeout (timers.js:89:15)]]>
+ <testsuite name="Cloudbreak login.launch application" timestamp="2016-01-25T14:50:17" hostname="localhost" time="20.184" errors="0" tests="2" skipped="0" disabled="0" failures="1">
+  <testcase classname="Cloudbreak login.launch application" name="should be at the Dashboard page" time="20.128" />
+  <testcase classname="Cloudbreak login.launch application" name="should see default blueprints" time="0.053">
+   <failure type="toEqual" message="Expected 4 to equal 3."><![CDATA[Error: Failed expectation
+    at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/LoginSpec.js:17:23
+    at [object Object].promise.Promise.goog.defineClass.invokeCallback_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:1337:14)
+    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_.execute_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2776:14)
+    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2758:21)
+    at goog.async.run.processWorkQueue (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/async/run.js:124:15)
+    at process._tickCallback (node.js:356:9)]]>
    </failure>
   </testcase>
-  <testcase classname="Cloudbreak login.launch application" name="should see default blueprints" time="100.008">
-   <failure type="exception" message="Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL."><![CDATA[Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-    at [object Object]._onTimeout (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1812:23)
-    at Timer.listOnTimeout (timers.js:89:15)]]>
-   </failure>
-   <failure type="exception" message="Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL."><![CDATA[Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-    at [object Object]._onTimeout (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1812:23)
-    at Timer.listOnTimeout (timers.js:89:15)]]>
+ </testsuite>
+ <testsuite name="Testing Blueprints on Dashboard" timestamp="2016-01-25T14:50:37" hostname="localhost" time="8.069" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ </testsuite>
+ <testsuite name="Testing Blueprints on Dashboard.Create a new blueprint" timestamp="2016-01-25T14:50:37" hostname="localhost" time="8.069" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Testing Blueprints on Dashboard.Create a new blueprint" name="autotest-multi-node-hdfs-yarn" time="8.069" />
+ </testsuite>
+ <testsuite name="Testing Credentials on Dashboard" timestamp="2016-01-25T14:50:45" hostname="localhost" time="13.835" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ </testsuite>
+ <testsuite name="Testing Credentials on Dashboard.Create a new credential" timestamp="2016-01-25T14:50:45" hostname="localhost" time="13.835" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Testing Credentials on Dashboard.Create a new credential" name="autotest-aws" time="13.834" />
+ </testsuite>
+ <testsuite name="Cluster testing" timestamp="2016-01-25T14:50:59" hostname="localhost" time="169.324" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ </testsuite>
+ <testsuite name="Cluster testing.on a new cluster" timestamp="2016-01-25T14:50:59" hostname="localhost" time="169.324" errors="0" tests="5" skipped="0" disabled="0" failures="1">
+  <testcase classname="Cluster testing.on a new cluster" name="AWS credential should be selected" time="0.39" />
+  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be created" time="13.717" />
+  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be started" time="0.126" />
+  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be run" time="136.828">
+   <failure type="exception" message="Failed: clusterISRunning.isDisplayed is not a function"><![CDATA[TypeError: clusterISRunning.isDisplayed is not a function
+    at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/utils/WaitForUtils.js:34:34
+    at [object Object].promise.Promise.goog.defineClass.invokeCallback_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:1337:14)
+    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_.execute_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2776:14)
+    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2758:21)
+    at goog.async.run.processWorkQueue (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/async/run.js:124:15)
+    at process._tickCallback (node.js:356:9)
+From: Task: Run it("AWS cluster should be run") in control flow
+    at Object.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasminewd2/index.js:81:14)
+    at attemptAsync (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1819:24)
+    at QueueRunner.run (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1774:9)
+    at QueueRunner.execute (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1762:10)
+    at Spec.Env.queueRunnerFactory (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:627:35)
+    at Spec.execute (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:353:10)
+    at Object.fn (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:2360:37)
+    at attemptAsync (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1819:24)
+    at QueueRunner.run (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1774:9)
+    at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1801:16
+From asynchronous test: 
+Error
+    at Suite.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/ClusterSpec.js:31:7)
+    at addSpecsToSuite (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:743:25)
+    at Env.describe (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:713:7)
+    at jasmineInterface.describe (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:3219:18)
+    at Suite.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/ClusterSpec.js:15:3)
+    at addSpecsToSuite (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:743:25)
+    at Env.describe (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:713:7)
+    at jasmineInterface.describe (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:3219:18)
+    at Object.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/ClusterSpec.js:5:1)]]>
    </failure>
   </testcase>
+  <testcase classname="Cluster testing.on a new cluster" name="selected cluster should be terminated" time="18.26" />
  </testsuite>
 </testsuites>

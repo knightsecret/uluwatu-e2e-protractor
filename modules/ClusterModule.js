@@ -101,21 +101,40 @@ var ClusterModule = ( function () {
     };
 
     this.clickTerminateButton = function () {
-        browser.wait(function() {
-            return browser.element(by.css('a#terminate-btn')).isDisplayed();
-        }, 2000);
-        browser.waitForAngular();
-        return browser.element(by.css('a#terminate-btn')).click().then(function() {
-            return browser.wait(function() {
-                return browser.element(by.css('button#terminateStackBtn')).isDisplayed();
-            }, 20000);
+        var EC = protractor.ExpectedConditions;
+        var terminateButton = browser.element(by.css('a#terminate-btn'));
+        // We need to fix the GUI here. Something goes wrong with Angular here.
+        return browser.driver.wait(EC.elementToBeClickable(terminateButton), 5000, 'Terminate button is NOT click able!').then(function() {
+            console.log('Terminate button is clicked 1st!');
+            return browser.driver.actions().doubleClick(terminateButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.visibilityOf(browser.element(by.css('button#terminateStackBtn'))), 5000,'Terminate button has NOT clicked at 1st!').then(function() {
+                console.log('Terminate button has already clicked at 1st!');
+            }, function(err) {
+                console.log('Terminate button is clicked 2nd!');
+                return browser.driver.actions().click(terminateButton).perform();
+            });
         });
     };
 
     this.clickConfirmTerminateButton = function () {
-        browser.element(by.css('input#modal-terminate-forced')).click();
-        browser.element(by.css('button#terminateStackBtn')).click();
-        return browser.waitForAngular();
+        var EC = protractor.ExpectedConditions;
+        var forceTerminateBox = browser.element(by.css('input#modal-terminate-forced'));
+        var stackTerminateButton = browser.element(by.css('button#terminateStackBtn'));
+        // We need to fix the GUI here. Something goes wrong with Angular here.
+        return browser.driver.wait(EC.elementToBeClickable(forceTerminateBox), 5000, 'Force terminate checkbox is NOT click able!').then(function() {
+            console.log('Force terminate is clicked 1st!');
+            browser.driver.actions().click(forceTerminateBox).perform();
+            return browser.driver.actions().click(stackTerminateButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.invisibilityOf(stackTerminateButton), 5000,'Terminate button has NOT clicked at 1st!').then(function() {
+                console.log('Terminate button has already clicked at 1st!');
+            }, function(err) {
+                console.log('Terminate button is clicked 2nd!');
+                browser.driver.actions().click(forceTerminateBox).perform();
+                return browser.driver.actions().click(stackTerminateButton).perform();
+            });
+        });
     };
 
     this.startCluster = function () {

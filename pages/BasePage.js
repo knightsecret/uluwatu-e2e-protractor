@@ -65,13 +65,15 @@ BasePage.prototype  = Object.create({}, {
       var widgetModule = new WidgetModule();
       return widgetModule.openCluster(name);
   }},
-  isClusterStarted:                              { value: function (name)  {
-      //var waitForUtils = new WaitForUtils();
-      //return waitForUtils.waitForElementCSS('div.mod-LED>span.state5-run', 20);
+  isClusterStarted:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
       return widgetModule.getClusterStarted(name);
   }},
-  terminateCluster:                          { value: function (name)  {
+  isClusterRun:                               { value: function ()  {
+     var waitForUtils = new WaitForUtils();
+     return waitForUtils.waitForClusterStart();
+  }},
+  terminateCluster:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
       widgetModule.openCluster(name);
 
