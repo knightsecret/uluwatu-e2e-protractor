@@ -128,9 +128,9 @@ var ClusterModule = ( function () {
             return browser.driver.actions().click(stackTerminateButton).perform();
         }).then(function() {
             return browser.driver.wait(EC.invisibilityOf(stackTerminateButton), 5000,'Terminate button has NOT clicked at 1st!').then(function() {
-                console.log('Terminate button has already clicked at 1st!');
+                console.log('Force terminate has already clicked at 1st!');
             }, function(err) {
-                console.log('Terminate button is clicked 2nd!');
+                console.log('Force terminate is clicked 2nd!');
                 browser.driver.actions().click(forceTerminateBox).perform();
                 return browser.driver.actions().click(stackTerminateButton).perform();
             });

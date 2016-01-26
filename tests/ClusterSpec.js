@@ -30,7 +30,8 @@ describe('Cluster testing', function () {
 
       it('AWS cluster should be run', function (done) {
           jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-          expect(basePage.isClusterRun().then(done)).toBeTruthy();
+          expect(basePage.isClusterRun()).toBeTruthy();
+          done();
       }, 30 * 60000);
 
       it('selected cluster should be terminated', function () {

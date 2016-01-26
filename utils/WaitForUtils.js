@@ -31,7 +31,11 @@ var WaitForUtils = ( function () {
 
         return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 30 * 60000, 'The cluster is NOT visible!').then(function() {
             console.log('The cluster is visible!');
-            return clusterISRunning.isDisplayed();
+            return browser.element(by.css('div.mod-LED>span.state5-run')).isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
         }, function(err) {
             console.log('The cluster has NOT created!');
             return err;
