@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
- <testsuite name="Cloudbreak login" timestamp="2016-01-26T16:11:38" hostname="localhost" time="25.937" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Cloudbreak login" timestamp="2016-02-10T16:10:06" hostname="localhost" time="19.238" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Cloudbreak login.launch application" timestamp="2016-01-26T16:11:38" hostname="localhost" time="25.936" errors="0" tests="2" skipped="0" disabled="0" failures="1">
-  <testcase classname="Cloudbreak login.launch application" name="should be at the Dashboard page" time="25.876" />
-  <testcase classname="Cloudbreak login.launch application" name="should see default blueprints" time="0.056">
-   <failure type="toEqual" message="Expected 4 to equal 3."><![CDATA[Error: Failed expectation
-    at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/LoginSpec.js:17:23
-    at [object Object].promise.Promise.goog.defineClass.invokeCallback_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:1337:14)
-    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_.execute_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2776:14)
-    at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2758:21)
-    at goog.async.run.processWorkQueue (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/async/run.js:124:15)
-    at process._tickCallback (node.js:356:9)]]>
-   </failure>
-  </testcase>
+ <testsuite name="Cloudbreak login.launch application" timestamp="2016-02-10T16:10:06" hostname="localhost" time="19.237" errors="0" tests="2" skipped="0" disabled="0" failures="0">
+  <testcase classname="Cloudbreak login.launch application" name="should be at the Dashboard page" time="19.192" />
+  <testcase classname="Cloudbreak login.launch application" name="should see default blueprints" time="0.043" />
  </testsuite>
- <testsuite name="Testing Blueprints on Dashboard" timestamp="2016-01-26T16:12:04" hostname="localhost" time="8.4" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Testing Blueprints on Dashboard" timestamp="2016-02-10T16:10:25" hostname="localhost" time="9.384" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Testing Blueprints on Dashboard.Create a new blueprint" timestamp="2016-01-26T16:12:04" hostname="localhost" time="8.4" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Testing Blueprints on Dashboard.Create a new blueprint" name="autotest-multi-node-hdfs-yarn" time="8.4" />
+ <testsuite name="Testing Blueprints on Dashboard.Create a new blueprint" timestamp="2016-02-10T16:10:25" hostname="localhost" time="9.384" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Testing Blueprints on Dashboard.Create a new blueprint" name="autotest-multi-node-hdfs-yarn" time="9.384" />
  </testsuite>
- <testsuite name="Testing Credentials on Dashboard" timestamp="2016-01-26T16:12:12" hostname="localhost" time="17.209" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Testing Credentials on Dashboard" timestamp="2016-02-10T16:10:34" hostname="localhost" time="13.148" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Testing Credentials on Dashboard.Create a new credential" timestamp="2016-01-26T16:12:12" hostname="localhost" time="17.209" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Testing Credentials on Dashboard.Create a new credential" name="autotest-aws" time="17.209" />
+ <testsuite name="Testing Credentials on Dashboard.Create a new credential" timestamp="2016-02-10T16:10:34" hostname="localhost" time="13.148" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Testing Credentials on Dashboard.Create a new credential" name="autotest-aws" time="13.148" />
  </testsuite>
- <testsuite name="Cluster testing" timestamp="2016-01-26T16:12:30" hostname="localhost" time="195.662" errors="0" tests="0" skipped="0" disabled="0" failures="0">
+ <testsuite name="Cluster testing" timestamp="2016-02-10T16:10:47" hostname="localhost" time="189.472" errors="0" tests="0" skipped="0" disabled="0" failures="0">
  </testsuite>
- <testsuite name="Cluster testing.on a new cluster" timestamp="2016-01-26T16:12:30" hostname="localhost" time="195.661" errors="0" tests="5" skipped="0" disabled="0" failures="1">
-  <testcase classname="Cluster testing.on a new cluster" name="AWS credential should be selected" time="0.423" />
-  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be created" time="7.682" />
-  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be started" time="0.214" />
-  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be run" time="180.743">
+ <testsuite name="Cluster testing.on a new cluster" timestamp="2016-02-10T16:10:47" hostname="localhost" time="189.472" errors="0" tests="5" skipped="0" disabled="0" failures="1">
+  <testcase classname="Cluster testing.on a new cluster" name="AWS credential should be selected" time="0.368" />
+  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be created" time="14.287" />
+  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be started" time="0.115" />
+  <testcase classname="Cluster testing.on a new cluster" name="AWS cluster should be run" time="167.874">
    <failure type="toBeTruthy" message="Expected false to be truthy."><![CDATA[Error: Failed expectation
     at Object.<anonymous> (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/tests/ClusterSpec.js:33:43)
     at /Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/jasminewd2/index.js:92:15
@@ -41,9 +32,9 @@
     at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_.execute_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2776:14)
     at [object Object].promise.ControlFlow.goog.defineClass.goog.defineClass.abort_.error.executeNext_ (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/../webdriver/promise.js:2758:21)
     at goog.async.run.processWorkQueue (/Users/aszegedi/prj/uluwatutests/uluwatu-e2e-protractor/node_modules/protractor/node_modules/selenium-webdriver/lib/goog/async/run.js:124:15)
-    at process._tickCallback (node.js:356:9)]]>
+    at process._tickCallback (node.js:401:9)]]>
    </failure>
   </testcase>
-  <testcase classname="Cluster testing.on a new cluster" name="selected cluster should be terminated" time="6.597" />
+  <testcase classname="Cluster testing.on a new cluster" name="selected cluster should be terminated" time="6.827" />
  </testsuite>
 </testsuites>

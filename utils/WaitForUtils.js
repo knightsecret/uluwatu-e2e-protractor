@@ -26,12 +26,13 @@ var WaitForUtils = ( function () {
 
     this.waitForClusterStart = function () {
         var EC = protractor.ExpectedConditions;
-        var clusterISRunning = EC.visibilityOf(browser.element(by.css('div.mod-LED>span.state5-run')));
+        var runningLed = browser.element(by.css('div.mod-LED>span.state5-run'));
+        var clusterISRunning = EC.visibilityOf(runningLed);
         var clusterISFailed = EC.visibilityOf(browser.element(by.css('div.mod-LED>span.state3-stop')));
 
         return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 30 * 60000, 'The cluster is NOT visible!').then(function() {
             console.log('The cluster is visible!');
-            return browser.element(by.css('div.mod-LED>span.state5-run')).isDisplayed().then(function(isDisplayed) {
+            return runningLed.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
                 return false;
