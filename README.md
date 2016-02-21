@@ -48,3 +48,7 @@ protractor e2e.conf.js
 ```
 ## Structure
 ![](utils/images/UluwatuPageObjects.png)
+
+## Docker image for ULUWATU functional E2E test project
+
+The related docker image is available in a [separate repository](https://github.com/aszegedi/docker-e2e-protractor) to can execute the test cases in a Docker container on demand. 
