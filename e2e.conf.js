@@ -14,6 +14,15 @@ exports.config = {
   //Capabilities to be passed to the WebDriverJS instance.
   capabilities: {
       'browserName': 'firefox'
+/*
+      'browserName': 'chrome',
+      /**
+       * Chrome is not allowed to create a SUID sandbox when running inside Docker
+       *
+      'chromeOptions': {
+          'args': ['no-sandbox']
+      }
+*/
   },
 
   /**
@@ -62,7 +71,7 @@ exports.config = {
   baseUrl: process.env.BASE_URL,
 
   /**
-   * Protractor starts directly Chrome or Firefox. Do not need to start the WebDriver.
+   * Protractor starts directly Chrome or Firefox. Do not need to start the WebDriver. This could be very useful in development pahse.
    */
   directConnect: true,
 

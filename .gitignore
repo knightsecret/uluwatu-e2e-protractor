@@ -1,5 +1,5 @@
-.idea
-.deps
+.*
+Desktop
 build
 target
 *.iml
@@ -10,3 +10,5 @@ routes
 app.js
 public
 views
+docker
+tmp
