@@ -7,8 +7,8 @@ var DashboardPage = function () {
 };
 
 DashboardPage.prototype  = Object.create({}, {
-  blueprintsexpandButton:  {   get: function ()  { return element(by.css('a#blueprints-btn i'));   }},
-  credentialexpandButton:  {   get: function ()  { return element(by.css('a#credentials-btn i'));  }},
+  blueprintsexpandButton:  {   get: function ()  { return element(by.css('a#blueprints-btn'));   }},
+  credentialexpandButton:  {   get: function ()  { return element(by.css('a#credentials-btn'));  }},
 
   expandBlueprints:        { value: function ()  {
     return this.blueprintsexpandButton.click().then(function() {
