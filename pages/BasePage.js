@@ -12,12 +12,17 @@ BasePage.prototype  = Object.create({}, {
   clusterBar:           {   get: function ()  { return element(by.css('div#clusters-bar'));                               }},
   dashboardLink:        {   get: function ()  { return this.navBar.element(by.cssContainingText('a', 'dashboard'));       }},
   accountLink:          {   get: function ()  { return this.navBar.element(by.cssContainingText('a', 'account'));         }},
-  credentialList:       {   get: function ()  { return this.navBar.element(by.css('li#menu-credential>a'));               }},
+  credentialList:       {   get: function ()  { return this.navBar.element(by.css('li#menu-credential'));                 }},
   credentials:          {   get: function ()  { return element.all(by.repeater('credential in $root.credentials'));       }},
   createClusterButton:  {   get: function ()  { return this.clusterBar.element(by.css('button#create-cluster-btn'));      }},
 
   selectCredentialByName:                     { value: function (name)  {
-    this.credentialList.click().then(function() {
+    var EC = protractor.ExpectedConditions;
+    var button = this.credentialList.element(by.tagName('a'));
+    var isClickable = EC.elementToBeClickable(button);
+    browser.wait(isClickable, 10000);
+
+    this.credentialList.element(by.tagName('a')).click().then(function() {
       return browser.element(by.cssContainingText('li>a', name)).click().then(function () {
         browser.waitForAngular();
         return browser.wait(function() {
