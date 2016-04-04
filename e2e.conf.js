@@ -79,8 +79,8 @@ exports.config = {
       // WebDriver general settings for browsers.
       browser.driver.manage().deleteAllCookies();
       browser.driver.manage().window().maximize();
-      browser.driver.manage().timeouts().implicitlyWait(10000);
-      browser.driver.manage().timeouts().pageLoadTimeout(10000);
+      browser.driver.manage().timeouts().implicitlyWait(20000);
+      browser.driver.manage().timeouts().pageLoadTimeout(20000);
       // Open the base URL.
       browser.driver.get(browser.baseUrl);
       // Login to the Cloudbreak then check the redirected URL.
@@ -92,7 +92,7 @@ exports.config = {
                   console.log(url);
                   return /dashboard/.test(url);
               });
-          }, 10000);
+          }, 20000);
       });
 
       browser.driver.findElement(by.id('login-btn')).click().then(function() {
@@ -101,7 +101,7 @@ exports.config = {
                   console.log(url);
                   return /#/.test(url);
               });
-          }, 10000);
+          }, 20000);
       });
       // Waiting for Angular on the Cloudbreak Dashboard page.
       browser.waitForAngular();

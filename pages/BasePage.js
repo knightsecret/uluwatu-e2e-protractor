@@ -12,7 +12,7 @@ BasePage.prototype  = Object.create({}, {
   clusterBar:           {   get: function ()  { return element(by.css('div#clusters-bar'));                               }},
   dashboardLink:        {   get: function ()  { return this.navBar.element(by.cssContainingText('a', 'dashboard'));       }},
   accountLink:          {   get: function ()  { return this.navBar.element(by.cssContainingText('a', 'account'));         }},
-  credentialList:       {   get: function ()  { return this.navBar.element(by.css('li#menu-credential'));                 }},
+  credentialList:       {   get: function ()  { return this.navBar.element(by.css('li#menu-credential>a'));               }},
   credentials:          {   get: function ()  { return element.all(by.repeater('credential in $root.credentials'));       }},
   createClusterButton:  {   get: function ()  { return this.clusterBar.element(by.css('button#create-cluster-btn'));      }},
 
