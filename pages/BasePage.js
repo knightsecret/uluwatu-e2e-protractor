@@ -18,11 +18,11 @@ BasePage.prototype  = Object.create({}, {
 
   selectCredentialByName:                     { value: function (name)  {
     var EC = protractor.ExpectedConditions;
-    var button = this.credentialList.element(by.tagName('a'));
+    var button = this.credentialList.element(by.partialLinkText('select a credential'));
     var isClickable = EC.elementToBeClickable(button);
     browser.wait(isClickable, 10000);
 
-    this.credentialList.element(by.tagName('a')).click().then(function() {
+    this.credentialList.element(by.partialLinkText('select a credential')).click().then(function() {
       return browser.element(by.cssContainingText('li>a', name)).click().then(function () {
         browser.waitForAngular();
         return browser.wait(function() {

@@ -76,6 +76,8 @@ exports.config = {
   directConnect: true,
 
   onPrepare: function() {
+      var currentURL;
+
       // WebDriver general settings for browsers.
       browser.driver.manage().deleteAllCookies();
       browser.driver.manage().window().maximize();
@@ -90,19 +92,30 @@ exports.config = {
           return browser.driver.wait(function() {
               return browser.driver.getCurrentUrl().then(function(url) {
                   console.log(url);
-                  return /dashboard/.test(url);
+                  currentURL = url;
+                  return /dashboard/g.test(url) || /confirm/g.test(url);
               });
-          }, 20000);
+          }, 20000).then(function() {
+              if (/dashboard/g.test(currentURL)) {
+                  browser.driver.findElement(by.id('login-btn')).click().then(function() {
+                      return browser.driver.wait(function() {
+                          return browser.driver.getCurrentUrl().then(function(url) {
+                              return /#/.test(url);
+                          });
+                      }, 20000);
+                  });
+              } else {
+                  browser.driver.findElement(by.id('confirm-yes')).click().then(function() {
+                      return browser.driver.wait(function() {
+                          return browser.driver.getCurrentUrl().then(function(url) {
+                              return /#/.test(url);
+                          });
+                      }, 20000);
+                  });
+              }
+          });
       });
 
-      browser.driver.findElement(by.id('login-btn')).click().then(function() {
-          return browser.driver.wait(function() {
-              return browser.driver.getCurrentUrl().then(function(url) {
-                  console.log(url);
-                  return /#/.test(url);
-              });
-          }, 20000);
-      });
       // Waiting for Angular on the Cloudbreak Dashboard page.
       browser.waitForAngular();
       // It genereates JUnit XML report for test run.
