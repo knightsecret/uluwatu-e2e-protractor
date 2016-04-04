@@ -44,10 +44,21 @@ WidgetModule.prototype = Object.create({}, {
         }, 30 * 20000, 'Cannot see this element!');
     }},
     openCluster:                                 { value: function (name) {
-        browser.waitForAngular();
-        return browser.element(by.cssContainingText('a#btn-cluster', name)).click().then(function() {
-            return browser.waitForAngular();
+        var EC = protractor.ExpectedConditions;
+        var openButton = browser.element(by.cssContainingText('a#btn-cluster', name));
+        // We need to fix the GUI here. Something goes wrong with Angular here.
+        return browser.driver.wait(EC.elementToBeClickable(openButton), 20000, 'Open button is NOT click able!').then(function() {
+            console.log('Open button is clicked 1st!');
+            return browser.driver.actions().doubleClick(openButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.invisibilityOf(openButton), 20000,'Open button has NOT clicked at 1st!').then(function() {
+                console.log('Open button has already clicked at 1st!');
+            }, function(err) {
+                console.log('Open button is clicked 2nd!');
+                return browser.driver.actions().click(openButton).perform();
+            });
         });
+        browser.waitForAngular();
     }}
 });
 module.exports = WidgetModule;

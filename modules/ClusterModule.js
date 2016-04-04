@@ -97,11 +97,11 @@ ClusterModule.prototype = Object.create({}, {
         var EC = protractor.ExpectedConditions;
         var terminateButton = browser.element(by.css('a#terminate-btn'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
-        return browser.driver.wait(EC.elementToBeClickable(terminateButton), 5000, 'Terminate button is NOT click able!').then(function() {
+        return browser.driver.wait(EC.elementToBeClickable(terminateButton), 20000, 'Terminate button is NOT click able!').then(function() {
             console.log('Terminate button is clicked 1st!');
             return browser.driver.actions().doubleClick(terminateButton).perform();
         }).then(function() {
-            return browser.driver.wait(EC.visibilityOf(browser.element(by.css('button#terminateStackBtn'))), 5000,'Terminate button has NOT clicked at 1st!').then(function() {
+            return browser.driver.wait(EC.visibilityOf(browser.element(by.css('button#terminateStackBtn'))), 20000,'Terminate button has NOT clicked at 1st!').then(function() {
                 console.log('Terminate button has already clicked at 1st!');
             }, function(err) {
                 console.log('Terminate button is clicked 2nd!');
@@ -114,12 +114,12 @@ ClusterModule.prototype = Object.create({}, {
         var forceTerminateBox = browser.element(by.css('input#modal-terminate-forced'));
         var stackTerminateButton = browser.element(by.css('button#terminateStackBtn'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
-        return browser.driver.wait(EC.elementToBeClickable(forceTerminateBox), 5000, 'Force terminate checkbox is NOT click able!').then(function() {
+        return browser.driver.wait(EC.elementToBeClickable(forceTerminateBox), 20000, 'Force terminate checkbox is NOT click able!').then(function() {
             console.log('Force terminate is clicked 1st!');
             browser.driver.actions().click(forceTerminateBox).perform();
             return browser.driver.actions().click(stackTerminateButton).perform();
         }).then(function() {
-            return browser.driver.wait(EC.invisibilityOf(stackTerminateButton), 5000,'Terminate button has NOT clicked at 1st!').then(function() {
+            return browser.driver.wait(EC.invisibilityOf(stackTerminateButton), 20000,'Terminate button has NOT clicked at 1st!').then(function() {
                 console.log('Force terminate has already clicked at 1st!');
             }, function(err) {
                 console.log('Force terminate is clicked 2nd!');
