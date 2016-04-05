@@ -34,7 +34,7 @@ describe('Cluster testing', function () {
           done();
       }, 30 * 60000);
 
-      it('selected cluster should be terminated', function () {
+      it('AWS cluster should be terminated', function () {
           expect(basePage.terminateCluster(clusterName)).toBeTruthy();
       });
   });

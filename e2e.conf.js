@@ -139,9 +139,9 @@ exports.config = {
       }));
       var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
       jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-          savePath: './test-results/jasmine-reports',
-          filePrefix: 'htmlReport',
+          savePath: './test-results/jasmine-reports/',
           screenshotsFolder: 'screenshots',
+          filePrefix: 'htmlReport',
           takeScreenshots: true,
           takeScreenshotsOnlyOnFailures: true
       }));

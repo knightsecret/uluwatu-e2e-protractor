@@ -31,7 +31,28 @@ BlueprintModule.prototype = Object.create({}, {
     typeUrl:                       { value: function (url) {
         return this.urlBox.sendKeys(url);
     }},
+    deleteBlueprint:               { value: function (name) {
+        try {
+            browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
+                browser.element(by.cssContainingText('div>h5>a', name)).click();
+                browser.waitForAngular();
+
+                browser.element(by.css('a[ng-click="deleteBlueprint(blueprint)"]')).click().then(function () {
+                    browser.waitForAngular();
+                    var EC = protractor.ExpectedConditions;
+                    var blueprintName = browser.element(by.cssContainingText('div>h5>a', name));
+                    var blueprintNotPresent = EC.stalenessOf(blueprintName);
+                    return browser.wait(blueprintNotPresent, 20000);
+                });
+            }, function(err) {
+                console.log('The blueprint with ' + name + ' name is not present!');
+            });
+        } catch(err) {
+            console.log('An error was thrown during delete blueprint ' + name + ': ' + err);
+        }
+    }},
     createBlueprint:               { value: function (name, description, rawurl) {
+        browser.waitForAngular();
         this.newblueprintButton.click();
         this.typeName(name);
         this.typeDescription(description);

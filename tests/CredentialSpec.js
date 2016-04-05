@@ -9,11 +9,17 @@ describe('Testing Credentials on Dashboard', function () {
   var iamRole = process.env.IAMROLE;
   var sshKey = process.env.SSHKEY;
 
-  describe('Create a new credential', function () {
+  describe('with test credential', function () {
     dashboardPage = new DashboardPage();
 
-    it('autotest-aws', function () {
-      dashboardPage.expandCredentials();
+    it('Delete if ' + newName + ' credential is already present', function () {
+      dashboardPage.deleteAWSCredential(newName);
+      dashboardPage.getBadgeValue(4).then(function (value) {
+        expect(value).toEqual(0);
+      });
+    });
+
+    it('Create new ' + newName + ' credential', function () {
       dashboardPage.createAWSCredential(newName, newDescription, iamRole, sshKey);
       dashboardPage.getBadgeValue(4).then(function (value) {
         expect(value).toEqual(1);

@@ -201,7 +201,28 @@ CredentialModule.prototype = Object.create({}, {
     typeEndpoint:                      { value: function (endpoint) {
         return this.openstackendpointBox.sendKeys(endpoint);
     }},
+    deleteAWSCredential:               { value: function (name) {
+        try {
+            browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
+                browser.element(by.cssContainingText('div>h5>a', name)).click();
+                browser.waitForAngular();
+
+                browser.element(by.css('a[ng-click="deleteCredential(credential)"]')).click().then(function () {
+                    browser.waitForAngular();
+                    var EC = protractor.ExpectedConditions;
+                    var credentialName = browser.element(by.cssContainingText('div>h5>a', name));
+                    var credentialNotPresent = EC.stalenessOf(credentialName);
+                    return browser.wait(credentialNotPresent, 20000);
+                });
+            }, function(err) {
+                console.log('The credential with ' + name + ' name is not present!');
+            });
+        } catch(err) {
+            console.log('An error was thrown during delete credential ' + name + ': ' + err);
+        }
+    }},
     createAWSCredential:               { value: function (name, description, iamRole, sshKey) {
+        browser.waitForAngular();
         this.newcredentialButton.click();
         this.awsTab.click();
         this.typeName('AWS', name);
