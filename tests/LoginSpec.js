@@ -2,10 +2,10 @@
 
 var DashboardPage = require('../pages/DashboardPage.js');
 
-describe('Cloudbreak login', function () {
+describe('Launch Cloudbreak', function () {
   var dashboardPage;
 
-  describe('launch application', function () {
+  describe('Login with test user', function () {
     dashboardPage = new DashboardPage();
 
     it('should be at the Dashboard page', function () {
