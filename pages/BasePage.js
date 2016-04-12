@@ -72,7 +72,7 @@ BasePage.prototype  = Object.create({}, {
   }},
   isClusterStarted:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
-      return widgetModule.getClusterStarted(name);
+      return widgetModule.isClusterStarted(name);
   }},
   isClusterRun:                               { value: function ()  {
      var waitForUtils = new WaitForUtils();

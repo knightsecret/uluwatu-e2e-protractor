@@ -33,7 +33,7 @@ WidgetModule.prototype = Object.create({}, {
             return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     }},
-    getClusterStarted:                           { value: function () {
+    isClusterStarted:                           { value: function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
         browser.waitForAngular();
         browser.driver.wait(function() {
