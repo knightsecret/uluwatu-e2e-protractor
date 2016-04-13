@@ -3,13 +3,15 @@
 Cloudbreak web application functional smoke test project.
 
 ## Technology stack
-- [Protractor](https://angular.github.io/protractor/#/api)
-  - [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs)
+- [Protractor](https://angular.github.io/protractor/#/)
+  - [WebDriverJS](http://webdriver.io/)
+      - [WebDriver's JavaScript API](https://github.com/SeleniumHQ/selenium/wiki/WebDriverJs)
+      - ..."WebDriver's JavaScript API is entirely asynchronous and every command results in a promise. Promise-heavy APIs will be a lot easier to work with"..."Implicitly synchronizes asynchronous actions, making it so you only have to register a promise callback when you want to catch an error or access a return value."...
   - [NodeJS](https://nodejs.org/api/)
 - [Jasmine](http://jasmine.github.io/)
 
 ## Prerequisites
-The following environment variables should be present with valid values:
+The following environment variables should be present for you with valid values:
 - BASE_URL
 - USERNAME
 - PASSWORD
@@ -34,11 +36,11 @@ launchctl setenv SSHKEY $SSHKEY
 Please do not forget you should reopen your project and restart your IDEA.
 
 ## Executing tests
-If your Protractor test environment has not set up, you should install every needed package and tool first. 
+If your Protractor test environment has not cloned and set up yet, you should install every needed packages and tools first. Please check the [Protractor Tutorial](https://angular.github.io/protractor/#/tutorial).
 
-You can use `npm install` to install everything for this project in one round; please check the [npm-install](https://docs.npmjs.com/cli/install) documentation. Besides these please check the [Protractor Tutorial](https://angular.github.io/protractor/#/tutorial) first.
+The easiest way to get all the needed Node packages in one round to use `npm install` after you have cloned this repository for your drive. Please check the [npm-install](https://docs.npmjs.com/cli/install) documentation.
 
-You do not need to launch the `webdriver-manager` for these tests, because of the `directConnect` is `true` in the Protractor configuration. In this case the Protractor starts directly Chrome or Firefox and you do not need to start the WebDriver.
+You do not need to launch the `webdriver-manager` for these tests, because of the `directConnect` is `true` in the [Protractor configuration](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L76). In this case the Protractor works directly with Chrome Driver or Firefox Driver, bypassing any Selenium Server.
 
 Execute the tests based on the configuration:
 ```
@@ -49,7 +51,7 @@ protractor e2e.conf.js
 
 # Docker image for ULUWATU functional E2E test project
 
-**Docker image for executing headless Google Chrome or Firefox Protractor e2e test cases in Docker container. The created image contains the latest javascript test project.**
+**Docker image for executing headless Google Chrome or Firefox Protractor e2e test cases in Docker container. The created image contains the latest ULUWATU test project as well.**
 
 The [Dockerfile](Dockerfile) was design based on the following Docker projects:
 - [Protractor and headless Chrome on Docker](http://float-middle.com/protractor-and-headless-chrome-on-docker-with-video-tutorial/) or [Docker image of Protractor with headless Chrome](https://github.com/jciolek/docker-protractor-headless)
@@ -70,7 +72,7 @@ The [Dockerfile](Dockerfile) was design based on the following Docker projects:
 ```
 docker build -t sequenceiq/protractor-runner .
 ```
-4. Execute the Protractor test configuration for ULUWATU in the [Docker container](https://docs.docker.com/engine/installation/):
+4. Execute the Protractor test configuration for ULUWATU in [Docker container](https://docs.docker.com/engine/installation/):
 ```
 docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv sequenceiq/protractor-runner
 ```
@@ -79,21 +81,23 @@ docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv sequencei
   - `utils/testenv` the location (full path) of the `testenv` file on your machine
   - `sequenceiq/protractor-runner` previously built Docker image name
 
-> You should apply all these commands in the root folder of the cloned `ULUWATU functional E2E tests` repository.
+> You should apply all these commands in the root folder of your cloned `ULUWATU functional E2E tests` repository.
 
 ## Advanced options
 
 ### Protractor direct connect
-Protractor can test directly against Chrome and Firefox [without using a Selenium Server](https://github.com/angular/protractor/blob/master/docs/server-setup.md#connecting-directly-to-browser-drivers). **The advantage of directly connecting to browser drivers is that your test scripts may start up and run faster.** To use this, in your config file set:
+Protractor can test directly using Chrome Driver or Firefox Driver, [bypassing any Selenium Server](https://github.com/angular/protractor/blob/master/docs/server-setup.md#connecting-directly-to-browser-drivers). **The advantage of direct connect is that your test project start up and run faster.**
+
+To use this, you should change your [config file](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L76):
 ```
 directConnect: true
 ```
->**If this is true, settings for seleniumAddress and seleniumServerJar will be ignored.**
-
-If you attempt to use a browser other than Chrome or Firefox an error will be thrown.
+>**If this is true, settings for seleniumAddress and seleniumServerJar will be ignored.** If you attempt to use a browser other than Chrome or Firefox an error will be thrown.
 
 ### No sandbox for Google Chrome
-Chrome doesn't support [running it in container](https://github.com/travis-ci/travis-ci/issues/938#issuecomment-77785455). So you need to start it with `--no-sandbox` argument to avoid this. In the Protractor configuration file:
+Chrome does not support to [running it in container](https://github.com/travis-ci/travis-ci/issues/938#issuecomment-77785455). So you need to start the Chrome Driver with `--no-sandbox` argument to avoid errors.
+
+In the [Protractor configuration file](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L17-L25):
 ```
 capabilities: {
      'browserName': 'chrome',
@@ -105,9 +109,17 @@ capabilities: {
      }
 },
 ```
+### --privileged
+Chrome uses sandboxing, therefore if you try and run Chrome within a non-privileged container you will receive the following message:
+
+> "Failed to move to new namespace: PID namespaces supported, Network namespace supported, but failed: errno = Operation not permitted".
+
+The `--privileged` flag gives the container almost the same privileges to the host machine resources as other processes running outside the container, which is required for the sandboxing to run smoothly.
+
+<sub>Based on the [Webnicer project](https://hub.docker.com/r/webnicer/protractor-headless/).</sub>
 
 ### Makefile
-We created a very simple Makefile to be able build and run easily our Docker image:
+We created a very simple [Makefile](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/Makefile) to be able build and run easily our Docker image:
 ```
 make build
 ```
@@ -121,20 +133,11 @@ Docker has hardcoded value of 64MB for `/dev/shm`. Error can be occurred, becaus
 ```
 docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v /dev/shm:/dev/shm sequenceiq/protractor-runner
 ```
-This needs to be done during Docker build gets the [option](https://github.com/docker/docker/issues/2606) `--shm-size`.
+The size of `/dev/shm` in the Docker container can be changed when container is made with [option](https://github.com/docker/docker/issues/2606) `--shm-size`.
 
 For Mac OSX users [this conversation](http://unix.stackexchange.com/questions/151984/how-do-you-move-files-into-the-in-memory-file-system-mounted-at-dev-shm) can be useful. 
 
 <sub>Based on the [Webnicer project](https://hub.docker.com/r/webnicer/protractor-headless/).</sub> 
-
-### --privileged
-Chrome uses sandboxing, therefore if you try and run Chrome within a non-privileged container you will receive the following message:
-
-> "Failed to move to new namespace: PID namespaces supported, Network namespace supported, but failed: errno = Operation not permitted".
-
-The `--privileged` flag gives the container almost the same privileges to the host machine resources as other processes running outside the container, which is required for the sandboxing to run smoothly.
-
-<sub>Based on the [Webnicer project](https://hub.docker.com/r/webnicer/protractor-headless/).</sub>
 
 ### --net=host
 This options is required only if the dockerised Protractor is run against localhost on the host.
