@@ -2,14 +2,15 @@
 
 var DashboardPage = require('../pages/DashboardPage.js');
 
-describe('Launch Cloudbreak', function () {
+describe('Testing Cloudbreak login', function () {
   var dashboardPage;
+  var preprodURL = 'https://pre-prod-cloudbreak.sequenceiq.com/#/';
 
-  describe('Login with test user', function () {
+  describe('with ' + process.env.USERNAME + ' user', function () {
     dashboardPage = new DashboardPage();
 
     it('should be at the Dashboard page', function () {
-      expect(browser.getCurrentUrl()).toEqual('https://pre-prod-cloudbreak.sequenceiq.com/#/');
+      expect(browser.getCurrentUrl()).toEqual(preprodURL);
     });
 
     it('should see default blueprints', function () {

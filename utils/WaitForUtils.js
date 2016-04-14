@@ -31,7 +31,7 @@ var WaitForUtils = ( function () {
         var clusterISFailed = EC.visibilityOf(browser.element(by.css('div.mod-LED>span.state3-stop')));
 
         return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 30 * 60000, 'The cluster is NOT visible!').then(function() {
-            console.log('The cluster is visible!');
+        //    console.log('The cluster is visible!');
             return runningLed.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -39,6 +39,24 @@ var WaitForUtils = ( function () {
             });
         }, function(err) {
             console.log('The cluster has NOT created!');
+            return err;
+        });
+    };
+
+    this.waitForClusterRemove = function () {
+        var EC = protractor.ExpectedConditions;
+        var notificationTerminated = browser.element(by.css('input#notification-n-filtering[value*="successfully been terminated"]'));
+        var clusterISTerminated = EC.visibilityOf(notificationTerminated);
+
+        return browser.driver.wait(EC.or(clusterISTerminated), 30 * 60000, 'The cluster is NOT terminated!').then(function() {
+        //    console.log('The cluster is terminated successfully!');
+            return notificationTerminated.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('The notification has not generated!');
             return err;
         });
     };

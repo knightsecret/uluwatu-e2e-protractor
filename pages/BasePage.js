@@ -86,7 +86,11 @@ BasePage.prototype  = Object.create({}, {
       clusterModule.clickTerminateButton();
       clusterModule.clickConfirmTerminateButton();
 
-      return widgetModule.isClusterTerminated(name);
+      return widgetModule.isClusterTerminated();
+  }},
+  isClusterRemoved:                           { value: function ()  {
+      var waitForUtils = new WaitForUtils();
+      return waitForUtils.waitForClusterRemove();
   }}
 });
 module.exports = BasePage;

@@ -48,13 +48,13 @@ WidgetModule.prototype = Object.create({}, {
         var openButton = browser.element(by.cssContainingText('a#btn-cluster', name));
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(openButton), 20000, 'Open button is NOT click able!').then(function() {
-            console.log('Open button is clicked 1st!');
+        //    console.log('Open button is clicked 1st!');
             return browser.driver.actions().doubleClick(openButton).perform();
         }).then(function() {
             return browser.driver.wait(EC.invisibilityOf(openButton), 20000,'Open button has NOT clicked at 1st!').then(function() {
-                console.log('Open button has already clicked at 1st!');
+        //        console.log('Open button has already clicked at 1st!');
             }, function(err) {
-                console.log('Open button is clicked 2nd!');
+        //        console.log('Open button is clicked 2nd!');
                 return browser.driver.actions().click(openButton).perform();
             });
         });

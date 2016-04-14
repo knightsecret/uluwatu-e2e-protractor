@@ -2,24 +2,24 @@
 
 var DashboardPage = require('../pages/DashboardPage.js');
 
-describe('Testing Credentials on Dashboard', function () {
+describe('Testing credential creation', function () {
   var dashboardPage;
   var newName = 'autotest-aws';
   var newDescription = 'autotest';
   var iamRole = process.env.IAMROLE;
   var sshKey = process.env.SSHKEY;
 
-  describe('with test credential', function () {
+  describe('with ' + newName + ' credential', function () {
     dashboardPage = new DashboardPage();
 
-    it('Delete if ' + newName + ' credential is already present', function () {
+    it('If credential has already present, delete it', function () {
       dashboardPage.deleteAWSCredential(newName);
       dashboardPage.getBadgeValue(4).then(function (value) {
         expect(value).toEqual(0);
       });
     });
 
-    it('Create new ' + newName + ' credential', function () {
+    it('Create new credential', function () {
       dashboardPage.createAWSCredential(newName, newDescription, iamRole, sshKey);
       dashboardPage.getBadgeValue(4).then(function (value) {
         expect(value).toEqual(1);
