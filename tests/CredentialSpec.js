@@ -12,11 +12,9 @@ describe('Testing credential creation', function () {
   describe('with ' + newName + ' credential', function () {
     dashboardPage = new DashboardPage();
 
-    it('If credential has already present, delete it', function () {
+    beforeAll(function() {
+      console.log('Setup has started!');
       dashboardPage.deleteAWSCredential(newName);
-      dashboardPage.getBadgeValue(4).then(function (value) {
-        expect(value).toEqual(0);
-      });
     });
 
     it('Create new credential', function () {

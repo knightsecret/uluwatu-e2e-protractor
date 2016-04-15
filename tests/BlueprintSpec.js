@@ -11,8 +11,12 @@ describe('Testing blueprint creation', function () {
   describe('with ' + newName + ' blueprint', function () {
     dashboardPage = new DashboardPage();
 
-    it('If blueprint has already present, delete it', function () {
+    beforeAll(function() {
+      console.log('Setup has started!');
       dashboardPage.deleteBlueprint(newName);
+    });
+
+    it('Default blueprints should be available', function () {
       dashboardPage.getBadgeValue(3).then(function (value) {
         expect(value).toEqual(3);
       });

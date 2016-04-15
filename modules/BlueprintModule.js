@@ -45,7 +45,7 @@ BlueprintModule.prototype = Object.create({}, {
                     return browser.wait(blueprintNotPresent, 20000);
                 });
             }, function(err) {
-                console.log('The blueprint with ' + name + ' name is not present!');
+            //    console.log('The blueprint with ' + name + ' name is not present!');
             });
         } catch(err) {
             console.log('An error was thrown during delete blueprint ' + name + ': ' + err);

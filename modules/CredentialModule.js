@@ -215,7 +215,7 @@ CredentialModule.prototype = Object.create({}, {
                     return browser.wait(credentialNotPresent, 20000);
                 });
             }, function(err) {
-                console.log('The credential with ' + name + ' name is not present!');
+            //    console.log('The credential with ' + name + ' name is not present!');
             });
         } catch(err) {
             console.log('An error was thrown during delete credential ' + name + ': ' + err);
