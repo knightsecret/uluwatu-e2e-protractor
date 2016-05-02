@@ -1,11 +1,29 @@
+ENVFILE=utils/testenv
+
 all:
 				build run
 
 build:
 				docker build -t sequenceiq/protractor-runner .
 
+run-with-envfile:
+				docker run -it \
+				--rm \
+				--name uluwatu-e2e-runner \
+				--env-file $(ENVFILE) \
+				sequenceiq/protractor-runner
+
 run:
-				docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv sequenceiq/protractor-runner
+				docker run -it \
+				--rm \
+				--name uluwatu-e2e-runner \
+				-e BASE_URL=$(BASE_URL) \
+				-e USERNAME=$(USERNAME) \
+				-e PASSWORD=$(PASSWORD) \
+				-e IAMROLE=$(IAMROLE) \
+				-e SSHKEY=$(SSHKEY) \
+				-e TESTCONF=$(TESTCONF) \
+				sequenceiq/protractor-runner
 
 allure-report:
 				allure generate allure-results/
