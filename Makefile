@@ -28,7 +28,7 @@ run:
 				sequenceiq/protractor-runner
 
 allure-report:
-				allure generate $(pwd):/protractor/project/allure-results/
+				allure generate allure-results/
 
 allure-report-open:
 				allure report open

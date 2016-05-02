@@ -28,30 +28,17 @@ describe('Testing cluster creation', function () {
           dashboardPage.deleteAWSCredential(credentialName);
       });
 
-      it('AWS credential should be selected', function () {
+      it('Cluster should be launched then terminated', function (done) {
           expect(basePage.getSelectedCredential()).toEqual(credentialName);
-      });
-
-      it('Infrastructure should be set up', function () {
           expect(basePage.createNewAWSCluster(clusterName, regionName, networkName, securityGroup, blueprintName)).toBeTruthy();
-      });
-
-      it('Infrastructure creation should be started', function () {
           expect(basePage.isClusterStarted(clusterName)).toBeTruthy();
-      });
 
-      it('New cluster should be up and running', function (done) {
           jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
           expect(basePage.isClusterRun()).toBeTruthy();
           done();
-      }, 30 * 60000);
 
-      it('Cluster should be terminated', function () {
           expect(basePage.terminateCluster(clusterName)).toBeTruthy();
-      });
 
-      it('Cluster should be removed', function (done) {
-          jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
           expect(basePage.isClusterRemoved()).toBeTruthy();
           done();
       }, 30 * 60000);
