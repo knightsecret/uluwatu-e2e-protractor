@@ -52,8 +52,6 @@ RUN npm install --unsafe-perm -g jasmine-reporters jasmine-spec-reporter protrac
 WORKDIR /protractor/
 # Copy the run sript/s from local folder to the container's related folder
 COPY /scripts/ /protractor/scripts/
-# Copy the actual code base from local folder to the container's related folder
-COPY / /protractor/project/
 # Set the HOME environment variable for the test project
 ENV HOME=/protractor/project
 # Set the owner recursively for the new folders
