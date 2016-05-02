@@ -1,7 +1,7 @@
 require('jasmine-reporters');
 require('jasmine-spec-reporter');
 require('protractor-jasmine2-html-reporter');
-require('protractor-html-screenshot-reporter');
+require('jasmine-allure-reporter');
 
 /**
  * Base configurations for the Uluwatu E2E Protractor tests.
@@ -9,9 +9,11 @@ require('protractor-html-screenshot-reporter');
  * @type {{seleniumAddress: string, capabilities: {browserName: string}, specs: string[], framework: string, jasmineNodeOpts: {onComplete: null, showColors: boolean, includeStackTrace: boolean, isVerbose: boolean, defaultTimeoutInterval: number}, baseUrl: *, onPrepare: exports.config.onPrepare}}
  */
 exports.config = {
-  //The address of the running selenium server.
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  //Capabilities to be passed to the WebDriverJS instance.
+  // The address of the running selenium server. In case of direct connection this is not needed.
+  // seleniumAddress: 'http://localhost:4444/wd/hub',
+  // Protractor starts directly Chrome or Firefox. Do not need to start the WebDriver. This could be very useful in development pahse.
+  directConnect: true,
+  // Capabilities to be passed to the WebDriverJS instance.
   capabilities: {
       'browserName': 'firefox'
 /*
@@ -70,11 +72,6 @@ exports.config = {
    */
   baseUrl: process.env.BASE_URL,
 
-  /**
-   * Protractor starts directly Chrome or Firefox. Do not need to start the WebDriver. This could be very useful in development pahse.
-   */
-  directConnect: true,
-
   onPrepare: function() {
       var currentURL;
 
@@ -128,15 +125,7 @@ exports.config = {
       // Format the Console test result report.
       var SpecReporter = require('jasmine-spec-reporter');
       jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'spec'}));
-      // The following two generate HTML reports for the test run. In case of failure these save screenshot about the related page.
-      // https://github.com/jintoppy/protractor-html-screenshot-reporter/issues/74
-      var HtmlReporter = require('protractor-html-screenshot-reporter');
-      jasmine.getEnv().addReporter(new HtmlReporter({
-          baseDirectory: './test-results/protractor-reports',
-          docTitle: 'protractor report',
-          docName: 'protractorReport.html',
-          takeScreenShotsOnlyForFailedSpecs: true
-      }));
+      // It generates HTML reports for the test run. In case of failure these save screenshot about the related page.
       var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
       jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
           savePath: './test-results/jasmine-reports/',
@@ -145,5 +134,16 @@ exports.config = {
           takeScreenshots: true,
           takeScreenshotsOnlyOnFailures: true
       }));
+      // It generates the Jasmine Allure Reports https://www.npmjs.com/package/jasmine-allure-reporter
+      var AllureReporter = require('jasmine-allure-reporter');
+      jasmine.getEnv().addReporter(new AllureReporter());
+      jasmine.getEnv().afterEach(function(done){
+          browser.takeScreenshot().then(function(png) {
+              allure.createAttachment('Screenshot', function () {
+                  return new Buffer(png, 'base64')
+              }, 'image/png')();
+              done();
+          })
+      });
   }
 };

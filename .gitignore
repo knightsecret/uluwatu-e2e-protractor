@@ -13,3 +13,5 @@ views
 docker
 tmp
 test-results
+allure-results
+allure-report
