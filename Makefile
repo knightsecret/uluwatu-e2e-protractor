@@ -1,7 +1,7 @@
 ENVFILE=utils/testenv
+TESTCONF=/protractor/project/e2e.conf.js
 
-all:
-				build run
+all: build run
 
 build:
 				docker build -t sequenceiq/protractor-runner .

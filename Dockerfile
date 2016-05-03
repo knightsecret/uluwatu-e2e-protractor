@@ -56,6 +56,8 @@ COPY /scripts/ /protractor/scripts/
 ENV HOME=/protractor/project
 # Set the owner recursively for the new folders
 RUN chmod -R +x .
+#Install the necessary npm packages
+RUN cd $HOME && npm install
 # Container entry point
 CMD ["/protractor/scripts/run-e2e-tests.sh"]
 
