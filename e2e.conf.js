@@ -90,26 +90,38 @@ exports.config = {
               return browser.driver.getCurrentUrl().then(function(url) {
                   console.log(url);
                   currentURL = url;
-                  return /dashboard/g.test(url) || /confirm/g.test(url);
+                  return /dashboard/g.test(url) || /confirm/g.test(url) || /#/g.test(url);
               });
           }, 20000).then(function() {
-              if (/dashboard/g.test(currentURL)) {
-                  browser.driver.findElement(by.id('login-btn')).click().then(function() {
+              var pageName = currentURL.split("/").pop();
+
+              switch (pageName) {
+                  case 'dashboard':
+                      browser.driver.findElement(by.id('login-btn')).click().then(function() {
+                          return browser.driver.wait(function() {
+                              return browser.driver.getCurrentUrl().then(function(url) {
+                                  return /#/.test(url);
+                              });
+                          }, 20000);
+                      });
+                      break;
+                  case 'confirm':
+                      browser.driver.findElement(by.id('confirm-yes')).click().then(function() {
+                          return browser.driver.wait(function() {
+                              return browser.driver.getCurrentUrl().then(function(url) {
+                                  return /#/.test(url);
+                              });
+                          }, 20000);
+                      });
+                      break;
+                  default:
                       return browser.driver.wait(function() {
                           return browser.driver.getCurrentUrl().then(function(url) {
                               return /#/.test(url);
                           });
                       }, 20000);
-                  });
-              } else {
-                  browser.driver.findElement(by.id('confirm-yes')).click().then(function() {
-                      return browser.driver.wait(function() {
-                          return browser.driver.getCurrentUrl().then(function(url) {
-                              return /#/.test(url);
-                          });
-                      }, 20000);
-                  });
-              }
+                      break;
+              };
           });
       });
 

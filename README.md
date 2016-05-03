@@ -1,7 +1,5 @@
 # ULUWATU functional E2E tests (Protractor, Jasmine)
 
-[![Build Status](http://ci.sequenceiq.com/view/integrationtest/job/uluwatu-e2e/badge/icon)](http://ci.sequenceiq.com/view/integrationtest/job/uluwatu-e2e/)
-
 ## Description
 Cloudbreak web application functional smoke test project.
 

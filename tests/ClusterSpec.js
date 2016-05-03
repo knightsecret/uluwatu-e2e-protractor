@@ -9,7 +9,7 @@ describe('Testing cluster creation', function () {
   var credentialName = 'autotest-aws';
   var blueprintName = 'autotest-multi-node-hdfs-yarn';
   var clusterName = 'autotest-aws';
-  var regionName = 'US East(N. Virginia)';
+  var regionName = 'US West (N. California)';
   var networkName = 'default-aws-network';
   var securityGroup = 'all-services-port';
 
