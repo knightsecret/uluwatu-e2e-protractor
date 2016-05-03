@@ -3,6 +3,8 @@ TESTCONF=/protractor/project/e2e.conf.js
 
 all: build run
 
+all-jenkins: build run-jenkins
+
 build:
 				docker build -t sequenceiq/protractor-runner .
 
@@ -16,6 +18,19 @@ run-with-envfile:
 
 run:
 				docker run -it \
+				--rm \
+				--name uluwatu-e2e-runner \
+				-e BASE_URL=$(BASE_URL) \
+				-e USERNAME=$(USERNAME) \
+				-e PASSWORD=$(PASSWORD) \
+				-e IAMROLE=$(IAMROLE) \
+				-e SSHKEY=$(SSHKEY) \
+				-e TESTCONF=$(TESTCONF) \
+				-v $(PWD):/protractor/project \
+				sequenceiq/protractor-runner
+
+run-jenkins:
+				docker run -i \
 				--rm \
 				--name uluwatu-e2e-runner \
 				-e BASE_URL=$(BASE_URL) \
