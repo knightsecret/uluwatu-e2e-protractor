@@ -11,7 +11,7 @@ run-with-envfile:
 				--rm \
 				--name uluwatu-e2e-runner \
 				--env-file $(ENVFILE) \
-				-v $(pwd):/protractor/project \
+				-v $(PWD):/protractor/project \
 				sequenceiq/protractor-runner
 
 run:
@@ -24,7 +24,7 @@ run:
 				-e IAMROLE=$(IAMROLE) \
 				-e SSHKEY=$(SSHKEY) \
 				-e TESTCONF=$(TESTCONF) \
-				-v $(pwd):/protractor/project \
+				-v $(PWD):/protractor/project \
 				sequenceiq/protractor-runner
 
 allure-report:
