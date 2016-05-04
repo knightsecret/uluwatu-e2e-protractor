@@ -34,18 +34,20 @@ BlueprintModule.prototype = Object.create({}, {
     deleteBlueprint:               { value: function (name) {
         try {
             browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
-                browser.element(by.cssContainingText('div>h5>a', name)).click();
+                var blueprintLink = browser.element(by.cssContainingText('div>h5>a', name));
+                blueprintLink.click();
                 browser.waitForAngular();
 
-                browser.element(by.css('a[ng-click="deleteBlueprint(blueprint)"]')).click().then(function () {
+                var selectedBlueprintPanel = browser.element(by.css('div[id^="panel-blueprint-collapse"][aria-expanded="true"]'));
+
+                selectedBlueprintPanel.element(by.css('a[ng-click="deleteBlueprint(blueprint)"]')).click().then(function () {
                     browser.waitForAngular();
                     var EC = protractor.ExpectedConditions;
-                    var blueprintName = browser.element(by.cssContainingText('div>h5>a', name));
-                    var blueprintNotPresent = EC.stalenessOf(blueprintName);
+                    var blueprintNotPresent = EC.stalenessOf(blueprintLink);
                     return browser.wait(blueprintNotPresent, 20000);
                 });
             }, function(err) {
-            //    console.log('The blueprint with ' + name + ' name is not present!');
+                console.log('The blueprint with ' + name + ' name is not present!');
             });
         } catch(err) {
             console.log('An error was thrown during delete blueprint ' + name + ': ' + err);

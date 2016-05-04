@@ -10,6 +10,7 @@ Cloudbreak web application functional smoke test project.
       - ..."WebDriver's JavaScript API is entirely asynchronous and every command results in a promise. Promise-heavy APIs will be a lot easier to work with"..."Implicitly synchronizes asynchronous actions, making it so you only have to register a promise callback when you want to catch an error or access a return value."...
   - [NodeJS](https://nodejs.org/api/)
 - [Jasmine](http://jasmine.github.io/)
+- [Jasmine Allure Reporter](https://www.npmjs.com/package/jasmine-allure-reporter)
 
 ## Prerequisites
 The following environment variables should be present for you with valid values:

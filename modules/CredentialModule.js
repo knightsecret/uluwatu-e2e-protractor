@@ -8,7 +8,7 @@
 
 var CredentialModule = function () {
     this.managementSection = element(by.css('section.management-panels'));
-    this.newcredentialButton = element(by.css('a#panel-create-credentials-collapse-btn'));
+    this.credentialsPanel =  element(by.css('div#panel-credentials-collapse'));
 };
 
 CredentialModule.prototype = Object.create({}, {
@@ -54,6 +54,24 @@ CredentialModule.prototype = Object.create({}, {
     openstacksshBox:         {       get: function () {      return this.openstackcredentialForm.element(by.css('textarea#openstack_sshPublicKey'));           }},
     openstackcreateButton:   {       get: function () {      return this.openstackcredentialForm.element(by.css('a#createopenstackCredential'));               }},
 
+    openCreatePanel:                   { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var createButton = this.credentialsPanel.element(by.cssContainingText('a#panel-create-credentials-collapse-btn', 'create credential'));
+        var closeButton = this.credentialsPanel.element(by.cssContainingText('a#panel-create-credentials-collapse-btn[aria-expanded="true"]', 'create credential'));
+
+        // We need to fix the GUI here. Something goes wrong with Angular here.
+        return browser.driver.wait(EC.elementToBeClickable(createButton), 5000, 'Create button is NOT click able!').then(function() {
+        //    console.log('Create button is clicked 1st!');
+            return browser.driver.actions().doubleClick(createButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.elementToBeClickable(closeButton), 5000, 'Create button has NOT clicked at 1st!').then(function() {
+            //    console.log('Create button has already clicked at 1st!');
+            }, function(err) {
+            //    console.log('Create button is clicked 2nd!');
+                return browser.driver.actions().click(createButton).perform();
+            });
+        });
+    }},
     typeName:                          { value: function (provider, name) {
         switch (provider) {
             case 'AWS':
@@ -207,7 +225,9 @@ CredentialModule.prototype = Object.create({}, {
                 browser.element(by.cssContainingText('div>h5>a', name)).click();
                 browser.waitForAngular();
 
-                browser.element(by.css('a[ng-click="deleteCredential(credential)"]')).click().then(function () {
+                var selectedCredentialPanel = browser.element(by.css('div[id^="panel-credential-collapse"][aria-expanded="true"]'));
+
+                selectedCredentialPanel.element(by.css('a[ng-click="deleteCredential(credential)"]')).click().then(function () {
                     browser.waitForAngular();
                     var EC = protractor.ExpectedConditions;
                     var credentialName = browser.element(by.cssContainingText('div>h5>a', name));
@@ -215,15 +235,14 @@ CredentialModule.prototype = Object.create({}, {
                     return browser.wait(credentialNotPresent, 20000);
                 });
             }, function(err) {
-            //    console.log('The credential with ' + name + ' name is not present!');
+                console.log('The credential with ' + name + ' name is not present!');
             });
         } catch(err) {
             console.log('An error was thrown during delete credential ' + name + ': ' + err);
         }
     }},
     createAWSCredential:               { value: function (name, description, iamRole, sshKey) {
-        browser.waitForAngular();
-        this.newcredentialButton.click();
+        this.openCreatePanel();
         this.awsTab.click();
         this.typeName('AWS', name);
         this.typeDescription('AWS', description);
@@ -233,7 +252,7 @@ CredentialModule.prototype = Object.create({}, {
         browser.waitForAngular();
     }},
     createAzureCredential:             { value: function (name, description, subscriptionID, appID, password, tenantID, sshKey) {
-        this.newcredentialButton.click();
+        this.openCreatePanel();
         this.azureTab.click();
         this.typeName('Azure', name);
         this.typeDescription('Azure', description);
@@ -246,7 +265,7 @@ CredentialModule.prototype = Object.create({}, {
         browser.waitForAngular();
     }},
     createGCPCredential:               { value: function (name, description, projectID, accountEmail, p12KeyPath, sshKey) {
-        this.newcredentialButton.click();
+        this.openCreatePanel();
         this.gcpTab.click();
         this.typeName('GCP', newName);
         this.typeDescription('GCP', newDescription);
@@ -258,7 +277,7 @@ CredentialModule.prototype = Object.create({}, {
         browser.waitForAngular();
     }},
     createOpenStackCredential:         { value: function (name, description, user, password, tenantName, endpoint, sshKey) {
-        this.newcredentialButton.click();
+        this.openCreatePanel();
         this.openstackTab.click();
         this.typeName('OpenStack', name);
         this.typeDescription('OpenStack', description);

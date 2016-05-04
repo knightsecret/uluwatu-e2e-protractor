@@ -88,11 +88,11 @@ exports.config = {
       browser.driver.findElement(by.id('login-btn')).click().then(function() {
           return browser.driver.wait(function() {
               return browser.driver.getCurrentUrl().then(function(url) {
-                  console.log(url);
                   currentURL = url;
                   return /dashboard/g.test(url) || /confirm/g.test(url) || /#/g.test(url);
               });
           }, 20000).then(function() {
+              console.log(currentURL);
               var pageName = currentURL.split("/").pop();
 
               switch (pageName) {
@@ -146,6 +146,7 @@ exports.config = {
           takeScreenshots: true,
           takeScreenshotsOnlyOnFailures: true
       }));
+
       // It generates the Jasmine Allure Reports https://www.npmjs.com/package/jasmine-allure-reporter
       var AllureReporter = require('jasmine-allure-reporter');
       jasmine.getEnv().addReporter(new AllureReporter());

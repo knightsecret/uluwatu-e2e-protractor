@@ -9,22 +9,7 @@ var DashboardPage = function () {
 DashboardPage.prototype  = Object.create({}, {
   blueprintsexpandButton:  {   get: function ()  { return element(by.css('a#blueprints-btn'));   }},
   credentialsexpandButton: {   get: function ()  { return element(by.css('a#credentials-btn'));  }},
-/*
-  expandBlueprints:        { value: function ()  {
-    return this.blueprintsexpandButton.click().then(function() {
-      return browser.driver.wait(function () {
-        return browser.element(by.css('a#panel-create-blueprints-collapse-btn')).isDisplayed();
-      }, 20000);
-    });
-  }},
-  expandCredentials:       { value: function ()  {
-    return this.credentialsexpandButton.click().then(function() {
-      return browser.driver.wait(function () {
-        return browser.element(by.css('a#panel-create-credentials-collapse-btn')).isDisplayed();
-      }, 20000);
-    });
-  }},
-*/
+
   expandBlueprints:        { value: function ()  {
     var EC = protractor.ExpectedConditions;
     var expandButton = this.blueprintsexpandButton;
@@ -45,17 +30,17 @@ DashboardPage.prototype  = Object.create({}, {
   expandCredentials:       { value: function ()  {
     var EC = protractor.ExpectedConditions;
     var expandButton = this.credentialsexpandButton;
-    var expandedButton = browser.element(by.css('a#credentials-btn[aria-expanded="true"]'));
+    var expandedPanel = browser.element(by.css('.panel-collapse.panel-btn-in-header-collapse.collapse.in'));
 
-
-    return browser.driver.wait(EC.visibilityOf(expandedButton), 2000,'Button has NOT expanded!').then(function() {
-    //  console.log('Button has already expanded!');
+    return browser.driver.wait(EC.visibilityOf(expandedPanel), 2000,'Manage Credentials has NOT expanded!').then(function() {
+    //  console.log('Manage Credentials has already expanded!');
     }, function(err) {
-    //  console.log('Button has NOT expanded!');
+    //  console.log('Manage Credentials has NOT expanded!');
       return browser.driver.actions().click(expandButton).perform().then(function() {
+        browser.waitForAngular();
         return browser.driver.wait(function() {
-          return expandedButton.isDisplayed();
-        }, 2000, 'Cannot see this element!');
+          return expandedPanel.isDisplayed();
+        }, 2000, 'Cannot see expanded Manage Credentials!');
       });
     });
   }},
