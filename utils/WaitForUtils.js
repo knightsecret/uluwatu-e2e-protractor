@@ -31,8 +31,8 @@ var WaitForUtils = ( function () {
         var clusterISFailed = EC.visibilityOf(browser.element(by.css('div.mod-LED>span.state3-stop')));
 
         return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 30 * 60000, 'The cluster is NOT visible!').then(function() {
-        //    console.log('The cluster is visible!');
             return runningLed.isDisplayed().then(function(isDisplayed) {
+                console.log('The cluster creation has done!');
                 return isDisplayed;
             }, function(err) {
                 return false;
@@ -49,8 +49,8 @@ var WaitForUtils = ( function () {
         var clusterISTerminated = EC.visibilityOf(notificationTerminated);
 
         return browser.driver.wait(EC.or(clusterISTerminated), 30 * 60000, 'The cluster is NOT terminated!').then(function() {
-        //    console.log('The cluster is terminated successfully!');
             return notificationTerminated.isDisplayed().then(function(isDisplayed) {
+                console.log('The cluster has been terminated successfully!');
                 return isDisplayed;
             }, function(err) {
                 return false;

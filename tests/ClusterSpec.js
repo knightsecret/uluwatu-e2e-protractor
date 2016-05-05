@@ -33,19 +33,14 @@ describe('Testing cluster creation', function () {
           expect(basePage.createNewAWSCluster(clusterName, regionName, networkName, securityGroup, blueprintName)).toBeTruthy();
           expect(basePage.isClusterStarted(clusterName)).toBeTruthy();
 
-          console.log(clusterName + 'cluster infrastructure is building!');
           jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
           expect(basePage.isClusterRun()).toBeTruthy();
           done();
-          console.log(clusterName + 'cluster is up and running!');
 
           expect(basePage.terminateCluster(clusterName)).toBeTruthy();
-          console.log(clusterName + 'cluster has been terminated!');
 
-          console.log('Removing the cluster infrastructure!');
           expect(basePage.isClusterRemoved()).toBeTruthy();
           done();
-          console.log(clusterName + 'cluster has been removed!');
       }, 30 * 60000);
   });
 });

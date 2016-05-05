@@ -64,6 +64,7 @@ BasePage.prototype  = Object.create({}, {
       this.openClusterCreate();
       clusterModule.createNewAWSCluster(name, region, network, securityGroup, blueprint);
       var widgetModule = new WidgetModule();
+      console.log(name + ' cluster has been launched!');
       return widgetModule.isClusterPresent(name);
   }},
   openClusterDetails:                         { value: function (name)  {
@@ -76,6 +77,7 @@ BasePage.prototype  = Object.create({}, {
   }},
   isClusterRun:                               { value: function ()  {
      var waitForUtils = new WaitForUtils();
+     console.log('The cluster infrastructure is building!');
      return waitForUtils.waitForClusterStart();
   }},
   terminateCluster:                           { value: function (name)  {
