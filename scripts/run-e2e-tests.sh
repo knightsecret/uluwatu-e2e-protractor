@@ -29,5 +29,6 @@ a=$?
 echo "Protractor tests have done"
 # Remove temporary folders
 rm -rf .cache .dbus .gconf .mozilla node_modules Desktop
+chmod -Rf 777 allure-results test-results
 
-echo $a
+exit $a
