@@ -58,5 +58,3 @@ ENV HOME=/protractor/project
 RUN chmod -R +x .
 # Container entry point
 CMD ["/protractor/scripts/run-e2e-tests.sh"]
-
-#docker run -it --rm --name protractor-runner --env-file /utils/testenv -v /dev/shm:/dev/shm -v $(pwd):/protractor/project aszegedi/protractor

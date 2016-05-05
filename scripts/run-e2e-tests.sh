@@ -1,7 +1,8 @@
 #!/bin/bash
 # Move to the Protractor test project folder
 cd $HOME
-
+# Remove previous Allure results
+rm -rf allure-results
 #Install the necessary npm packages
 npm install
 
@@ -23,4 +24,6 @@ echo "Running Protractor tests"
 protractor $TESTCONF
 a=$?
 echo "Protractor tests have done"
+# Remove temporary folders
+rm -rf .cache .dbus .gconf .mozilla node_modules Desktop
 exit $a
