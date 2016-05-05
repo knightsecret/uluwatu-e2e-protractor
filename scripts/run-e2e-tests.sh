@@ -30,4 +30,4 @@ echo "Protractor tests have done"
 # Remove temporary folders
 rm -rf .cache .dbus .gconf .mozilla node_modules Desktop
 
-return $a
+echo $a
