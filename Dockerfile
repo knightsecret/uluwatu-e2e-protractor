@@ -58,4 +58,4 @@ ENV HOME=/protractor/project
 # Set the owner recursively for the new folders
 RUN chmod -Rf 777 .
 # Container entry point
-CMD ["/protractor/scripts/entry.sh"]
+CMD ["/protractor/scripts/run-e2e-tests.sh"]
