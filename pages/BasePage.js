@@ -87,7 +87,7 @@ BasePage.prototype  = Object.create({}, {
       var clusterModule = new ClusterModule();
       clusterModule.clickTerminateButton();
       clusterModule.clickConfirmTerminateButton();
-
+      console.log(name + ' cluster has been terminated!');
       return widgetModule.isClusterTerminated();
   }},
   isClusterRemoved:                           { value: function ()  {

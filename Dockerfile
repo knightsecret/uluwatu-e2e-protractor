@@ -46,7 +46,7 @@ RUN webdriver-manager update
 ENV NODE_PATH /usr/lib/node_modules
 
 # Global reporters for protractor
-RUN npm install --unsafe-perm -g jasmine-reporters jasmine-spec-reporter protractor-jasmine2-html-reporter protractor-html-screenshot-reporter
+RUN npm install --unsafe-perm -g jasmine-reporters jasmine-spec-reporter protractor-jasmine2-html-reporter jasmine-allure-reporter
 
 # Set the working directory
 WORKDIR /protractor/
@@ -56,6 +56,6 @@ COPY /scripts/ /protractor/scripts/
 ENV HOME=/protractor/project
 
 # Set the owner recursively for the new folders
-RUN chmod -R +x .
+RUN chmod -Rf 777 .
 # Container entry point
-CMD ["/protractor/scripts/run-e2e-tests.sh"]
+CMD ["/protractor/scripts/entry.sh"]

@@ -41,6 +41,6 @@ describe('Testing cluster creation', function () {
 
           expect(basePage.isClusterRemoved()).toBeTruthy();
           done();
-      }, 30 * 60000);
+      }, 40 * 60000);
   });
 });
