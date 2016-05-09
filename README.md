@@ -76,11 +76,14 @@ docker build -t sequenceiq/protractor-runner .
 ```
 4. Execute the Protractor test configuration for ULUWATU in [Docker container](https://docs.docker.com/engine/installation/):
 ```
-docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv sequenceiq/protractor-runner
+docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project sequenceiq/protractor-runner
 ```
 
   - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
   - `utils/testenv` the location (full path) of the `testenv` file on your machine
+  - `$(PWD)` or `pwd` the root folder of your Protractor test project
+      - For example the local folder where the [ULUWATU functional E2E tests](https://github.com/sequenceiq/uluwatu-e2e-protractor) project has been cloned from GitHub.
+      - The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
   - `sequenceiq/protractor-runner` previously built Docker image name
 
 > You should apply all these commands in the root folder of your cloned `ULUWATU functional E2E tests` repository.
@@ -90,7 +93,7 @@ docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv sequencei
 ### Protractor direct connect
 Protractor can test directly using Chrome Driver or Firefox Driver, [bypassing any Selenium Server](https://github.com/angular/protractor/blob/master/docs/server-setup.md#connecting-directly-to-browser-drivers). **The advantage of direct connect is that your test project start up and run faster.**
 
-To use this, you should change your [config file](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L76):
+To use this, you should change your [config file](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L15):
 ```
 directConnect: true
 ```
@@ -99,7 +102,7 @@ directConnect: true
 ### No sandbox for Google Chrome
 Chrome does not support to [running it in container](https://github.com/travis-ci/travis-ci/issues/938#issuecomment-77785455). So you need to start the Chrome Driver with `--no-sandbox` argument to avoid errors.
 
-In the [Protractor configuration file](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L17-L25):
+In the [Protractor configuration file](https://github.com/sequenceiq/uluwatu-e2e-protractor/blob/master/e2e.conf.js#L19-L27):
 ```
 capabilities: {
      'browserName': 'chrome',
@@ -129,11 +132,15 @@ then
 ```
 make run
 ```
+or you can run the above commands in one round:
+```
+make all
+```
 
 ### In-memory File System /dev/shm (Linux only)
 Docker has hardcoded value of 64MB for `/dev/shm`. Error can be occurred, because of [page crash](https://bugs.chromium.org/p/chromedriver/issues/detail?id=1097) on memory intensive pages. The easiest way to mitigate the problem is share `/dev/shm` with the host.
 ```
-docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v /dev/shm:/dev/shm sequenceiq/protractor-runner
+docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v /dev/shm:/dev/shm -v $(PWD):/protractor/project sequenceiq/protractor-runner
 ```
 The size of `/dev/shm` in the Docker container can be changed when container is made with [option](https://github.com/docker/docker/issues/2606) `--shm-size`.
 

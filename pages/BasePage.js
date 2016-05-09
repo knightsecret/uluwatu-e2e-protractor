@@ -91,7 +91,6 @@ BasePage.prototype  = Object.create({}, {
   }},
   isClusterRemoved:                           { value: function ()  {
       var waitForUtils = new WaitForUtils();
-      console.log('The cluster infrastructure is removing!');
       return waitForUtils.waitForClusterRemove();
   }}
 });

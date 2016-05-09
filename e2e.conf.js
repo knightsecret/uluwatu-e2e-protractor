@@ -80,7 +80,11 @@ exports.config = {
       browser.driver.manage().window().maximize();
       browser.driver.manage().timeouts().implicitlyWait(20000);
       browser.driver.manage().timeouts().pageLoadTimeout(20000);
-      // Open the base URL.
+      /**
+       * Open the base URL that defined above.
+       * OR
+       * You can use parameter 'browser.params.baseUrl' with 'protractor e2e.conf.js --params.baseUrl=https://qa-accounts.sequenceiq.com/'.
+       */
       browser.driver.get(browser.baseUrl);
       // Login to the Cloudbreak then check the redirected URL.
       browser.driver.findElement(by.id('email')).sendKeys(process.env.USERNAME);
