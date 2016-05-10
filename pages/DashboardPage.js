@@ -3,7 +3,12 @@ var CredentialModule = require('../modules/CredentialModule.js');
 var BlueprintModule = require('../modules/BlueprintModule.js');
 
 var DashboardPage = function () {
-  browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
+  browser.driver.wait(function() {
+    return browser.driver.getCurrentUrl().then(function(url) {
+      //console.log(url);
+      return /#/g.test(url);
+    });
+  }, 2000)
 };
 
 DashboardPage.prototype  = Object.create({}, {

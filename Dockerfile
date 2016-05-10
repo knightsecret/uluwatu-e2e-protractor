@@ -5,12 +5,13 @@ MAINTAINER SequenceIQ
 # http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
 ENV DEBIAN_FRONTEND noninteractive
 
-# Latest Googgle Chrome installation package
+# Update is used to resynchronize the package index files from their sources. An update should always be performed before an upgrade.
+RUN apt-get update
+
+# Latest Google Chrome installation package
 RUN apt-get install -y wget
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-
-# Update is used to resynchronize the package index files from their sources. An update should always be performed before an upgrade.
 RUN apt-get update
 
 # Latest Nodejs with npm install
@@ -19,11 +20,13 @@ RUN apt-get install -y software-properties-common python-software-properties
 RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
 RUN apt-get install -y nodejs build-essential
+RUN apt-get update
 
 # Latest Ubuntu Firefox, Google Chrome, XVFB and JRE installs
 RUN apt-get install -y xvfb firefox google-chrome-stable default-jre
+RUN apt-get update
 # Clean clears out the local repository of retrieved package files. Run apt-get clean from time to time to free up disk space.
-RUN apt-get clean
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 1. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
@@ -33,7 +36,7 @@ RUN rm -fr /root/tmp
 # Jasmine and protractor global install
 # 2. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
-RUN npm install --unsafe-perm -g protractor
+RUN npm install -g protractor
 
 # Get the latest Google Chrome driver
 RUN npm update
@@ -46,7 +49,7 @@ RUN webdriver-manager update
 ENV NODE_PATH /usr/lib/node_modules
 
 # Global reporters for protractor
-RUN npm install --unsafe-perm -g jasmine-reporters jasmine-spec-reporter protractor-jasmine2-html-reporter jasmine-allure-reporter
+RUN npm install -g jasmine-reporters jasmine-spec-reporter protractor-jasmine2-html-reporter jasmine-allure-reporter
 
 # Set the working directory
 WORKDIR /protractor/

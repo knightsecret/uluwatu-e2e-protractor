@@ -58,7 +58,7 @@ BlueprintModule.prototype = Object.create({}, {
         this.newblueprintButton.click();
         this.typeName(name);
         this.typeDescription(description);
-        this.selectSource('URL');
+        this.selectSource('Url');
         this.typeUrl(rawurl);
         this.createButton.click().then(function () {
             return browser.driver.wait(function () {

@@ -4,7 +4,12 @@ var WidgetModule = require('../modules/WidgetModule.js');
 var WaitForUtils = require('../utils/WaitForUtils.js');
 
 var BasePage = function () {
-    browser.get('https://pre-prod-cloudbreak.sequenceiq.com/');
+    browser.driver.wait(function() {
+        return browser.driver.getCurrentUrl().then(function(url) {
+            //console.log(url);
+            return /#/g.test(url);
+        });
+    }, 2000)
 };
 
 BasePage.prototype  = Object.create({}, {
