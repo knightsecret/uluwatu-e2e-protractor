@@ -1,9 +1,11 @@
 ENVFILE=utils/testenv
 TESTCONF=/protractor/project/e2e.conf.js
 
-all: build run
+all:            build run
 
-all-jenkins: build run-jenkins
+all-preprod:    build run-preprod
+
+all-qa:         build run-qa
 
 build:
 				docker build -t sequenceiq/protractor-runner .
@@ -29,10 +31,23 @@ run:
 				-v $(PWD):/protractor/project \
 				sequenceiq/protractor-runner
 
-run-jenkins:
+run-preprod:
 				docker run -i \
 				--rm \
-				--name uluwatu-e2e-runner \
+				--name uluwatu-e2e-preprod \
+				-e BASE_URL=$(BASE_URL) \
+				-e USERNAME=$(USERNAME) \
+				-e PASSWORD=$(PASSWORD) \
+				-e IAMROLE=$(IAMROLE) \
+				-e SSHKEY=$(SSHKEY) \
+				-e TESTCONF=$(TESTCONF) \
+				-v $(PWD):/protractor/project \
+				sequenceiq/protractor-runner
+
+run-qa:
+				docker run -i \
+				--rm \
+				--name uluwatu-e2e-qa \
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
