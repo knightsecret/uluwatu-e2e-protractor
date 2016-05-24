@@ -13,7 +13,7 @@ describe('Testing credential creation', function () {
     dashboardPage = new DashboardPage();
 
     beforeAll(function() {
-      console.log('Setup has started!');
+      console.log('Credential creation test setup has started!');
       dashboardPage.deleteAWSCredential(newName);
     });
 

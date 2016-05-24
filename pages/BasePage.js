@@ -20,6 +20,7 @@ BasePage.prototype  = Object.create({}, {
   credentialList:       {   get: function ()  { return this.navBar.element(by.css('li#menu-credential'));                 }},
   credentials:          {   get: function ()  { return element.all(by.repeater('credential in $root.credentials'));       }},
   createClusterButton:  {   get: function ()  { return this.clusterBar.element(by.css('button#create-cluster-btn'));      }},
+  notificationBar:      {   get: function ()  { return this.clusterBar.element(by.css('input#notification-n-filtering')); }},
 
   selectCredentialByName:                     { value: function (name)  {
     var EC = protractor.ExpectedConditions;
@@ -58,10 +59,9 @@ BasePage.prototype  = Object.create({}, {
       }, 20000);
     });
   }},
-  getClusterState:                            { value: function ()  {
-    browser.waitForAngular();
-    return browser.element(by.css('input#notification-n-filtering')).getAttribute('value').then(function(value) {
-      console.log(value);
+  pushNotification:                           { value: function ()  {
+    this.notificationBar.getAttribute('value').then(function(message){
+        console.log(message + ' from BasePage');
     });
   }},
   createNewAWSCluster:                        { value: function (name, region, network, securityGroup, blueprint)  {
@@ -69,7 +69,6 @@ BasePage.prototype  = Object.create({}, {
       this.openClusterCreate();
       clusterModule.createNewAWSCluster(name, region, network, securityGroup, blueprint);
       var widgetModule = new WidgetModule();
-      console.log(name + ' cluster has been launched!');
       return widgetModule.isClusterPresent(name);
   }},
   openClusterDetails:                         { value: function (name)  {
@@ -82,7 +81,6 @@ BasePage.prototype  = Object.create({}, {
   }},
   isClusterRun:                               { value: function ()  {
      var waitForUtils = new WaitForUtils();
-     console.log('The cluster infrastructure is building!');
      return waitForUtils.waitForClusterStart();
   }},
   terminateCluster:                           { value: function (name)  {

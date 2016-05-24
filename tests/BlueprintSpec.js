@@ -12,7 +12,7 @@ describe('Testing blueprint creation', function () {
     dashboardPage = new DashboardPage();
 
     beforeAll(function() {
-      console.log('Setup has started!');
+      console.log('Blueprint creation test setup has started!');
       dashboardPage.deleteBlueprint(newName);
     });
 

@@ -9,11 +9,10 @@ rm -rf allure-results
 npm install
 
 # X11 for Ubuntu is not configured! The following configurations are needed for XVFB.
-
 # Make a new display :21 with virtual screen 0 with resolution 1024x768 24dpi
-Xvfb :21 -screen 0 1920x1080x24 &
+Xvfb :10 -screen 0 1920x1080x24 &
 # Export the previously created display
-export DISPLAY=:21.0
+export DISPLAY=:10.0
 
 # Right now this is not necessary, because of 'directConnect: true' in the 'e2e.conf.js'
 #echo "Starting webdriver"

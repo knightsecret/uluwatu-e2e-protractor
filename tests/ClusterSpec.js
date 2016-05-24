@@ -18,12 +18,12 @@ describe('Testing cluster creation', function () {
       dashboardPage = new DashboardPage();
 
       beforeAll(function() {
-          console.log('Setup has started!');
+          console.log('Cluster creation test setup has started!');
           basePage.selectCredentialByName(credentialName);
       });
 
       afterAll(function() {
-          console.log('Teardown has started!');
+          console.log('Test suit teardown has started!');
           dashboardPage.deleteBlueprint(blueprintName);
           dashboardPage.deleteAWSCredential(credentialName);
       });

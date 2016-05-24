@@ -30,7 +30,6 @@ WidgetModule.prototype = Object.create({}, {
             return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
         return browser.driver.wait(function() {
-            console.log('The cluster infrastructure is removing!');
             return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     }},

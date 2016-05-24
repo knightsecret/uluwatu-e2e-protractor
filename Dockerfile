@@ -14,7 +14,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 RUN apt-get update
 
-# Latest Nodejs with npm install
+# Nodejs 5 with npm install
 # https://github.com/nodesource/distributions#installation-instructions
 RUN apt-get install -y software-properties-common python-software-properties
 RUN apt-get install -y curl
@@ -32,12 +32,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # https://github.com/nodejs/node-gyp/issues/454
 # https://github.com/npm/npm/issues/2952
 RUN rm -fr /root/tmp
-
 # Jasmine and protractor global install
 # 2. Step to fixing the error for Node.js native addon build tool (node-gyp)
 # https://github.com/nodejs/node-gyp/issues/454
-RUN npm install -g protractor
-
+RUN npm install --unsafe-perm -g protractor
 # Get the latest Google Chrome driver
 RUN npm update
 # Get the latest WebDriver Manager
@@ -47,9 +45,8 @@ RUN webdriver-manager update
 # http://stackoverflow.com/questions/31534698/cannot-find-module-jasmine-reporters
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
 ENV NODE_PATH /usr/lib/node_modules
-
 # Global reporters for protractor
-RUN npm install -g jasmine-reporters jasmine-spec-reporter protractor-jasmine2-html-reporter jasmine-allure-reporter
+RUN npm install --unsafe-perm -g jasmine-reporters jasmine-spec-reporter protractor-jasmine2-html-reporter jasmine-allure-reporter
 
 # Set the working directory
 WORKDIR /protractor/
