@@ -134,9 +134,23 @@ CredentialModule.prototype = Object.create({}, {
             case 'AWS':
                 this.awscreateButton.click().then(function() {
                     browser.waitForAngular();
-                    return browser.driver.wait(function () {
-                        return browser.element(by.cssContainingText('div>h5>a', newName)).isDisplayed();
-                    }, 20000);
+                    var EC = protractor.ExpectedConditions;
+                    var newCredential = element(by.cssContainingText('div>h5>a', newName));
+                    var notificationBar = element(by.css('input#notification-n-filtering'));
+
+                    return browser.driver.wait(EC.visibilityOf(newCredential), 20000, 'The ' + newName + ' credential has NOT created!').then(function() {
+                        return newCredential.isDisplayed().then(function(isDisplayed) {
+                            notificationBar.getAttribute('value').then(function(message){
+                                console.log(message);
+                            });
+                            return isDisplayed;
+                        }, function(err) {
+                            return false;
+                        });
+                    }, function(err) {
+                        console.log('The ' + newName + ' credential has NOT created!');
+                        return err;
+                    });
                 });
                 break;
             case 'Azure':

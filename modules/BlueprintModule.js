@@ -55,16 +55,30 @@ BlueprintModule.prototype = Object.create({}, {
     }},
     createBlueprint:               { value: function (name, description, rawurl) {
         browser.waitForAngular();
+        var EC = protractor.ExpectedConditions;
+        var newBlueprint = element(by.cssContainingText('div>h5>a', name));
+        var notificationBar = element(by.css('input#notification-n-filtering'));
+
         this.newblueprintButton.click();
         this.typeName(name);
         this.typeDescription(description);
         this.selectSource('Url');
         this.typeUrl(rawurl);
         this.createButton.click().then(function () {
-            return browser.driver.wait(function () {
-                browser.waitForAngular();
-                return browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed();
-            }, 20000);
+            browser.waitForAngular();
+            return browser.driver.wait(EC.visibilityOf(newBlueprint), 20000, 'The ' + name + ' blueprint has NOT created!').then(function() {
+                return newBlueprint.isDisplayed().then(function(isDisplayed) {
+                    notificationBar.getAttribute('value').then(function(message){
+                        console.log(message);
+                    });
+                    return isDisplayed;
+                }, function(err) {
+                    return false;
+                });
+            }, function(err) {
+                console.log('The ' + name + ' blueprint has NOT created!');
+                return err;
+            });
         });
     }},
     getBlueprintID:                { value: function (name) {
