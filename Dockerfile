@@ -13,25 +13,6 @@ RUN apt-get update -qqy \
     sudo \
     curl
 
-# Timezone settings
-ENV TZ "Europe/Berlin"
-# Apply TimeZone
-RUN echo "Setting time zone to '${TZ}'" \
-  && echo ${TZ} > /etc/timezone \
-  && dpkg-reconfigure --frontend noninteractive tzdata
-
-# Locale and encoding settings
-ENV LANG_WHICH en
-ENV LANG_WHERE US
-ENV ENCODING UTF-8
-ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
-ENV LANG ${LANGUAGE}
-RUN locale-gen ${LANGUAGE} \
-  && dpkg-reconfigure --frontend noninteractive locales \
-  && apt-get update -qqy \
-  && apt-get -qqy install \
-    language-pack-en
-
 # Font libraries
 RUN apt-get update -qqy \
   && apt-get -qqy install \
