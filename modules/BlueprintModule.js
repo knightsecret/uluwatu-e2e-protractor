@@ -33,18 +33,18 @@ BlueprintModule.prototype = Object.create({}, {
     }},
     deleteBlueprint:               { value: function (name) {
         try {
-            browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
-                var blueprintLink = browser.element(by.cssContainingText('div>h5>a', name));
+            element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function(isDisplayed) {
+                var blueprintLink = element(by.cssContainingText('div>h5>a', name));
                 blueprintLink.click();
                 browser.waitForAngular();
 
-                var selectedBlueprintPanel = browser.element(by.css('div[id^="panel-blueprint-collapse"][aria-expanded="true"]'));
+                var selectedBlueprintPanel = element(by.css('div[id^="panel-blueprint-collapse"][aria-expanded="true"]'));
 
                 selectedBlueprintPanel.element(by.css('a[ng-click="deleteBlueprint(blueprint)"]')).click().then(function () {
                     browser.waitForAngular();
                     var EC = protractor.ExpectedConditions;
                     var blueprintNotPresent = EC.stalenessOf(blueprintLink);
-                    return browser.wait(blueprintNotPresent, 20000);
+                    return browser.driver.wait(blueprintNotPresent, 20000);
                 });
             }, function(err) {
                 console.log('The blueprint with ' + name + ' name is not present!');
@@ -82,7 +82,7 @@ BlueprintModule.prototype = Object.create({}, {
         });
     }},
     getBlueprintID:                { value: function (name) {
-        return browser.element(by.cssContainingText('div>h5>a', name)).getAttribute('data-target');
+        return element(by.cssContainingText('div>h5>a', name)).getAttribute('data-target');
     }}
 });
 module.exports = BlueprintModule;

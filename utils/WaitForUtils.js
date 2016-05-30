@@ -39,6 +39,9 @@ WaitForUtils.prototype = Object.create({}, {
                 });
                 return isDisplayed;
             }, function(err) {
+                notificationBar.getAttribute('value').then(function(message){
+                    console.log(message);
+                });
                 return false;
             });
         });
@@ -91,6 +94,9 @@ WaitForUtils.prototype = Object.create({}, {
                 });
                 return isDisplayed;
             }, function(err) {
+                notificationBar.getAttribute('value').then(function(message){
+                    console.log(message);
+                });
                 return false;
             });
         }, function(err) {

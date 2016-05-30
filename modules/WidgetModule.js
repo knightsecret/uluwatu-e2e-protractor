@@ -20,7 +20,7 @@ WidgetModule.prototype = Object.create({}, {
             return browser.element(by.cssContainingText('a#btn-cluster', name)).isPresent();
         }, 20000, 'Cluster with this name is NOT present!');
         return browser.driver.wait(function() {
-            return browser.element(by.cssContainingText('a#btn-cluster', name)).isDisplayed();
+            return element(by.cssContainingText('a#btn-cluster', name)).isDisplayed();
         }, 20000, 'Cluster with this name is NOT displayed!');
     }},
     isClusterTerminated:                         { value: function () {
@@ -30,7 +30,7 @@ WidgetModule.prototype = Object.create({}, {
             return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
         return browser.driver.wait(function() {
-            return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
+            return element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     }},
     isClusterStarted:                           { value: function () {
@@ -40,12 +40,12 @@ WidgetModule.prototype = Object.create({}, {
             return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
         return browser.driver.wait(function() {
-            return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isDisplayed();
+            return element(by.css('div.mod-LED>span.state2-run-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     }},
     openCluster:                                 { value: function (name) {
         var EC = protractor.ExpectedConditions;
-        var openButton = browser.element(by.cssContainingText('a#btn-cluster', name));
+        var openButton = element(by.cssContainingText('a#btn-cluster', name));
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(openButton), 20000, 'Open button is NOT click able!').then(function() {
         //    console.log('Open button is clicked 1st!');
