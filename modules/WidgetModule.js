@@ -17,7 +17,7 @@ WidgetModule.prototype = Object.create({}, {
     isClusterPresent:                            { value: function (name) {
         browser.waitForAngular();
         browser.driver.wait(function() {
-            return browser.element(by.cssContainingText('a#btn-cluster', name)).isPresent();
+            return element(by.cssContainingText('a#btn-cluster', name)).isPresent();
         }, 20000, 'Cluster with this name is NOT present!');
         return browser.driver.wait(function() {
             return element(by.cssContainingText('a#btn-cluster', name)).isDisplayed();
@@ -27,7 +27,7 @@ WidgetModule.prototype = Object.create({}, {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
         browser.waitForAngular();
         browser.driver.wait(function() {
-            return browser.element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
+            return element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
         return browser.driver.wait(function() {
             return element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
@@ -37,28 +37,27 @@ WidgetModule.prototype = Object.create({}, {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
         browser.waitForAngular();
         browser.driver.wait(function() {
-            return browser.element(by.css('div.mod-LED>span.state2-run-blink')).isPresent();
+            return element(by.css('div.mod-LED>span.state2-run-blink')).isPresent();
         }, 30 * 20000, 'Cannot find this element!');
         return browser.driver.wait(function() {
             return element(by.css('div.mod-LED>span.state2-run-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     }},
-    openCluster:                                 { value: function (name) {
+    openDetails:                                 { value: function (name) {
         var EC = protractor.ExpectedConditions;
         var openButton = element(by.cssContainingText('a#btn-cluster', name));
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(openButton), 20000, 'Open button is NOT click able!').then(function() {
-        //    console.log('Open button is clicked 1st!');
+            //console.log('Open button is clicked 1st!');
             return browser.driver.actions().doubleClick(openButton).perform();
         }).then(function() {
             return browser.driver.wait(EC.invisibilityOf(openButton), 20000,'Open button has NOT clicked at 1st!').then(function() {
-        //        console.log('Open button has already clicked at 1st!');
+                 //console.log('Open button has already clicked at 1st!');
             }, function(err) {
-        //        console.log('Open button is clicked 2nd!');
+                //console.log('Open button is clicked 2nd!');
                 return browser.driver.actions().click(openButton).perform();
             });
         });
-        browser.waitForAngular();
     }}
 });
 module.exports = WidgetModule;

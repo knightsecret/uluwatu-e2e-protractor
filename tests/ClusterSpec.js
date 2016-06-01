@@ -34,7 +34,7 @@ describe('Testing cluster creation', function () {
           expect(basePage.isClusterStarted(clusterName)).toBeTruthy();
 
           jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-          expect(basePage.isClusterRun()).toBeTruthy();
+          expect(basePage.isClusterRun(clusterName)).toBeTruthy();
           done();
 
           expect(basePage.terminateCluster(clusterName)).toBeTruthy();

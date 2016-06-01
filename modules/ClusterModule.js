@@ -36,8 +36,8 @@ ClusterModule.prototype = Object.create({}, {
     }},
     clickSetupNetworkSecurity:         { value: function () {
         return this.securityButton.click().then(function() {
-            return browser.wait(function() {
-                return browser.element(by.css('select#selectClusterNetwork')).isDisplayed();
+            return browser.driver.wait(function() {
+                return element(by.css('select#selectClusterNetwork')).isDisplayed();
             }, 20000);
         });
     }},
@@ -49,23 +49,26 @@ ClusterModule.prototype = Object.create({}, {
     }},
     clickChooseBlueprint:              { value: function () {
         return this.blueprintButton.click().then(function() {
-            return browser.wait(function() {
-                return browser.element(by.css('select#selectBlueprint')).isDisplayed();
+            return browser.driver.wait(function() {
+                return element(by.css('select#selectBlueprint')).isDisplayed();
             }, 20000);
         });
     }},
     selectBlueprint:                   { value: function (name) {
         return this.clustercreateForm.element(by.cssContainingText('option', name)).click();
     }},
+    selectAmbariServer:                   { value: function () {
+        return this.clustercreateForm.element(by.css('input#template-ambari-0')).click();
+    }},
     isBlueprintSelected:               { value: function (name) {
         browser.waitForAngular();
-        return browser.wait(function() {
-            return browser.element(by.cssContainingText('div#create-cluster-panel-collapse option', name)).isSelected();
+        return browser.driver.wait(function() {
+            return element(by.cssContainingText('div#create-cluster-panel-collapse option', name)).isSelected();
         }, 20000, 'Cannot select ' + name + ' blueprint!');
     }},
     clickReviewAndLaunch:              { value: function () {
         var EC = protractor.ExpectedConditions;
-        var launchButton = browser.element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
+        var launchButton = element(by.cssContainingText('div#configure_host_groups .btn.btn-sm.btn-default.ng-binding', 'Review and Launch'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
        return browser.driver.wait(EC.elementToBeClickable(launchButton), 5000, 'Launch button is NOT click able!').then(function() {
         //   console.log('Launch button is clicked 1st!');
@@ -80,28 +83,30 @@ ClusterModule.prototype = Object.create({}, {
        });
     }},
     isReviewAndLaunchOpened:           { value: function () {
-        browser.wait(function() {
-            return browser.element(by.css('a#createCluster')).isPresent();
+        browser.driver.wait(function() {
+            return element(by.css('a#createCluster')).isPresent();
         }, 20000);
-        return browser.wait(function() {
-            return browser.element(by.css('a#createCluster')).isDisplayed();
+        return browser.driver.wait(function() {
+            return element(by.css('a#createCluster')).isDisplayed();
         }, 20000);
     }},
-    isClusterDetailsOpened:            { value: function () {
+    isClusterDetailsOpen:              { value: function (name) {
+        var clusterDetails = element(by.css('div#active-cluster-panel'));
+
         browser.waitForAngular();
-        return browser.wait(function() {
-            return browser.element(by.css('a#terminate-btn')).isDisplayed();
-        }, 20000);
+        return browser.driver.wait(function() {
+            return clusterDetails.element(by.cssContainingText('h4.ng-binding', name)).isPresent();
+        }, 20000, 'Cluster Details with this name is NOT opened!');
     }},
     clickTerminateButton:              { value: function () {
         var EC = protractor.ExpectedConditions;
-        var terminateButton = browser.element(by.css('a#terminate-btn'));
+        var terminateButton = element(by.css('a#terminate-btn'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(terminateButton), 20000, 'Terminate button is NOT click able!').then(function() {
         //    console.log('Terminate button is clicked 1st!');
             return browser.driver.actions().doubleClick(terminateButton).perform();
         }).then(function() {
-            return browser.driver.wait(EC.visibilityOf(browser.element(by.css('button#terminateStackBtn'))), 20000,'Terminate button has NOT clicked at 1st!').then(function() {
+            return browser.driver.wait(EC.visibilityOf(element(by.css('button#terminateStackBtn'))), 20000,'Terminate button has NOT clicked at 1st!').then(function() {
         //        console.log('Terminate button has already clicked at 1st!');
             }, function(err) {
         //        console.log('Terminate button is clicked 2nd!');
@@ -111,8 +116,8 @@ ClusterModule.prototype = Object.create({}, {
     }},
     clickConfirmTerminateButton:       { value: function () {
         var EC = protractor.ExpectedConditions;
-        var forceTerminateBox = browser.element(by.css('input#modal-terminate-forced'));
-        var stackTerminateButton = browser.element(by.css('button#terminateStackBtn'));
+        var forceTerminateBox = element(by.css('input#modal-terminate-forced'));
+        var stackTerminateButton = element(by.css('button#terminateStackBtn'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(forceTerminateBox), 20000, 'Force terminate checkbox is NOT click able!').then(function() {
         //    console.log('Force terminate is clicked 1st!');
@@ -130,7 +135,7 @@ ClusterModule.prototype = Object.create({}, {
     }},
     startCluster:                      { value: function () {
         var EC = protractor.ExpectedConditions;
-        var startButton = browser.element(by.css('a#createCluster'));
+        var startButton = element(by.css('a#createCluster'));
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(startButton), 5000, 'Start button is NOT click able!').then(function() {
         //    console.log('Start button is clicked 1st!');
@@ -144,6 +149,21 @@ ClusterModule.prototype = Object.create({}, {
             });
         });
     }},
+    getClusterStatus:                  { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var clusterStatus = element(by.css('p#sl_cloudStatus'));
+
+        browser.driver.wait(EC.visibilityOf(clusterStatus), 2000, 'Cluster Status is NOT visible').then(function() {
+            return clusterStatus.isDisplayed().then(function(isDisplayed) {
+                clusterStatus.getText().then(function(message){
+                    console.log(message);
+                });
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        });
+    }},
     createNewAWSCluster:               { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {
         this.typeName(clusterName);
         this.selectRegion(regionName);
@@ -154,6 +174,7 @@ ClusterModule.prototype = Object.create({}, {
         this.clickChooseBlueprint();
 
         this.selectBlueprint(blueprintName);
+        this.selectAmbariServer();
         this.clickReviewAndLaunch();
         this.startCluster();
     }}

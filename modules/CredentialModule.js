@@ -130,13 +130,14 @@ CredentialModule.prototype = Object.create({}, {
         };
     }},
     clickCreateCredential:             { value: function (provider, newName) {
+        var notificationBar = element(by.css('input#notification-n-filtering'));
+
         switch (provider) {
             case 'AWS':
                 this.awscreateButton.click().then(function() {
                     browser.waitForAngular();
                     var EC = protractor.ExpectedConditions;
                     var newCredential = element(by.cssContainingText('div>h5>a', newName));
-                    var notificationBar = element(by.css('input#notification-n-filtering'));
 
                     return browser.driver.wait(EC.visibilityOf(newCredential), 20000, 'The ' + newName + ' credential has NOT created!').then(function() {
                         return newCredential.isDisplayed().then(function(isDisplayed) {

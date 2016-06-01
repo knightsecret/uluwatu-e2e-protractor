@@ -1,6 +1,7 @@
 'use strict';
 var ClusterModule = require('../modules/ClusterModule.js');
 var WidgetModule = require('../modules/WidgetModule.js');
+var BlueprintModule = require('../modules/BlueprintModule.js');
 var WaitForUtils = require('../utils/WaitForUtils.js');
 
 var BasePage = function () {
@@ -26,26 +27,24 @@ BasePage.prototype  = Object.create({}, {
     var EC = protractor.ExpectedConditions;
     var button = this.credentialList.element(by.partialLinkText('select a credential'));
     var isClickable = EC.elementToBeClickable(button);
-    browser.wait(isClickable, 10000);
+
+    browser.driver.wait(isClickable, 10000, 'The Credential select drop-down is NOT available!');
 
     this.credentialList.element(by.partialLinkText('select a credential')).click().then(function() {
-      return browser.element(by.cssContainingText('li>a', name)).click().then(function () {
+      return element(by.cssContainingText('li>a', name)).click().then(function () {
         browser.waitForAngular();
-        return browser.wait(function() {
-          return browser.element(by.cssContainingText('li>a>span', name)).isDisplayed();
+        return browser.driver.wait(function() {
+          return element(by.cssContainingText('li>a>span', name)).isDisplayed();
         }, 20000)
       });
     });
     this.credentials.filter(function(credential) {
-      credential.element(by.cssContainingText('li>a', name)).then(function (credentialLink) {
-        credentialLink.click().then(function () {
-          browser.waitForAngular();
-          return browser.wait(function () {
-            return browser.element(by.css('li#menu-credential>a>span')).getText(function(text) {
-              return text === name;
-            });
+      credential.element(by.cssContainingText('li>a', name)).then(function () {
+          return browser.driver.wait(function () {
+              return element(by.css('li#menu-credential>a>span')).getText(function(text) {
+                  return text === name;
+              });
           }, 20000);
-        });
       });
     });
   }},
@@ -54,14 +53,15 @@ BasePage.prototype  = Object.create({}, {
   }},
   openClusterCreate:                          { value: function ()  {
     this.createClusterButton.click().then(function() {
-      return browser.wait(function () {
-        return browser.element(by.css('div#cluster-form-panel')).isDisplayed();
+      return browser.driver.wait(function () {
+        return element(by.css('div#cluster-form-panel')).isDisplayed();
       }, 20000);
     });
   }},
-  pushNotification:                           { value: function ()  {
+  notificationToConsole:                      { value: function ()  {
     this.notificationBar.getAttribute('value').then(function(message){
-        console.log(message + ' from BasePage');
+        console.log(message);
+        return message.length > 0;
     });
   }},
   createNewAWSCluster:                        { value: function (name, region, network, securityGroup, blueprint)  {
@@ -73,7 +73,7 @@ BasePage.prototype  = Object.create({}, {
   }},
   openClusterDetails:                         { value: function (name)  {
       var widgetModule = new WidgetModule();
-      return widgetModule.openCluster(name);
+      return widgetModule.openDetails(name);
   }},
   isClusterStarted:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
@@ -85,9 +85,10 @@ BasePage.prototype  = Object.create({}, {
   }},
   terminateCluster:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
-      widgetModule.openCluster(name);
+      widgetModule.openDetails(name);
 
       var clusterModule = new ClusterModule();
+      clusterModule.getClusterStatus();
       clusterModule.clickTerminateButton();
       clusterModule.clickConfirmTerminateButton();
       return widgetModule.isClusterTerminated();
