@@ -76,7 +76,6 @@ WaitForUtils.prototype = Object.create({}, {
     }},
     waitForClusterRemove:        { value: function ()  {
         var EC = protractor.ExpectedConditions;
-        var notificationBar = element(by.css('input#notification-n-filtering'));
 
         var successfullyTerminated = element(by.css('input#notification-n-filtering[value*="successfully been terminated"]'));
 
