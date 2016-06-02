@@ -38,10 +38,10 @@ WaitForUtils.prototype = Object.create({}, {
         var notifications = ['Creating infrastructure', 'collection finished', 'cluster services', 'Starting Ambari cluster...', 'Building Ambari', 'cluster built'];
         var messages = ['The stack creation has NOT started!', 'Metadata collection has NOT finished!', 'Ambari services has NOT started!', 'Ambari cluster has NOT started!', 'Ambari building has NOT started!', 'Ambari building has NOT finished!'];
 
-        notifications.every(function(notification) {
+        notifications.every(function(notification, index) {
             var expectedElement = element(by.css('input#notification-n-filtering[value*="' + notification + '"]'));
 
-            browser.driver.wait(EC.visibilityOf(expectedElement), 20 * 60000, 'Cluster installation has not been finished!').then(function() {
+            browser.driver.wait(EC.visibilityOf(expectedElement), 20 * 60000, messages[index]).then(function() {
                 return expectedElement.isDisplayed().then(function(isDisplayed) {
                     notificationBar.getAttribute('value').then(function(message){
                         console.log(message);
@@ -77,10 +77,10 @@ WaitForUtils.prototype = Object.create({}, {
         var notifications = ['Terminating the cluster'];
         var messages = ['The cluster termination has NOT started!'];
 
-        notifications.every(function(notification) {
+        notifications.every(function(notification, index) {
             var expectedElement = element(by.css('input#notification-n-filtering[value*="' + notification + '"]'));
 
-            browser.driver.wait(EC.visibilityOf(expectedElement), 20 * 60000, 'Cluster termination has not been finished!').then(function() {
+            browser.driver.wait(EC.visibilityOf(expectedElement), 20 * 60000, messages[index]).then(function() {
                 return expectedElement.isDisplayed().then(function(isDisplayed) {
                     notificationBar.getAttribute('value').then(function(message){
                         console.log(message);
