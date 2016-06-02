@@ -174,7 +174,6 @@ ClusterModule.prototype = Object.create({}, {
         this.clickChooseBlueprint();
 
         this.selectBlueprint(blueprintName);
-        this.selectAmbariServer();
         this.clickReviewAndLaunch();
         this.startCluster();
     }}
