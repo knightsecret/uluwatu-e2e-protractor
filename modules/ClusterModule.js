@@ -153,7 +153,7 @@ ClusterModule.prototype = Object.create({}, {
         var EC = protractor.ExpectedConditions;
         var clusterStatus = element(by.css('p#sl_cloudStatus'));
 
-        browser.driver.wait(EC.visibilityOf(clusterStatus), 2000, 'Cluster Status is NOT visible').then(function() {
+        browser.driver.wait(EC.visibilityOf(clusterStatus), 2000, 'Cluster Status is NOT available!').then(function() {
             return clusterStatus.isDisplayed().then(function(isDisplayed) {
                 clusterStatus.getText().then(function(message){
                     console.log(message);
@@ -162,6 +162,9 @@ ClusterModule.prototype = Object.create({}, {
             }, function(err) {
                 return false;
             });
+        }, function(err) {
+            console.log('Cluster Status is NOT available!');
+            return false;
         });
     }},
     createNewAWSCluster:               { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {
