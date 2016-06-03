@@ -83,8 +83,7 @@ WORKDIR /protractor/
 COPY /scripts/ /protractor/scripts/
 # Set the HOME environment variable for the test project
 ENV HOME=/protractor/project
-
-# Set the owner recursively for the new folders
+# Set the file access permissions (read, write and access) recursively for the new folders
 RUN chmod -Rf 777 .
 # Container entry point
 CMD ["/protractor/scripts/run-e2e-tests.sh"]

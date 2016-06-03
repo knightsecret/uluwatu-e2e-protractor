@@ -28,7 +28,7 @@ a=$?
 echo "Protractor tests have done"
 # Remove temporary folders
 rm -rf .cache .dbus .gconf .mozilla node_modules Desktop
-# Set the owner recursively for the result folders
+# Set the file access permissions (read, write and access) recursively for the result folders
 chmod -Rf 777 allure-results test-results
 
 exit $a
