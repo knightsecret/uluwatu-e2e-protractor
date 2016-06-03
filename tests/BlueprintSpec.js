@@ -18,14 +18,14 @@ describe('Testing blueprint creation', function () {
 
     it('Default blueprints should be available', function () {
       dashboardPage.getBadgeValue(3).then(function (value) {
-        expect(value).toEqual(3);
+        expect(value).toEqual(4);
       });
     });
 
     it('Create new blueprint', function () {
       dashboardPage.createBlueprint(newName, newDescription, newUrl);
       dashboardPage.getBadgeValue(3).then(function (value) {
-        expect(value).toEqual(4);
+        expect(value).toEqual(5);
       });
     });
   });
