@@ -25,8 +25,6 @@ ClusterModule.prototype = Object.create({}, {
     networknameSelect:                 {       get: function () {     return element(by.css('select#selectClusterNetwork'));                    }},
     securitygroupSelect:               {       get: function () {     return element(by.css('select#select-cluster-securitygroup'));            }},
     blueprintButton:                   {       get: function () {     return element(by.cssContainingText('div#configure_security_group .btn.btn-sm.btn-default.ng-binding', 'Choose Blueprint'));        }},
-    // Choose Blueprint tab
-    // Review and Launch
 
     typeName:                          { value: function (name) {
         return this.clusternameBox.sendKeys(name);
@@ -58,7 +56,19 @@ ClusterModule.prototype = Object.create({}, {
         return this.clustercreateForm.element(by.cssContainingText('option', name)).click();
     }},
     selectAmbariServer:                   { value: function () {
-        return this.clustercreateForm.element(by.css('input#template-ambari-0')).click();
+        var EC = protractor.ExpectedConditions;
+        var serverButton = element(by.css('input#template-ambari-0'));
+        var checkedServerButton = element(by.css('input#template-ambari-0[checked*="checked"]'));
+
+        return browser.driver.wait(EC.elementToBeClickable(serverButton), 5000, 'Server button is NOT click able!').then(function() {
+            return browser.driver.actions().click(serverButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.visibilityOf(checkedServerButton), 5000, 'Server button has NOT clicked at 1st!').then(function() {
+
+            }, function(err) {
+                return browser.driver.actions().click(serverButton).perform();
+            });
+        });
     }},
     isBlueprintSelected:               { value: function (name) {
         browser.waitForAngular();
@@ -90,13 +100,36 @@ ClusterModule.prototype = Object.create({}, {
             return element(by.css('a#createCluster')).isDisplayed();
         }, 20000);
     }},
-    isClusterDetailsOpen:              { value: function (name) {
-        var clusterDetails = element(by.css('div#active-cluster-panel'));
+    isClusterPanelOpen:              { value: function (name) {
+        var EC = protractor.ExpectedConditions;
+        var clusterPanel = element(by.css('div#active-cluster-panel'));
+        var clusterNameTag = clusterPanel.element(by.cssContainingText('h4.ng-binding', name));
 
-        browser.waitForAngular();
-        return browser.driver.wait(function() {
-            return clusterDetails.element(by.cssContainingText('h4.ng-binding', name)).isPresent();
-        }, 20000, 'Cluster Details with this name is NOT opened!');
+        return browser.driver.wait(EC.visibilityOf(clusterNameTag), 5000, 'The cluster panel has NOT opened!').then(function() {
+            return clusterNameTag.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('Cluster panel is not available');
+            return false;
+        });
+    }},
+    isClusterDetailsOpen:              { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var openedDetailsTab = element(by.cssContainingText('a.ng-binding[role="tab"][aria-expanded="true"]', 'details'));
+
+        return browser.driver.wait(EC.visibilityOf(openedDetailsTab), 5000, 'Details tab is NOT opened!').then(function() {
+            return openedDetailsTab.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('Cluster details is not available');
+            return false;
+        });
     }},
     clickTerminateButton:              { value: function () {
         var EC = protractor.ExpectedConditions;
@@ -165,6 +198,127 @@ ClusterModule.prototype = Object.create({}, {
         }, function(err) {
             console.log('Cluster Status is NOT available!');
             return false;
+        });
+    }},
+    openDetails:                               { value: function () {
+        var EC = protractor.ExpectedConditions;
+
+        var defaultTab = element(by.cssContainingText('a.ng-binding[role="tab"]', 'details'));
+        var openedDetailsTab = element(by.cssContainingText('a.ng-binding[role="tab"][aria-expanded="true"]', 'details'));
+        var isDefaultTab = EC.visibilityOf(defaultTab);
+        var isDetailsTab = EC.visibilityOf(openedDetailsTab);
+
+        var closedDetailsTab = element(by.cssContainingText('a.ng-binding[role="tab"][aria-expanded="false"]', 'details'));
+        var eventHistory = element(by.css('div#cluster-history-collapse01'));
+
+        return browser.driver.wait(EC.visibilityOf(eventHistory), 5000,'Details tab has NOT opened!').then(function() {
+            return console.log('Cluster Details tab is already opened!');
+        }, function(err) {
+            return browser.driver.wait(EC.elementToBeClickable(defaultTab), 5000, 'Details tab is NOT click able!').then(function() {
+                return defaultTab.click();
+            }).then(function() {
+                return browser.driver.wait(EC.visibilityOf(eventHistory), 5000,'Details tab has NOT clicked at 1st!').then(function() {
+                    return console.log('Cluster Details tab has successfully opened!');
+                }, function(err) {
+                    return browser.driver.actions().click(defaultTab).perform();
+                });
+            });
+        });
+    }},
+    isDetailsButtonSetAvailable:                { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var clusterDetails = element(by.css('div#active-cluster-panel'));
+        var buttons = ['add nodes','remove nodes','sync','stop','terminate'];
+
+        return buttons.every(function(button) {
+            var expectedElement = clusterDetails.element(by.cssContainingText('span.ng-binding', button));
+
+            return browser.driver.wait(EC.visibilityOf(expectedElement), 5000, 'Cluster "' + button + '" button is NOT present!').then(function () {
+                return expectedElement.isDisplayed().then(function (isDisplayed) {
+                    return isDisplayed;
+                }, function (err) {
+                    return false;
+                });
+            });
+        });
+    }},
+    openAutoScaling:                   { value: function () {
+        var EC = protractor.ExpectedConditions;
+
+        var defaultTab = element(by.cssContainingText('a.ng-binding[role="tab"]', 'autoscaling SLA policies'));
+        var openedAutoScalingTab = element(by.cssContainingText('a.ng-binding[role="tab"][aria-expanded="true"]', 'autoscaling SLA policies'));
+        var isDefaultTab = EC.visibilityOf(defaultTab);
+        var isScailingTab = EC.visibilityOf(openedAutoScalingTab);
+
+        var closedAutoScalingTab = element(by.cssContainingText('a.ng-binding[role="tab"][aria-expanded="false"]', 'autoscaling SLA policies'));
+
+        return browser.driver.wait(EC.visibilityOf(openedAutoScalingTab), 5000,'Scailing tab has NOT opened!').then(function() {
+
+        }, function(err) {
+            return browser.driver.wait(EC.elementToBeClickable(defaultTab), 5000, 'Scailing tab is NOT click able!').then(function() {
+                return defaultTab.click();
+            }).then(function() {
+                return browser.driver.wait(EC.or(isDefaultTab, isScailingTab), 5000,'Scailing tab has NOT clicked at 1st!').then(function() {
+
+                }, function(err) {
+                    return browser.driver.actions().click(defaultTab).perform();
+                });
+            });
+        });
+    }},
+    enableAutoScaling:                 { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var enableAutoScaling = element(by.css('a#update-scaling-configuration-btn[class="btn btn-primary btn-block ng-binding"]'));
+        var disableAutoScaling = element(by.css('a#update-scaling-configuration-btn[class="btn btn-danger btn-block ng-binding"]'));
+
+        this.openAutoScaling();
+
+        return browser.driver.wait(EC.visibilityOf(disableAutoScaling), 5000,'Enable auto scaling button has NOT clicked!').then(function() {
+
+        }, function(err) {
+            return browser.driver.wait(EC.elementToBeClickable(enableAutoScaling), 5000, 'Enable auto scaling button is NOT click able!').then(function() {
+                return enableAutoScaling.click();
+            }).then(function() {
+                return browser.driver.wait(EC.visibilityOf(disableAutoScaling), 5000,'Enable auto scaling button has NOT clicked at 1st!').then(function() {
+
+                }, function(err) {
+                    return browser.driver.actions().click(enableAutoScaling).perform();
+                });
+            });
+        });
+    }},
+    createAlert:                       { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var createAlertButton = element(by.css('a#panel-create-periscope-alert-btn'));
+        var createAlertLink = createAlertButton.$('span.ng-binding');
+
+        return browser.driver.wait(EC.elementToBeClickable(createAlertLink), 5000, 'Create Alert button is NOT click able!').then(function() {
+            return createAlertLink.click();
+        }).then(function() {
+            return browser.driver.wait(EC.invisibilityOf(createAlertLink), 5000,'Create Alert button has NOT clicked at 1st!').then(function() {
+
+            }, function(err) {
+                return browser.driver.actions().click(createAlertLink).perform();
+            });
+        });
+    }},
+    isAmbariAlertsAvailable:           { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var alertSelect = element(by.css('select#alertDefinitions'));
+        var ambariAlerts = element.all(by.repeater('alertDef in alertDefinitions'));
+
+        return browser.driver.wait(EC.visibilityOf(alertSelect), 5000, 'Ambari Alerts drop-down is NOT available!').then(function() {
+            return alertSelect.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }).then(function() {
+            return ambariAlerts.then(function(alerts) {
+                return alerts.length > 1;
+            }, function(err) {
+                return false;
+            });
         });
     }},
     createNewAWSCluster:               { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {

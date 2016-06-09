@@ -71,9 +71,13 @@ BasePage.prototype  = Object.create({}, {
       var widgetModule = new WidgetModule();
       return widgetModule.isClusterPresent(name);
   }},
-  openClusterDetails:                         { value: function (name)  {
+  openClusterPanel:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
-      return widgetModule.openDetails(name);
+      return widgetModule.openClusterPanel(name);
+  }},
+  openClusterDetails:                         { value: function ()  {
+      var clusterModule = new ClusterModule();
+      return clusterModule.openDetails();
   }},
   isClusterStarted:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
@@ -85,9 +89,11 @@ BasePage.prototype  = Object.create({}, {
   }},
   terminateCluster:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
-      widgetModule.openDetails(name);
-
       var clusterModule = new ClusterModule();
+
+      if(!clusterModule.isClusterPanelOpen) {this.openClusterPanel(name)}
+      this.openClusterDetails();
+
       clusterModule.getClusterStatus();
       clusterModule.clickTerminateButton();
       clusterModule.clickConfirmTerminateButton();
@@ -96,6 +102,23 @@ BasePage.prototype  = Object.create({}, {
   isClusterRemoved:                           { value: function ()  {
       var waitForUtils = new WaitForUtils();
       return waitForUtils.waitForClusterRemove();
+  }},
+  isAmbariAutoScalingAvailable:                     { value: function (name)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(name);
+
+      clusterModule.enableAutoScaling();
+      clusterModule.createAlert();
+      return clusterModule.isAmbariAlertsAvailable();
+  }},
+  isClusterDetailsControllers:                { value: function (name)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(name);
+      this.openClusterDetails();
+
+      return clusterModule.isDetailsButtonSetAvailable();
   }}
 });
 module.exports = BasePage;
