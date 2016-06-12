@@ -1,9 +1,11 @@
 {
   "name": "uluwatu-e2e-protractor",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "config": "e2e.conf.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "postinstall": "node ./node_modules/protractor/bin/webdriver-manager update"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

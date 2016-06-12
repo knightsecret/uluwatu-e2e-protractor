@@ -12,8 +12,8 @@ var DashboardPage = function () {
 };
 
 DashboardPage.prototype  = Object.create({}, {
-  blueprintsexpandButton:  {   get: function ()  { return element(by.css('a#blueprints-btn'));   }},
-  credentialsexpandButton: {   get: function ()  { return element(by.css('a#credentials-btn'));  }},
+  blueprintsexpandButton:  { get: function ()  { return element(by.css('a#blueprints-btn'));   }},
+  credentialsexpandButton: { get: function ()  { return element(by.css('a#credentials-btn'));  }},
 
   expandBlueprints:        { value: function ()  {
     var EC = protractor.ExpectedConditions;

@@ -14,14 +14,14 @@ var BasePage = function () {
 };
 
 BasePage.prototype  = Object.create({}, {
-  navBar:               {   get: function ()  { return element(by.css('div#navbar-collapse-1'));                          }},
-  clusterBar:           {   get: function ()  { return element(by.css('div#clusters-bar'));                               }},
-  dashboardLink:        {   get: function ()  { return this.navBar.element(by.cssContainingText('a', 'dashboard'));       }},
-  accountLink:          {   get: function ()  { return this.navBar.element(by.cssContainingText('a', 'account'));         }},
-  credentialList:       {   get: function ()  { return this.navBar.element(by.css('li#menu-credential'));                 }},
-  credentials:          {   get: function ()  { return element.all(by.repeater('credential in $root.credentials'));       }},
-  createClusterButton:  {   get: function ()  { return this.clusterBar.element(by.css('button#create-cluster-btn'));      }},
-  notificationBar:      {   get: function ()  { return this.clusterBar.element(by.css('input#notification-n-filtering')); }},
+  navBar:                                     { get: function ()  { return element(by.css('div#navbar-collapse-1'));                          }},
+  clusterBar:                                 { get: function ()  { return element(by.css('div#clusters-bar'));                               }},
+  dashboardLink:                              { get: function ()  { return this.navBar.element(by.cssContainingText('a', 'dashboard'));       }},
+  accountLink:                                { get: function ()  { return this.navBar.element(by.cssContainingText('a', 'account'));         }},
+  credentialList:                             { get: function ()  { return this.navBar.element(by.css('li#menu-credential'));                 }},
+  credentials:                                { get: function ()  { return element.all(by.repeater('credential in $root.credentials'));       }},
+  createClusterButton:                        { get: function ()  { return this.clusterBar.element(by.css('button#create-cluster-btn'));      }},
+  notificationBar:                            { get: function ()  { return this.clusterBar.element(by.css('input#notification-n-filtering')); }},
 
   selectCredentialByName:                     { value: function (name)  {
     var EC = protractor.ExpectedConditions;
@@ -79,19 +79,19 @@ BasePage.prototype  = Object.create({}, {
       var clusterModule = new ClusterModule();
       return clusterModule.openDetails();
   }},
-  isClusterStarted:                           { value: function (name)  {
-      var widgetModule = new WidgetModule();
-      return widgetModule.isClusterStarted(name);
+  isClusterInstalling:                        { value: function ()  {
+     var widgetModule = new WidgetModule();
+     return widgetModule.isClusterInstallRunning();
   }},
-  isClusterRun:                               { value: function ()  {
-     var waitForUtils = new WaitForUtils();
-     return waitForUtils.waitForClusterStart();
+  isClusterInstalled:                         { value: function ()  {
+      var waitForUtils = new WaitForUtils();
+      return waitForUtils.waitForClusterInstall();
   }},
   terminateCluster:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
       var clusterModule = new ClusterModule();
 
-      if(!clusterModule.isClusterPanelOpen) {this.openClusterPanel(name)}
+      this.openClusterPanel(name);
       this.openClusterDetails();
 
       clusterModule.getClusterStatus();
@@ -103,7 +103,7 @@ BasePage.prototype  = Object.create({}, {
       var waitForUtils = new WaitForUtils();
       return waitForUtils.waitForClusterRemove();
   }},
-  isAmbariAutoScalingAvailable:                     { value: function (name)  {
+  isAmbariAutoScalingAvailable:               { value: function (name)  {
       var clusterModule = new ClusterModule();
 
       this.openClusterPanel(name);
@@ -119,6 +119,35 @@ BasePage.prototype  = Object.create({}, {
       this.openClusterDetails();
 
       return clusterModule.isDetailsButtonSetAvailable();
+  }},
+  stopCluster:                           { value: function (name)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(name);
+      this.openClusterDetails();
+
+      clusterModule.clickStopButton();
+      clusterModule.clickStopConfirmButton();
+      return clusterModule.isClusterStopping();
+  }},
+  isClusterStopped:                           { value: function ()  {
+      var waitForUtils = new WaitForUtils();
+      return waitForUtils.waitForClusterStop();
+  }},
+  startCluster:                           { value: function (name)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(name);
+      this.openClusterDetails();
+
+      clusterModule.clickStartButton();
+      clusterModule.clickStartConfirmButton();
+      return clusterModule.isClusterStarting();
+  }},
+  isClusterStarted:                           { value: function ()  {
+      var waitForUtils = new WaitForUtils();
+      return waitForUtils.waitForClusterStart();
   }}
+
 });
 module.exports = BasePage;

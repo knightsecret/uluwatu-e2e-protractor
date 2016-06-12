@@ -11,10 +11,10 @@ var WidgetModule = function () {
 };
 
 WidgetModule.prototype = Object.create({}, {
-    widgetBar:           {      get: function () {    return element(by.css('div.row.cluster-block.collapse.in'));   }},
-    clusterWidgets:      {      get: function () {    return  element.all(by.repeater('cluster in $root.clusters')); }},
+    widgetBar:                                  { get: function () {    return element(by.css('div.row.cluster-block.collapse.in'));   }},
+    clusterWidgets:                             { get: function () {    return  element.all(by.repeater('cluster in $root.clusters')); }},
 
-    isClusterPresent:                            { value: function (name) {
+    isClusterPresent:                           { value: function (name) {
         browser.waitForAngular();
         browser.driver.wait(function() {
             return element(by.cssContainingText('a#btn-cluster', name)).isPresent();
@@ -23,17 +23,7 @@ WidgetModule.prototype = Object.create({}, {
             return element(by.cssContainingText('a#btn-cluster', name)).isDisplayed();
         }, 20000, 'Cluster with this name is NOT displayed!');
     }},
-    isClusterTerminated:                         { value: function () {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
-        browser.waitForAngular();
-        browser.driver.wait(function() {
-            return element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
-        }, 30 * 20000, 'Cannot find this element!');
-        return browser.driver.wait(function() {
-            return element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
-        }, 30 * 20000, 'Cannot see this element!');
-    }},
-    isClusterStarted:                           { value: function () {
+    isClusterInstallRunning:                    { value: function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
         browser.waitForAngular();
         browser.driver.wait(function() {
@@ -41,6 +31,16 @@ WidgetModule.prototype = Object.create({}, {
         }, 30 * 20000, 'Cannot find this element!');
         return browser.driver.wait(function() {
             return element(by.css('div.mod-LED>span.state2-run-blink')).isDisplayed();
+        }, 30 * 20000, 'Cannot see this element!');
+    }},
+    isClusterTerminated:                        { value: function () {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 200000;
+        browser.waitForAngular();
+        browser.driver.wait(function() {
+            return element(by.css('div.mod-LED>span.state0-stop-blink')).isPresent();
+        }, 30 * 20000, 'Cannot find this element!');
+        return browser.driver.wait(function() {
+            return element(by.css('div.mod-LED>span.state0-stop-blink')).isDisplayed();
         }, 30 * 20000, 'Cannot see this element!');
     }},
     openClusterPanel:                           { value: function (name) {
