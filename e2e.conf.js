@@ -18,9 +18,7 @@ exports.config = {
       'browserName': 'firefox'
 /*
       'browserName': 'chrome',
-      /**
-       * Chrome is not allowed to create a SUID sandbox when running inside Docker
-       *
+       // Chrome is not allowed to create a SUID sandbox when running inside Docker
       'chromeOptions': {
           'args': ['no-sandbox']
       }

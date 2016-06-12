@@ -50,7 +50,7 @@ WaitForUtils.prototype = Object.create({}, {
             });
         });
     }},
-    waitForClusterStart:               { value: function ()  {
+    waitForClusterInstall:             { value: function ()  {
         var EC = protractor.ExpectedConditions;
 
         var runningLed = element(by.css('div.mod-LED>span.state5-run'));
@@ -63,7 +63,7 @@ WaitForUtils.prototype = Object.create({}, {
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 20000, 'The cluster has NOT been started!').then(function() {
+        return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 20000, 'The cluster has NOT been installed!').then(function() {
             return runningLed.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -94,6 +94,49 @@ WaitForUtils.prototype = Object.create({}, {
             console.log('The notification has NOT generated!');
             return err;
         });
+    }},
+    waitForClusterStop:        { value: function ()  {
+        var EC = protractor.ExpectedConditions;
+
+        var successfullyStopped = element(by.css('input#notification-n-filtering[value*="successfully stopped"]'));
+
+        var notifications = ['Stopping Ambari services', 'Infrastructure is now stopping', 'Infrastructure successfully stopped'];
+        var messages = ['Ambari services has NOT stopping!', 'Infrastructure has NOT stopping!', 'Cluster stopping has NOT finished!'];
+
+        this.checkingNotifications(notifications, messages);
+
+        return browser.driver.wait(EC.visibilityOf(successfullyStopped), 20000, 'The cluster has NOT been stopped!').then(function() {
+            return successfullyStopped.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('The notification has NOT generated!');
+            return err;
+        });
+    }},
+    waitForClusterStart:             { value: function ()  {
+        var EC = protractor.ExpectedConditions;
+
+        var successfullyStarted = element(by.css('input#notification-n-filtering[value*="cluster started"]'));
+
+        var notifications = ['Starting Ambari cluster', 'Starting Ambari services', 'Ambari cluster started'];
+        var messages = ['Ambari cluster has NOT started!', 'Ambari services has NOT started!', 'Ambari restarting has NOT finished!'];
+
+        this.checkingNotifications(notifications, messages);
+
+        return browser.driver.wait(EC.visibilityOf(successfullyStarted), 20000, 'The cluster has NOT been started!').then(function() {
+            return successfullyStarted.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('The notification has NOT generated!');
+            return err;
+        });
     }}
 });
+
 module.exports = WaitForUtils;

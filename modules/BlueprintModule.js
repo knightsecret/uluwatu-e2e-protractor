@@ -12,12 +12,12 @@ var BlueprintModule = function () {
 };
 
 BlueprintModule.prototype = Object.create({}, {
-    blueprintForm:                 {       get: function () {     return element(by.css('form[name=blueprintForm]'));                }},
-    nameBox:                       {       get: function () {     return this.blueprintForm.element(by.css('input#name'));           }},
-    descriptionBox:                {       get: function () {     return this.blueprintForm.element(by.css('input#description'));    }},
-    sourceSelect:                  {       get: function () {     return this.blueprintForm.element(by.css('select#blueprinttype')); }},
-    urlBox:                        {       get: function () {     return this.blueprintForm.element(by.css('input#url'));            }},
-    createButton:                  {       get: function () {     return this.blueprintForm.element(by.css('a#createBlueprint'));    }},
+    blueprintForm:                 { get: function () {     return element(by.css('form[name=blueprintForm]'));                }},
+    nameBox:                       { get: function () {     return this.blueprintForm.element(by.css('input#name'));           }},
+    descriptionBox:                { get: function () {     return this.blueprintForm.element(by.css('input#description'));    }},
+    sourceSelect:                  { get: function () {     return this.blueprintForm.element(by.css('select#blueprinttype')); }},
+    urlBox:                        { get: function () {     return this.blueprintForm.element(by.css('input#url'));            }},
+    createButton:                  { get: function () {     return this.blueprintForm.element(by.css('a#createBlueprint'));    }},
 
     typeName:                      { value: function (name)  {
         return this.nameBox.sendKeys(name);
