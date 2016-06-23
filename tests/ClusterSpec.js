@@ -21,6 +21,7 @@ describe('Testing cluster creation', function () {
           console.log('Cluster creation test setup has started!');
           basePage.selectCredentialByName(credentialName);
       });
+
       afterAll(function() {
           console.log('Test suit teardown has started!');
           dashboardPage.deleteBlueprint(blueprintName);
