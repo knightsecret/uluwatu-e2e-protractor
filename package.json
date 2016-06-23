@@ -22,6 +22,7 @@
     "jasmine-reporters": "^2.1.1",
     "jasmine-spec-reporter": "^2.4.0",
     "protractor": "^3.3.0",
+    "protractor-console": "^2.0.1",
     "protractor-jasmine2-html-reporter": "^0.0.5"
   }
 }

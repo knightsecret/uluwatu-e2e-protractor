@@ -2,6 +2,7 @@ require('jasmine-reporters');
 require('jasmine-spec-reporter');
 require('protractor-jasmine2-html-reporter');
 require('jasmine-allure-reporter');
+require('protractor-console');
 
 /**
  * Base configurations for the Uluwatu E2E Protractor tests.
@@ -9,20 +10,28 @@ require('jasmine-allure-reporter');
  * @type {{seleniumAddress: string, capabilities: {browserName: string}, specs: string[], framework: string, jasmineNodeOpts: {onComplete: null, showColors: boolean, includeStackTrace: boolean, isVerbose: boolean, defaultTimeoutInterval: number}, baseUrl: *, onPrepare: exports.config.onPrepare}}
  */
 exports.config = {
+  plugins: [{
+      package: 'protractor-console',
+      logLevels: ['severe']
+  }],
   // The address of the running selenium server. In case of direct connection this is not needed.
   // seleniumAddress: 'http://localhost:4444/wd/hub',
   // Protractor starts directly Chrome or Firefox. Do not need to start the WebDriver. This could be very useful in development pahse.
   directConnect: true,
   // Capabilities to be passed to the WebDriverJS instance.
   capabilities: {
-      'browserName': 'firefox'
+      'browserName': 'firefox',
+      //'browserName': 'chrome',
+      // Chrome is not allowed to create a SUID sandbox when running inside Docker
 /*
-      'browserName': 'chrome',
-       // Chrome is not allowed to create a SUID sandbox when running inside Docker
       'chromeOptions': {
           'args': ['no-sandbox']
-      }
+      },
 */
+      javascriptEnabled: true,
+      locationContextEnabled: true,
+      handlesAlerts: true,
+      loggingPrefs: { browser: 'SEVERE', driver: 'ALL' }
   },
 
   /**
