@@ -45,7 +45,7 @@ RUN apt-get update -qqy \
 RUN apt-get update -qqy \
   && apt-get -qqy install \
     xvfb \
-    firefox \
+    firefox=28.0+build2-0ubuntu2 \
     google-chrome-stable \
     default-jre
 
@@ -75,7 +75,8 @@ RUN npm install --unsafe-perm -g \
     jasmine-reporters \
     jasmine-spec-reporter \
     protractor-jasmine2-html-reporter \
-    jasmine-allure-reporter
+    jasmine-allure-reporter \
+    protractor-console
 
 # Set the working directory
 WORKDIR /protractor/
