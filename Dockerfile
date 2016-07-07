@@ -35,7 +35,7 @@ RUN apt-get update -qqy \
   && apt-get -qqy install \
     software-properties-common \
     python-software-properties
-RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 RUN apt-get update -qqy \
   && apt-get -qqy install \
     nodejs \
