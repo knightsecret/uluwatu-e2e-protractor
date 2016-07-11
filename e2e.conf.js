@@ -21,11 +21,13 @@ exports.config = {
   // Capabilities to be passed to the WebDriverJS instance.
   capabilities: {
       'browserName': 'firefox',
-      //'browserName': 'chrome',
-      // Chrome is not allowed to create a SUID sandbox when running inside Docker
 /*
+      'browserName': 'chrome',
       'chromeOptions': {
-          'args': ['no-sandbox']
+          'args': [
+              '--no-sandbox',
+              '--disable-web-security'
+          ]
       },
 */
       javascriptEnabled: true,
@@ -45,15 +47,24 @@ exports.config = {
       'tests/CredentialSpec.js',
       'tests/ClusterSpec.js'
   ],
+
   /**
    * Define suits with the name of the Spec patterns.
    * Note: The spec patterns are relative to this directory (where the configuration file is)!
-   *
+   */
   suites: {
-      login: ['./tests/LoginSpec.js'],
-      blueprint: ['./tests/BlueprintSpec.js']
+      smoke: [
+          'tests/LoginSpec.js',
+          'tests/BlueprintSpec.js',
+          'tests/CredentialSpec.js'
+      ],
+      regression: [
+          'tests/LoginSpec.js',
+          'tests/BlueprintSpec.js',
+          'tests/CredentialSpec.js',
+          'tests/ClusterSpec.js'
+      ]
   },
-  */
 
   /**
    * Jasmine is a behavior-driven development framework for testing JavaScript code.

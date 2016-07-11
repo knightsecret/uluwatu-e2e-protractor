@@ -1,5 +1,5 @@
-FROM ubuntu:trusty
-MAINTAINER SequenceIQ
+FROM ubuntu:xenial
+MAINTAINER Hortonworks
 
 # Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
 # http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
@@ -25,11 +25,7 @@ RUN apt-get update -qqy \
     libfreetype6 \
     libfontconfig
 
-# Latest Google Chrome installation package
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-
-# Nodejs 5 with npm install
+# Nodejs 6 with npm install
 # https://github.com/nodesource/distributions#installation-instructions
 RUN apt-get update -qqy \
   && apt-get -qqy install \
@@ -41,11 +37,15 @@ RUN apt-get update -qqy \
     nodejs \
     build-essential
 
+# Latest Google Chrome installation package
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+
 # Latest Ubuntu Firefox, Google Chrome, XVFB and JRE installs
 RUN apt-get update -qqy \
   && apt-get -qqy install \
     xvfb \
-    firefox=28.0+build2-0ubuntu2 \
+    firefox=45.0.2+build1-0ubuntu1 \
     google-chrome-stable \
     default-jre
 
