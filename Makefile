@@ -8,7 +8,7 @@ all-preprod:    build run-preprod
 all-qa:         build run-qa
 
 build:
-				docker build -t sequenceiq/protractor-runner .
+				docker build -t hortonworks/protractor-runner .
 
 run-with-envfile:
 				docker run -it \
@@ -16,7 +16,7 @@ run-with-envfile:
 				--name uluwatu-e2e-runner \
 				--env-file $(ENVFILE) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				hortonworks/protractor-runner
 
 run:
 				docker run -it \
@@ -29,7 +29,7 @@ run:
 				-e SSHKEY=$(SSHKEY) \
 				-e TESTCONF=$(TESTCONF) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				hortonworks/protractor-runner
 
 run-preprod:
 				docker run -i \
@@ -42,7 +42,7 @@ run-preprod:
 				-e SSHKEY=$(SSHKEY) \
 				-e TESTCONF=$(TESTCONF) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				hortonworks/protractor-runner
 
 run-qa:
 				docker run -i \
@@ -55,7 +55,7 @@ run-qa:
 				-e SSHKEY=$(SSHKEY) \
 				-e TESTCONF=$(TESTCONF) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				hortonworks/protractor-runner
 
 allure-report:
 				allure generate allure-results/
