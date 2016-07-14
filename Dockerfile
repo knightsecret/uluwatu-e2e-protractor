@@ -49,6 +49,8 @@ RUN apt-get update -qqy \
     google-chrome-stable \
     default-jre
 
+RUN sudo apt-mark hold firefox
+
 # Clean clears out the local repository of retrieved package files. Run apt-get clean from time to time to free up disk space.
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/*
