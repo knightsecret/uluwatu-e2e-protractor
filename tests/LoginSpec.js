@@ -4,7 +4,7 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing Cloudbreak login', function () {
   var dashboardPage;
-  var cloudbreakURL = 'cloudbreak.sequenceiq.com/#/';
+  var cloudbreakURL = '/#/';
 
   describe('with ' + process.env.USERNAME + ' user', function () {
     dashboardPage = new DashboardPage();
