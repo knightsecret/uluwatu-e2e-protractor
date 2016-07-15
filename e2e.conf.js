@@ -91,6 +91,11 @@ exports.config = {
   onPrepare: function() {
       var currentURL;
 
+      console.log("The Base URL is: " + process.env.BASE_URL);
+      console.log("The Username is: " + process.env.USERNAME);
+      console.log("The Password is: " + process.env.PASSWORD);
+      console.log("The SSH Key is: " + process.env.SSHKEY);
+
       // WebDriver general settings for browsers.
       browser.driver.manage().deleteAllCookies();
       browser.driver.manage().window().maximize();
