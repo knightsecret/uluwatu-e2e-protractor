@@ -7,8 +7,12 @@
 'use strict';
 
 var CredentialModule = function () {
-    this.managementSection = element(by.css('section.management-panels'));
-    this.credentialsPanel =  element(by.css('div#panel-credentials-collapse'));
+    browser.waitForAngular();
+    browser.driver.wait(function() {
+        return browser.driver.findElement(by.id('panel-credentials-collapse')).isDisplayed().then(function(displayed) {
+            return displayed;
+        });
+    }, 5000);
 };
 
 CredentialModule.prototype = Object.create({}, {
@@ -56,8 +60,8 @@ CredentialModule.prototype = Object.create({}, {
 
     openCreatePanel:                   { value: function () {
         var EC = protractor.ExpectedConditions;
-        var createButton = this.credentialsPanel.element(by.cssContainingText('a#panel-create-credentials-collapse-btn', 'create credential'));
-        var closeButton = this.credentialsPanel.element(by.cssContainingText('a#panel-create-credentials-collapse-btn[aria-expanded="true"]', 'create credential'));
+        var createButton = element(by.cssContainingText('a#panel-create-credentials-collapse-btn', 'create credential'));
+        var closeButton = element(by.cssContainingText('a#panel-create-credentials-collapse-btn[aria-expanded="true"]', 'create credential'));
 
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(createButton), 5000, 'Create button is NOT click able!').then(function() {

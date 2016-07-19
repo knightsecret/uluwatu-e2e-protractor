@@ -3,6 +3,7 @@ var CredentialModule = require('../modules/CredentialModule.js');
 var BlueprintModule = require('../modules/BlueprintModule.js');
 
 var DashboardPage = function () {
+  browser.waitForAngular();
   browser.driver.wait(function() {
     return browser.driver.getCurrentUrl().then(function(url) {
       //console.log(url);
