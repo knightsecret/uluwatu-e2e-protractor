@@ -1,4 +1,7 @@
-.*
+.npm
+.local
+.pki
+.config
 Desktop
 build
 target
@@ -15,5 +18,3 @@ tmp
 test-results
 allure-results
 allure-report
-.protractor-failed
-~/Users/aszegedi/Library
