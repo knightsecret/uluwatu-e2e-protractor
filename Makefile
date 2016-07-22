@@ -18,10 +18,10 @@ run:
 				--name uluwatu-e2e-runner \
 				--net=host \
 				-e BASE_URL=$(BASE_URL) \
-                -e USERNAME=$(USERNAME) \
-                -e PASSWORD=$(PASSWORD) \
-                -e IAMROLE=$(IAMROLE) \
-                -e SSHKEY=$(SSHKEY) \
+				-e USERNAME=$(USERNAME) \
+				-e PASSWORD=$(PASSWORD) \
+				-e IAMROLE=$(IAMROLE) \
+				-e SSHKEY=$(SSHKEY) \
 				-v $(PWD):/protractor/project \
 				hortonworks/docker-e2e-protractor $(TESTCONF)
 

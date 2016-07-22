@@ -59,25 +59,24 @@ protractor e2e.conf.js
 
 1. Clone this repository in a local folder then open it.
 2. Provide valid and appropriate values for base test parameters in the [environment file](utils/testenv). The following variables should be set:
-  - BASE_URL=`https://pre-prod-accounts.sequenceiq.com/`
-  - USERNAME=`testing@something.com`
-  - PASSWORD=`password`
-  - IAMROLE=`arn:aws:iam::1234567890:role/userrole`
-  - SSHKEY=`AAAAB3NzaC1+soon...etc.`
-3. Pull the [hortonworks/docker-e2e-protracto](https://hub.docker.com/r/hortonworks/docker-e2e-protractor/) image from DockerHub
+     - BASE_URL=`https://pre-prod-accounts.sequenceiq.com/`
+     - USERNAME=`testing@something.com`
+     - PASSWORD=`password`
+     - IAMROLE=`arn:aws:iam::1234567890:role/userrole`
+     - SSHKEY=`AAAAB3NzaC1+soon...etc.`
+3. Pull the [hortonworks/docker-e2e-protractor](https://hub.docker.com/r/hortonworks/docker-e2e-protractor/) image from DockerHub
 4. Execute the Protractor test configuration for ULUWATU in [Docker container](https://docs.docker.com/engine/installation/):
-```
-docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite smoke
-docker run -it --rm --name uluwatu-e2e-runner -e BASE_URL=$(BASE_URL) -e USERNAME=$(USERNAME) -e PASSWORD=$(PASSWORD) -e IAMROLE=$(PASSWORD) -e SSHKEY=$(SSHKEY) -e IAMROLE=$(IAMROLE) -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite regression
-```
-
-  - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
-  - `utils/testenv` the location (full path) of the `testenv` file on your machine
-  - `USERNAME` a single environment variable that is passed for the new container
-  - `$(PWD)` or `pwd` the root folder of your Protractor test project
-      - For example the local folder where the [ULUWATU functional E2E tests](https://github.com/sequenceiq/uluwatu-e2e-protractor) project has been cloned from GitHub.
-      - The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
-  - `e2e.conf.js --suite regression` in case of regression testing
+    ```
+    docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite smoke
+    docker run -it --rm --name uluwatu-e2e-runner -e BASE_URL=$(BASE_URL) -e USERNAME=$(USERNAME) -e PASSWORD=$(PASSWORD) -e IAMROLE=$(PASSWORD) -e SSHKEY=$(SSHKEY) -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite regression
+    ```
+     - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
+     - `utils/testenv` the location (full path) of the `testenv` file on your machine
+     - `USERNAME` a single environment variable that is passed for the new container
+     - `$(PWD)` or `pwd` the root folder of your Protractor test project
+        - For example the local folder where the [ULUWATU functional E2E tests](https://github.com/sequenceiq/uluwatu-e2e-protractor) project has been cloned from GitHub.
+        - The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
+     - `e2e.conf.js --suite regression` in case of regression testing
 
 ## Advanced options
 
