@@ -83,6 +83,10 @@ BlueprintModule.prototype = Object.create({}, {
     }},
     getBlueprintID:                { value: function (name) {
         return element(by.cssContainingText('div>h5>a', name)).getAttribute('data-target');
+    }},
+    isDefaultBlueprintAvailable:   { value: function () {
+        var blueprintList = element(by.css('div#blueprint-list-accordion'));
+        return blueprintList.$$(by.css('i.fa.fa-users.fa-lg.public-account-info.pull-right')).count > 1;
     }}
 });
 module.exports = BlueprintModule;

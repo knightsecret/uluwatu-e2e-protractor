@@ -10,22 +10,24 @@ describe('Testing blueprint creation', function () {
 
   describe('with ' + newName + ' blueprint', function () {
     dashboardPage = new DashboardPage();
+    var defaultBlueprints = 0;
 
     beforeAll(function() {
       console.log('Blueprint creation test setup has started!');
       dashboardPage.deleteBlueprint(newName);
+      dashboardPage.getBadgeValue(3).then(function (value) {
+          defaultBlueprints = value;
+      });
     });
 
     it('Default blueprints should be available', function () {
-      dashboardPage.getBadgeValue(3).then(function (value) {
-        expect(value).toEqual(4);
-      });
+      expect(dashboardPage.getDefaultBlueprints).toBeTruthy();
     });
 
     it('Create new blueprint', function () {
       dashboardPage.createBlueprint(newName, newDescription, newUrl);
       dashboardPage.getBadgeValue(3).then(function (value) {
-        expect(value).toEqual(5);
+        expect(value).toBeGreaterThan(defaultBlueprints);
       });
     });
   });

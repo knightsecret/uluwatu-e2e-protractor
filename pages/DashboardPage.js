@@ -65,6 +65,11 @@ DashboardPage.prototype  = Object.create({}, {
     var credentialModule = new CredentialModule();
     return credentialModule.createAWSCredential(name, description, iamRole, sshKey);
   }},
+  getDefaultBlueprints:    { value: function ()  {
+    this.expandBlueprints();
+    var blueprintModule = new BlueprintModule();
+    return blueprintModule.isDefaultBlueprintAvailable();
+  }},
   deleteBlueprint:         { value: function (name)  {
     this.expandBlueprints();
     var blueprintModule = new BlueprintModule();

@@ -136,6 +136,48 @@ WaitForUtils.prototype = Object.create({}, {
             console.log('The notification has NOT generated!');
             return err;
         });
+    }},
+    waitForClusterScaleUp:           { value: function ()  {
+        var EC = protractor.ExpectedConditions;
+
+        var successfullyScaledUp = element(by.css('input#notification-n-filtering[value*="Ambari cluster scaled up"]'));
+
+        var notifications = ['new instances to the infrastructure', 'Bootstrapping new nodes', 'Scaling up the Ambari cluster', 'Ambari cluster scaled up'];
+        var messages = ['Infrastructure extension has NOT started!', 'Infrastructure bootstrapping has NOT started!', 'Ambari scale up has NOT started!', 'Ambari scaling up has NOT finished!'];
+
+        this.checkingNotifications(notifications, messages);
+
+        return browser.driver.wait(EC.visibilityOf(successfullyScaledUp), 20000, 'The cluster has NOT been scaled up!').then(function() {
+            return successfullyScaledUp.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('The notification has NOT generated!');
+            return err;
+        });
+    }},
+    waitForClusterScaleDown:           { value: function ()  {
+        var EC = protractor.ExpectedConditions;
+
+        var successfullyScaledDown = element(by.css('input#notification-n-filtering[value*="successfully downscaled"]'));
+
+        var notifications = ['Scaling down the Ambari cluster', 'node(s) from the host group', 'Ambari cluster scaled down', 'Cluster infrastructure successfully downscaled'];
+        var messages = ['Scaling down has NOT started!', 'Infrastructure reduction has NOT started!', 'Infrastructure reduction has NOT finished!', 'Infrastructure down scale has NOT finished!'];
+
+        this.checkingNotifications(notifications, messages);
+
+        return browser.driver.wait(EC.visibilityOf(successfullyScaledDown), 20000, 'The cluster has NOT been scaled down!').then(function() {
+            return successfullyScaledDown.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }, function(err) {
+            console.log('The notification has NOT generated!');
+            return err;
+        });
     }}
 });
 
