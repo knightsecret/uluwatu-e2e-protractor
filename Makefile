@@ -89,5 +89,8 @@ allure-report:
 allure-report-open:
 				allure report open
 
+cloudbreak-run-ui-it-test:
+				./scripts/cloudbreak-ui-integration-test.sh
+
 .PHONY:
 				run
