@@ -319,14 +319,14 @@ ClusterModule.prototype = Object.create({}, {
     addNodesToCluster:                 { value: function (hostGroup, number) {
         var EC = protractor.ExpectedConditions;
         var upscaleBox = element(by.css('div#modal-upscale-cluster'));
-        var hostGroupSelect = element(by.css('select#hostgroupselected'));
-        var nodeNumberInput = element(by.css('input#numberOfInstances'));
+        var hostGroupSelect = upscaleBox.element(by.css('select#hostgroupselected'));
+        var nodeNumberInput = upscaleBox.element(by.css('input#numberOfInstances'));
         var startUpscaleButton = upscaleBox.element(by.cssContainingText('button#stackStackBtn','start upscale'));
         var visibilityOfHostGroups = EC.visibilityOf(hostGroupSelect);
         var visibilityOfNodes = EC.visibilityOf(nodeNumberInput);
 
         browser.driver.wait(EC.or(visibilityOfHostGroups,visibilityOfNodes), 5000, 'Upscale inputs are NOT visible').then(function() {
-            hostGroupSelect.$$(by.cssContainingText('option', hostGroup)).click();
+            hostGroupSelect.element(by.cssContainingText('option', hostGroup)).click();
             nodeNumberInput.getText().then(function(value) {
                 if (value != number) {
                     return nodeNumberInput.clear().then(function() {
@@ -337,12 +337,12 @@ ClusterModule.prototype = Object.create({}, {
         });
 
         return browser.driver.wait(EC.elementToBeClickable(startUpscaleButton), 5000, 'Start Upscale button is NOT click able!').then(function() {
-            return browser.driver.actions().click(startUpscaleButton).perform();
-        }).then(function() {
-            return browser.driver.wait(EC.invisibilityOf(startUpscaleButton), 5000,'Start Upscale button has NOT clicked at 1st!').then(function() {
-
-            }, function(err) {
-                return browser.driver.actions().click(startUpscaleButton).perform();
+            return startUpscaleButton.click().then(function () {
+                return browser.driver.wait(EC.invisibilityOf(upscaleBox), 5000, 'Start Upscale button has NOT clicked at 1st!').then(function () {
+                    return true;
+                }, function (err) {
+                    return browser.driver.actions().click(startUpscaleButton).perform();
+                });
             });
         });
     }},
@@ -364,14 +364,14 @@ ClusterModule.prototype = Object.create({}, {
     removeNodesFromCluster:            { value: function (hostGroup, number) {
         var EC = protractor.ExpectedConditions;
         var downscaleBox = element(by.css('div#modal-downscale-cluster'));
-        var hostGroupSelect = element(by.css('select#hostgroupselected'));
-        var nodeNumberInput = element(by.css('input#numberOfInstances'));
+        var hostGroupSelect = downscaleBox.element(by.css('select#hostgroupselected'));
+        var nodeNumberInput = downscaleBox.element(by.css('input#numberOfInstances'));
         var startDownscaleButton = downscaleBox.element(by.cssContainingText('button#stackStackBtn','start downscale'));
         var visibilityOfHostGroups = EC.visibilityOf(hostGroupSelect);
         var visibilityOfNodes = EC.visibilityOf(nodeNumberInput);
 
         browser.driver.wait(EC.or(visibilityOfHostGroups,visibilityOfNodes), 5000, 'Downscale inputs are NOT visible').then(function() {
-            hostGroupSelect.$$(by.cssContainingText('option', hostGroup)).click();
+            hostGroupSelect.element(by.cssContainingText('option', hostGroup)).click();
             nodeNumberInput.getText().then(function(value) {
                 if (value != number) {
                     return nodeNumberInput.clear().then(function() {
@@ -382,12 +382,12 @@ ClusterModule.prototype = Object.create({}, {
         });
 
         return browser.driver.wait(EC.elementToBeClickable(startDownscaleButton), 5000, 'Start Downscale button is NOT click able!').then(function() {
-            return browser.driver.actions().click(startDownscaleButton).perform();
-        }).then(function() {
-            return browser.driver.wait(EC.invisibilityOf(startDownscaleButton), 5000,'Start Downscale button has NOT clicked at 1st!').then(function() {
-
-            }, function(err) {
-                return browser.driver.actions().click(startDownscaleButton).perform();
+            return startDownscaleButton.click().then(function() {
+                return browser.driver.wait(EC.invisibilityOf(downscaleBox), 5000,'Start Downscale button has NOT clicked at 1st!').then(function() {
+                    return true;
+                }, function(err) {
+                    return browser.driver.actions().click(startDownscaleButton).perform();
+                });
             });
         });
     }},

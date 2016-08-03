@@ -17,7 +17,7 @@ describe('Testing cluster creation', function () {
   describe('on a new AWS cluster where', function () {
       basePage = new BasePage();
       dashboardPage = new DashboardPage();
-      var nodeScalingUp = '4';
+      var nodeScalingUp = '6';
       var nodeScalingDown = '1';
       var hostGroup = 'slave_1';
 
@@ -25,7 +25,6 @@ describe('Testing cluster creation', function () {
           console.log('Cluster creation test setup has started!');
           basePage.selectCredentialByName(credentialName);
       });
-
       afterAll(function() {
           console.log('Test suit teardown has started!');
           dashboardPage.deleteBlueprint(blueprintName);
@@ -50,6 +49,7 @@ describe('Testing cluster creation', function () {
       it('the Cluster Details should be available', function () {
           expect(basePage.isClusterDetailsControllers(clusterName)).toBeTruthy();
       });
+
       it('the Cluster AutoScaling should be available', function () {
           expect(basePage.isAmbariAutoScalingAvailable(clusterName)).toBeTruthy();
           expect(basePage.isScalingHostGroupsAvailable(clusterName)).toBeTruthy();
@@ -69,6 +69,7 @@ describe('Testing cluster creation', function () {
           expect(basePage.isClusterStarted()).toBeTruthy();
           done();
       }, 40 * 60000);
+
       it('the Cluster should be up scaled', function (done) {
           expect(basePage.upScaleCluster(clusterName, hostGroup, nodeScalingUp)).toBeTruthy();
 
@@ -83,6 +84,7 @@ describe('Testing cluster creation', function () {
           expect(basePage.isClusterDownScaled()).toBeTruthy();
           done();
       }, 40 * 60000);
+
       it('the Cluster should be terminated', function (done) {
           expect(basePage.terminateCluster(clusterName)).toBeTruthy();
 

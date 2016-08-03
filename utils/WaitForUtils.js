@@ -63,7 +63,7 @@ WaitForUtils.prototype = Object.create({}, {
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 20000, 'The cluster has NOT been installed!').then(function() {
+        return browser.driver.wait(EC.or(clusterISRunning, clusterISFailed), 5000, 'The cluster has NOT been installed!').then(function() {
             return runningLed.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -84,7 +84,7 @@ WaitForUtils.prototype = Object.create({}, {
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.visibilityOf(successfullyTerminated), 20000, 'The cluster has NOT been terminated!').then(function() {
+        return browser.driver.wait(EC.visibilityOf(successfullyTerminated), 5000, 'The cluster has NOT been terminated!').then(function() {
             return successfullyTerminated.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -105,7 +105,7 @@ WaitForUtils.prototype = Object.create({}, {
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.visibilityOf(successfullyStopped), 20000, 'The cluster has NOT been stopped!').then(function() {
+        return browser.driver.wait(EC.visibilityOf(successfullyStopped), 5000, 'The cluster has NOT been stopped!').then(function() {
             return successfullyStopped.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -126,7 +126,7 @@ WaitForUtils.prototype = Object.create({}, {
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.visibilityOf(successfullyStarted), 20000, 'The cluster has NOT been started!').then(function() {
+        return browser.driver.wait(EC.visibilityOf(successfullyStarted), 5000, 'The cluster has NOT been started!').then(function() {
             return successfullyStarted.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -140,14 +140,14 @@ WaitForUtils.prototype = Object.create({}, {
     waitForClusterScaleUp:           { value: function ()  {
         var EC = protractor.ExpectedConditions;
 
-        var successfullyScaledUp = element(by.css('input#notification-n-filtering[value*="Ambari cluster scaled up"]'));
+        var successfullyScaledUp = element(by.css('input#notification-n-filtering[value*="cluster scaled up"]'));
 
-        var notifications = ['new instances to the infrastructure', 'Bootstrapping new nodes', 'Scaling up the Ambari cluster', 'Ambari cluster scaled up'];
-        var messages = ['Infrastructure extension has NOT started!', 'Infrastructure bootstrapping has NOT started!', 'Ambari scale up has NOT started!', 'Ambari scaling up has NOT finished!'];
+        var notifications = ['new instances to the infrastructure', 'Scaling up', 'cluster scaled up'];
+        var messages = ['Infrastructure extension has NOT started!', 'Ambari scale up has NOT started!', 'Ambari scaling up has NOT finished!'];
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.visibilityOf(successfullyScaledUp), 20000, 'The cluster has NOT been scaled up!').then(function() {
+        return browser.driver.wait(EC.visibilityOf(successfullyScaledUp), 5000, 'The cluster has NOT been scaled up!').then(function() {
             return successfullyScaledUp.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
@@ -163,12 +163,12 @@ WaitForUtils.prototype = Object.create({}, {
 
         var successfullyScaledDown = element(by.css('input#notification-n-filtering[value*="successfully downscaled"]'));
 
-        var notifications = ['Scaling down the Ambari cluster', 'node(s) from the host group', 'Ambari cluster scaled down', 'Cluster infrastructure successfully downscaled'];
-        var messages = ['Scaling down has NOT started!', 'Infrastructure reduction has NOT started!', 'Infrastructure reduction has NOT finished!', 'Infrastructure down scale has NOT finished!'];
+        var notifications = ['Scaling down the Ambari', 'from the host group', 'successfully downscaled'];
+        var messages = ['Scaling down has NOT started!', 'Infrastructure reduction has NOT started!', 'Infrastructure down scale has NOT finished!'];
 
         this.checkingNotifications(notifications, messages);
 
-        return browser.driver.wait(EC.visibilityOf(successfullyScaledDown), 20000, 'The cluster has NOT been scaled down!').then(function() {
+        return browser.driver.wait(EC.visibilityOf(successfullyScaledDown), 5000, 'The cluster has NOT been scaled down!').then(function() {
             return successfullyScaledDown.isDisplayed().then(function(isDisplayed) {
                 return isDisplayed;
             }, function(err) {
