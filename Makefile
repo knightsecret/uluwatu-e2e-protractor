@@ -1,61 +1,87 @@
 ENVFILE=utils/testenv
-TESTCONF=/protractor/project/e2e.conf.js
-
-all:            build run
-
-all-preprod:    build run-preprod
-
-all-qa:         build run-qa
-
-build:
-				docker build -t sequenceiq/protractor-runner .
+TESTCONF=e2e.conf.js
 
 run-with-envfile:
 				docker run -it \
+				--privileged \
 				--rm \
 				--name uluwatu-e2e-runner \
+				--net=host \
 				--env-file $(ENVFILE) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				hortonworks/docker-e2e-protractor $(TESTCONF)
 
 run:
 				docker run -it \
+				--privileged \
 				--rm \
 				--name uluwatu-e2e-runner \
+				--net=host \
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
 				-e IAMROLE=$(IAMROLE) \
 				-e SSHKEY=$(SSHKEY) \
-				-e TESTCONF=$(TESTCONF) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				hortonworks/docker-e2e-protractor $(TESTCONF)
+
+run-regression:
+				docker run -it \
+				--privileged \
+				--rm \
+				--name uluwatu-e2e-runner \
+				--net=host \
+				-e BASE_URL=$(BASE_URL) \
+				-e USERNAME=$(USERNAME) \
+				-e PASSWORD=$(PASSWORD) \
+				-e IAMROLE=$(IAMROLE) \
+				-e SSHKEY=$(SSHKEY) \
+				-v $(PWD):/protractor/project \
+				hortonworks/docker-e2e-protractor $(TESTCONF) --suite regression
+
+run-smoke:
+				docker run -it \
+				--privileged \
+				--rm \
+				--name uluwatu-e2e-runner \
+				--net=host \
+				-e BASE_URL=$(BASE_URL) \
+				-e USERNAME=$(USERNAME) \
+				-e PASSWORD=$(PASSWORD) \
+				-e IAMROLE=$(IAMROLE) \
+				-e SSHKEY=$(SSHKEY) \
+				-v $(PWD):/protractor/project \
+				hortonworks/docker-e2e-protractor $(TESTCONF) --suite smoke
 
 run-preprod:
 				docker run -i \
+				--privileged \
 				--rm \
-				--name uluwatu-e2e-preprod \
+				--name uluwatu-e2e-runner \
+				--net=host \
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
 				-e IAMROLE=$(IAMROLE) \
 				-e SSHKEY=$(SSHKEY) \
-				-e TESTCONF=$(TESTCONF) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				-v /dev/shm:/dev/shm \
+				hortonworks/docker-e2e-protractor $(TESTCONF)
 
 run-qa:
 				docker run -i \
+				--privileged \
 				--rm \
-				--name uluwatu-e2e-qa \
+				--name uluwatu-e2e-runner \
+				--net=host \
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
 				-e IAMROLE=$(IAMROLE) \
 				-e SSHKEY=$(SSHKEY) \
-				-e TESTCONF=$(TESTCONF) \
 				-v $(PWD):/protractor/project \
-				sequenceiq/protractor-runner
+				-v /dev/shm:/dev/shm \
+				hortonworks/docker-e2e-protractor $(TESTCONF)
 
 allure-report:
 				allure generate allure-results/
@@ -63,5 +89,8 @@ allure-report:
 allure-report-open:
 				allure report open
 
+cloudbreak-run-ui-it-test:
+				./scripts/cloudbreak-ui-integration-test.sh
+
 .PHONY:
-				all
+				run
