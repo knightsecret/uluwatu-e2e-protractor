@@ -11,16 +11,20 @@ describe('Testing credential creation', function () {
 
   describe('with ' + newName + ' credential', function () {
     dashboardPage = new DashboardPage();
+    var defaultCredentials = 0;
 
     beforeAll(function() {
       console.log('Credential creation test setup has started!');
       dashboardPage.deleteAWSCredential(newName);
+      dashboardPage.getBadgeValue(4).then(function (value) {
+        defaultCredentials = value;
+      });
     });
 
     it('Create new credential', function () {
       dashboardPage.createAWSCredential(newName, newDescription, iamRole, sshKey);
       dashboardPage.getBadgeValue(4).then(function (value) {
-        expect(value).toEqual(1);
+        expect(value).toBeGreaterThan(defaultCredentials);
       });
     });
   });

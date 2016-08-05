@@ -53,40 +53,30 @@ protractor e2e.conf.js
 
 # Docker image for ULUWATU functional E2E test project
 
-**Docker image for executing headless Google Chrome or Firefox Protractor e2e test cases in Docker container. The created image contains the latest ULUWATU test project as well.**
+**Docker image for executing headless Google Chrome or Firefox Protractor e2e test cases in Docker container is available at DockerHub as [hortonworks/docker-e2e-protracto](https://hub.docker.com/r/hortonworks/docker-e2e-protractor/)**
 
-The [Dockerfile](Dockerfile) was design based on the following Docker projects:
-- [Protractor and headless Chrome on Docker](http://float-middle.com/protractor-and-headless-chrome-on-docker-with-video-tutorial/) or [Docker image of Protractor with headless Chrome](https://github.com/jciolek/docker-protractor-headless)
-- [docker-protractor](https://github.com/School-Improvement-Network/docker-protractor)
-- [Protractor-Firefox-Headless-Docker](https://github.com/cfalguiere/Protractor-Firefox-Headless-Docker)
-
-## To run ULUWATU tests in this image
+## To run ULUWATU tests in this container
 
 1. Clone this repository in a local folder then open it.
 2. Provide valid and appropriate values for base test parameters in the [environment file](utils/testenv). The following variables should be set:
-  - BASE_URL=`https://pre-prod-accounts.sequenceiq.com/`
-  - USERNAME=`testing@something.com`
-  - PASSWORD=`password`
-  - IAMROLE=`arn:aws:iam::1234567890:role/userrole`
-  - SSHKEY=`AAAAB3NzaC1+soon...etc.`
-  - TESTCONF=`e2e.conf.js` here should add your e2e test configuration JS file name (for our project it is `e2e.conf.js`)
-3. Build the [Docker image](https://docs.docker.com/engine/reference/commandline/build/#tag-image-t):
-```
-docker build -t sequenceiq/protractor-runner .
-```
+     - BASE_URL=`https://pre-prod-accounts.sequenceiq.com/`
+     - USERNAME=`testing@something.com`
+     - PASSWORD=`password`
+     - IAMROLE=`arn:aws:iam::1234567890:role/userrole`
+     - SSHKEY=`AAAAB3NzaC1+soon...etc.`
+3. Pull the [hortonworks/docker-e2e-protractor](https://hub.docker.com/r/hortonworks/docker-e2e-protractor/) image from DockerHub
 4. Execute the Protractor test configuration for ULUWATU in [Docker container](https://docs.docker.com/engine/installation/):
-```
-docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project sequenceiq/protractor-runner
-```
-
-  - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
-  - `utils/testenv` the location (full path) of the `testenv` file on your machine
-  - `$(PWD)` or `pwd` the root folder of your Protractor test project
-      - For example the local folder where the [ULUWATU functional E2E tests](https://github.com/sequenceiq/uluwatu-e2e-protractor) project has been cloned from GitHub.
-      - The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
-  - `sequenceiq/protractor-runner` previously built Docker image name
-
-> You should apply all these commands in the root folder of your cloned `ULUWATU functional E2E tests` repository.
+    ```
+    docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite smoke
+    docker run -it --rm --name uluwatu-e2e-runner -e BASE_URL=$(BASE_URL) -e USERNAME=$(USERNAME) -e PASSWORD=$(PASSWORD) -e IAMROLE=$(PASSWORD) -e SSHKEY=$(SSHKEY) -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite regression
+    ```
+     - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
+     - `utils/testenv` the location (full path) of the `testenv` file on your machine
+     - `USERNAME` a single environment variable that is passed for the new container
+     - `$(PWD)` or `pwd` the root folder of your Protractor test project
+        - For example the local folder where the [ULUWATU functional E2E tests](https://github.com/sequenceiq/uluwatu-e2e-protractor) project has been cloned from GitHub.
+        - The use of **PWD is optional**, you do not need to navigate to the Protractor test project root. If it is the case, you should add the full path of the root folder instead of the `$(PWD)`.
+     - `e2e.conf.js --suite regression` in case of regression testing
 
 ## Advanced options
 

@@ -3,6 +3,7 @@ var CredentialModule = require('../modules/CredentialModule.js');
 var BlueprintModule = require('../modules/BlueprintModule.js');
 
 var DashboardPage = function () {
+  browser.waitForAngular();
   browser.driver.wait(function() {
     return browser.driver.getCurrentUrl().then(function(url) {
       //console.log(url);
@@ -63,6 +64,11 @@ DashboardPage.prototype  = Object.create({}, {
     this.expandCredentials();
     var credentialModule = new CredentialModule();
     return credentialModule.createAWSCredential(name, description, iamRole, sshKey);
+  }},
+  getDefaultBlueprints:    { value: function ()  {
+    this.expandBlueprints();
+    var blueprintModule = new BlueprintModule();
+    return blueprintModule.isDefaultBlueprintAvailable();
   }},
   deleteBlueprint:         { value: function (name)  {
     this.expandBlueprints();

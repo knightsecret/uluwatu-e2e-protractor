@@ -1,4 +1,7 @@
-.*
+.npm
+.local
+.pki
+.config
 Desktop
 build
 target

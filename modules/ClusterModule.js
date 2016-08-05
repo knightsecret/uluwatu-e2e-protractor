@@ -23,7 +23,6 @@ ClusterModule.prototype = Object.create({}, {
     securityButton:                    { get: function () {     return element.all(by.cssContainingText('div#configure_cluster .btn.btn-sm.btn-default.ng-binding', 'Setup Network and Security')); }},
     // Setup Network and Security tab
     networknameSelect:                 { get: function () {     return element(by.css('select#selectClusterNetwork'));                    }},
-    securitygroupSelect:               { get: function () {     return element(by.css('select#select-cluster-securitygroup'));            }},
     blueprintButton:                   { get: function () {     return element(by.cssContainingText('div#configure_security_group .btn.btn-sm.btn-default.ng-binding', 'Choose Blueprint'));        }},
 
     typeName:                          { value: function (name) {
@@ -40,10 +39,7 @@ ClusterModule.prototype = Object.create({}, {
         });
     }},
     selectNetwork:                     { value: function (name) {
-        return this.networknameSelect.element(by.cssContainingText('option', name));
-    }},
-    selectSecurityGroup:               { value: function (name) {
-        return this.securitygroupSelect.element(by.cssContainingText('option', name));
+        return this.networknameSelect.element(by.cssContainingText('option', name)).click();
     }},
     clickChooseBlueprint:              { value: function () {
         return this.blueprintButton.click().then(function() {
@@ -54,6 +50,13 @@ ClusterModule.prototype = Object.create({}, {
     }},
     selectBlueprint:                   { value: function (name) {
         return this.clustercreateForm.element(by.cssContainingText('option', name)).click();
+    }},
+    selectSecurityGroup:               { value: function (name) {
+        var securityGroupSelects = element.all(by.xpath('//select[contains(@id,"securityGroupNameName")]'));
+
+        return securityGroupSelects.each(function(select, index) {
+            return select.element(by.cssContainingText('option', name)).click();
+        });
     }},
     selectAmbariServer:                   { value: function () {
         var EC = protractor.ExpectedConditions;
@@ -298,6 +301,96 @@ ClusterModule.prototype = Object.create({}, {
             return false;
         });
     }},
+    clickAddNodesButton:               { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var addNodesButton = element(by.cssContainingText('a.btn.btn-success span','add nodes'));
+        var upscaleBox = element(by.css('div#modal-upscale-cluster'));
+
+        return browser.driver.wait(EC.elementToBeClickable(addNodesButton), 5000, 'Add Nodes button is NOT click able!').then(function() {
+            return browser.driver.actions().click(addNodesButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.visibilityOf(upscaleBox), 5000,'Add Nodes button has NOT clicked at 1st!').then(function() {
+
+            }, function(err) {
+                return browser.driver.actions().click(addNodesButton).perform();
+            });
+        });
+    }},
+    addNodesToCluster:                 { value: function (hostGroup, number) {
+        var EC = protractor.ExpectedConditions;
+        var upscaleBox = element(by.css('div#modal-upscale-cluster'));
+        var hostGroupSelect = upscaleBox.element(by.css('select#hostgroupselected'));
+        var nodeNumberInput = upscaleBox.element(by.css('input#numberOfInstances'));
+        var startUpscaleButton = upscaleBox.element(by.cssContainingText('button#stackStackBtn','start upscale'));
+        var visibilityOfHostGroups = EC.visibilityOf(hostGroupSelect);
+        var visibilityOfNodes = EC.visibilityOf(nodeNumberInput);
+
+        browser.driver.wait(EC.or(visibilityOfHostGroups,visibilityOfNodes), 5000, 'Upscale inputs are NOT visible').then(function() {
+            hostGroupSelect.element(by.cssContainingText('option', hostGroup)).click();
+            nodeNumberInput.getText().then(function(value) {
+                if (value != number) {
+                    return nodeNumberInput.clear().then(function() {
+                        return nodeNumberInput.sendKeys(number);
+                    });
+                }
+            });
+        });
+
+        return browser.driver.wait(EC.elementToBeClickable(startUpscaleButton), 5000, 'Start Upscale button is NOT click able!').then(function() {
+            return startUpscaleButton.click().then(function () {
+                return browser.driver.wait(EC.invisibilityOf(upscaleBox), 5000, 'Start Upscale button has NOT clicked at 1st!').then(function () {
+                    return true;
+                }, function (err) {
+                    return browser.driver.actions().click(startUpscaleButton).perform();
+                });
+            });
+        });
+    }},
+    clickRemoveNodesButton:            { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var removeNodesButton = element(by.cssContainingText('a.btn.btn-success span','remove nodes'));
+        var downscaleBox = element(by.css('div#modal-downscale-cluster'));
+
+        return browser.driver.wait(EC.elementToBeClickable(removeNodesButton), 5000, 'Remove Nodes button is NOT click able!').then(function() {
+            return browser.driver.actions().click(removeNodesButton).perform();
+        }).then(function() {
+            return browser.driver.wait(EC.visibilityOf(downscaleBox), 5000,'Remove Nodes button has NOT clicked at 1st!').then(function() {
+
+            }, function(err) {
+                return browser.driver.actions().click(removeNodesButton).perform();
+            });
+        });
+    }},
+    removeNodesFromCluster:            { value: function (hostGroup, number) {
+        var EC = protractor.ExpectedConditions;
+        var downscaleBox = element(by.css('div#modal-downscale-cluster'));
+        var hostGroupSelect = downscaleBox.element(by.css('select#hostgroupselected'));
+        var nodeNumberInput = downscaleBox.element(by.css('input#numberOfInstances'));
+        var startDownscaleButton = downscaleBox.element(by.cssContainingText('button#stackStackBtn','start downscale'));
+        var visibilityOfHostGroups = EC.visibilityOf(hostGroupSelect);
+        var visibilityOfNodes = EC.visibilityOf(nodeNumberInput);
+
+        browser.driver.wait(EC.or(visibilityOfHostGroups,visibilityOfNodes), 5000, 'Downscale inputs are NOT visible').then(function() {
+            hostGroupSelect.element(by.cssContainingText('option', hostGroup)).click();
+            nodeNumberInput.getText().then(function(value) {
+                if (value != number) {
+                    return nodeNumberInput.clear().then(function() {
+                        return nodeNumberInput.sendKeys(number);
+                    });
+                }
+            });
+        });
+
+        return browser.driver.wait(EC.elementToBeClickable(startDownscaleButton), 5000, 'Start Downscale button is NOT click able!').then(function() {
+            return startDownscaleButton.click().then(function() {
+                return browser.driver.wait(EC.invisibilityOf(downscaleBox), 5000,'Start Downscale button has NOT clicked at 1st!').then(function() {
+                    return true;
+                }, function(err) {
+                    return browser.driver.actions().click(startDownscaleButton).perform();
+                });
+            });
+        });
+    }},
     openDetails:                       { value: function () {
         var EC = protractor.ExpectedConditions;
 
@@ -420,16 +513,51 @@ ClusterModule.prototype = Object.create({}, {
             });
         });
     }},
+    createPolicy:                       { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var createPolicyButton = element(by.css('a#create-policy-collapse-btn'));
+        var createPolicyLink = createPolicyButton.$('span.ng-binding');
+
+        return browser.driver.wait(EC.elementToBeClickable(createPolicyLink), 5000, 'Create Scaling Policy button is NOT click able!').then(function() {
+            return createPolicyLink.click();
+        }).then(function() {
+            return browser.driver.wait(EC.invisibilityOf(createPolicyLink), 5000,'Create Scaling Policy button has NOT clicked at 1st!').then(function() {
+
+            }, function(err) {
+                return browser.driver.actions().click(createPolicyLink).perform();
+            });
+        });
+    }},
+    isScalingHostgroupsAvailable:       { value: function () {
+        var EC = protractor.ExpectedConditions;
+        var hostGroupSelect = element(by.css('select#policyHostGroup'));
+        var clusterHostGroups = element.all(by.repeater('hostGroup in activeClusterBlueprint.ambariBlueprint.host_groups'));
+
+        return browser.driver.wait(EC.visibilityOf(hostGroupSelect), 5000, 'Cluster Hostgroups drop-down is NOT available!').then(function() {
+            return hostGroupSelect.isDisplayed().then(function(isDisplayed) {
+                return isDisplayed;
+            }, function(err) {
+                return false;
+            });
+        }).then(function() {
+            return clusterHostGroups.then(function(hostGroups) {
+                console.log('Number of Hostgroups alerts: ' + hostGroups.length);
+                return hostGroups.length > 1;
+            }, function(err) {
+                return false;
+            });
+        });
+    }},
     createNewAWSCluster:               { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {
         this.typeName(clusterName);
         this.selectRegion(regionName);
         this.clickSetupNetworkSecurity();
 
         this.selectNetwork(networkName);
-        this.selectSecurityGroup(securityGroup);
         this.clickChooseBlueprint();
 
         this.selectBlueprint(blueprintName);
+        this.selectSecurityGroup(securityGroup);
         this.selectAmbariServer();
         this.clickReviewAndLaunch();
         this.LaunchCluster();

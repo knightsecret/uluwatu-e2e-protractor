@@ -112,6 +112,15 @@ BasePage.prototype  = Object.create({}, {
       clusterModule.createAlert();
       return clusterModule.isAmbariAlertsAvailable();
   }},
+  isScalingHostGroupsAvailable:               { value: function (name)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(name);
+
+      clusterModule.enableAutoScaling();
+      clusterModule.createPolicy();
+      return clusterModule.isScalingHostgroupsAvailable();
+  }},
   isClusterDetailsControllers:                { value: function (name)  {
       var clusterModule = new ClusterModule();
 
@@ -120,7 +129,7 @@ BasePage.prototype  = Object.create({}, {
 
       return clusterModule.isDetailsButtonSetAvailable();
   }},
-  stopCluster:                           { value: function (name)  {
+  stopCluster:                                { value: function (name)  {
       var clusterModule = new ClusterModule();
 
       this.openClusterPanel(name);
@@ -134,7 +143,7 @@ BasePage.prototype  = Object.create({}, {
       var waitForUtils = new WaitForUtils();
       return waitForUtils.waitForClusterStop();
   }},
-  startCluster:                           { value: function (name)  {
+  startCluster:                               { value: function (name)  {
       var clusterModule = new ClusterModule();
 
       this.openClusterPanel(name);
@@ -147,6 +156,32 @@ BasePage.prototype  = Object.create({}, {
   isClusterStarted:                           { value: function ()  {
       var waitForUtils = new WaitForUtils();
       return waitForUtils.waitForClusterStart();
+  }},
+  upScaleCluster:                             { value: function (clusterName, hostGroup, numberOfNodes)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(clusterName);
+      this.openClusterDetails();
+
+      clusterModule.clickAddNodesButton();
+      return clusterModule.addNodesToCluster(hostGroup, numberOfNodes);
+  }},
+  isClusterUpScaled:                          { value: function ()  {
+      var waitForUtils = new WaitForUtils();
+      return waitForUtils.waitForClusterScaleUp();
+  }},
+  downScaleCluster:                           { value: function (clusterName, hostGroup, numberOfNodes)  {
+      var clusterModule = new ClusterModule();
+
+      this.openClusterPanel(clusterName);
+      this.openClusterDetails();
+
+      clusterModule.clickRemoveNodesButton();
+      return clusterModule.removeNodesFromCluster(hostGroup, numberOfNodes);
+  }},
+  isClusterDownScaled:                        { value: function ()  {
+      var waitForUtils = new WaitForUtils();
+      return waitForUtils.waitForClusterScaleDown();
   }}
 
 });

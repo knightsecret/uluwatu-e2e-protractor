@@ -11,6 +11,7 @@ require('protractor-console');
  */
 exports.config = {
   plugins: [{
+      path: 'node_modules/protractor-console',
       package: 'protractor-console',
       logLevels: ['severe']
   }],
@@ -21,15 +22,16 @@ exports.config = {
   // Capabilities to be passed to the WebDriverJS instance.
   capabilities: {
       'browserName': 'firefox',
-      //'browserName': 'chrome',
-      // Chrome is not allowed to create a SUID sandbox when running inside Docker
 /*
+      'browserName': 'chrome',
       'chromeOptions': {
-          'args': ['no-sandbox']
+          'args': [
+              '--no-sandbox',
+              '--disable-web-security'
+          ]
       },
 */
       javascriptEnabled: true,
-      locationContextEnabled: true,
       handlesAlerts: true,
       loggingPrefs: { browser: 'SEVERE', driver: 'ALL' }
   },
@@ -45,15 +47,24 @@ exports.config = {
       'tests/CredentialSpec.js',
       'tests/ClusterSpec.js'
   ],
+
   /**
    * Define suits with the name of the Spec patterns.
    * Note: The spec patterns are relative to this directory (where the configuration file is)!
-   *
+   */
   suites: {
-      login: ['./tests/LoginSpec.js'],
-      blueprint: ['./tests/BlueprintSpec.js']
+      smoke: [
+          'tests/LoginSpec.js',
+          'tests/BlueprintSpec.js',
+          'tests/CredentialSpec.js'
+      ],
+      regression: [
+          'tests/LoginSpec.js',
+          'tests/BlueprintSpec.js',
+          'tests/CredentialSpec.js',
+          'tests/ClusterSpec.js'
+      ]
   },
-  */
 
   /**
    * Jasmine is a behavior-driven development framework for testing JavaScript code.
@@ -81,6 +92,11 @@ exports.config = {
 
   onPrepare: function() {
       var currentURL;
+
+      console.log("The Base URL is: " + process.env.BASE_URL);
+      console.log("The Username is: " + process.env.USERNAME);
+      console.log("The Password is: " + process.env.PASSWORD);
+      console.log("The SSH Key is: " + process.env.SSHKEY);
 
       // WebDriver general settings for browsers.
       browser.driver.manage().deleteAllCookies();
