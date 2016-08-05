@@ -23,9 +23,9 @@ DashboardPage.prototype  = Object.create({}, {
 
 
     return browser.driver.wait(EC.visibilityOf(expandedButton), 2000,'Button has NOT expanded!').then(function() {
-    //  console.log('Button has already expanded!');
+      //  console.log('Button has already expanded!');
     }, function(err) {
-    //  console.log('Button has NOT expanded!');
+      //  console.log('Button has NOT expanded!');
       return browser.driver.actions().click(expandButton).perform().then(function() {
         return browser.driver.wait(function() {
           return expandedButton.isDisplayed();
@@ -39,9 +39,9 @@ DashboardPage.prototype  = Object.create({}, {
     var expandedPanel = browser.element(by.css('.panel-collapse.panel-btn-in-header-collapse.collapse.in'));
 
     return browser.driver.wait(EC.visibilityOf(expandedPanel), 2000,'Manage Credentials has NOT expanded!').then(function() {
-    //  console.log('Manage Credentials has already expanded!');
+      //  console.log('Manage Credentials has already expanded!');
     }, function(err) {
-    //  console.log('Manage Credentials has NOT expanded!');
+      //  console.log('Manage Credentials has NOT expanded!');
       return browser.driver.actions().click(expandButton).perform().then(function() {
         browser.waitForAngular();
         return browser.driver.wait(function() {

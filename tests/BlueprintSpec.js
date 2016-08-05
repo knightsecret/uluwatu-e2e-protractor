@@ -16,7 +16,7 @@ describe('Testing blueprint creation', function () {
       console.log('Blueprint creation test setup has started!');
       dashboardPage.deleteBlueprint(newName);
       dashboardPage.getBadgeValue(3).then(function (value) {
-          defaultBlueprints = value;
+        defaultBlueprints = value;
       });
     });
 
