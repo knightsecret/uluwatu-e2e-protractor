@@ -21,7 +21,8 @@ exports.config = {
     directConnect: true,
     // Capabilities to be passed to the WebDriverJS instance.
     capabilities: {
-        //'browserName': 'firefox',
+        'browserName': 'firefox',
+/*
         'browserName': 'chrome',
         'chromeOptions': {
             'args': [
@@ -29,6 +30,7 @@ exports.config = {
                 '--disable-web-security'
             ]
         },
+*/
         javascriptEnabled: true,
         handlesAlerts: true,
         loggingPrefs: { browser: 'SEVERE', driver: 'ALL' }
