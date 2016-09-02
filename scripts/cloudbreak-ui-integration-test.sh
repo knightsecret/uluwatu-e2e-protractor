@@ -14,10 +14,16 @@ echo artifact version: $ARTIFACT_VERSION
 
 docker pull hortonworks/docker-e2e-protractor
 
+export TEST_CONTAINER_NAME=uluwatu-e2e-$ENVIRONMENT
+
+if [[ "$(docker inspect -f {{.State.Running}} $TEST_CONTAINER_NAME 2> /dev/null)" == "true" ]]; then
+  docker rm -f $TEST_CONTAINER_NAME
+fi
+
 docker run -i \
 --privileged \
 --rm \
---name uluwatu-e2e-$ENVIRONMENT \
+--name $TEST_CONTAINER_NAME \
 --net=host \
 -e "BASE_URL=$BASE_URL" \
 -e "USERNAME=$USERNAME" \
