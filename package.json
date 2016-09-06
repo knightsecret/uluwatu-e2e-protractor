@@ -14,14 +14,14 @@
     "express": "~4.13.1",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
-    "pug": "^2.0.0-alpha6",
-    "jstransformer": "^0.0.4"
+    "pug": "^2.0.0-beta6",
+    "jstransformer": "^1.0.0"
   },
   "devDependencies": {
     "jasmine-allure-reporter": "^1.0.1",
     "jasmine-reporters": "^2.1.1",
     "jasmine-spec-reporter": "^2.4.0",
-    "protractor": "^3.3.0",
+    "protractor": "^4.0.4",
     "protractor-console": "^2.0.1",
     "protractor-jasmine2-html-reporter": "^0.0.5"
   }
