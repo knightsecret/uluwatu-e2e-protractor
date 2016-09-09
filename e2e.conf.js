@@ -33,7 +33,10 @@ exports.config = {
 
       },
 */
+      locationContextEnabled: true,
       javascriptEnabled: true,
+      acceptSslCerts: true,
+      trustAllSSLCertificates: true,
       handlesAlerts: true,
       loggingPrefs: { browser: 'SEVERE', driver: 'ALL' }
   },
@@ -102,7 +105,9 @@ exports.config = {
 
       // WebDriver general settings for browsers.
       browser.driver.manage().deleteAllCookies();
-      browser.driver.manage().window().maximize();
+      // https://github.com/angular/protractor/issues/1467
+      browser.driver.manage().window().setSize(1280, 1024);
+      //browser.driver.manage().window().maximize();
       browser.driver.manage().timeouts().implicitlyWait(20000);
       browser.driver.manage().timeouts().pageLoadTimeout(20000);
       /**
