@@ -81,7 +81,7 @@ exports.config = {
         includeStackTrace: true,
         isVerbose: true,
         // Default waiting time in ms before test fails.
-        defaultTimeoutInterval: 50000
+        defaultTimeoutInterval: 60000
     },
 
     /**
@@ -101,8 +101,8 @@ exports.config = {
         // WebDriver general settings for browsers.
         browser.driver.manage().deleteAllCookies();
         browser.driver.manage().window().maximize();
-        browser.driver.manage().timeouts().implicitlyWait(20000);
-        browser.driver.manage().timeouts().pageLoadTimeout(20000);
+        browser.driver.manage().timeouts().implicitlyWait(60000);
+        browser.driver.manage().timeouts().pageLoadTimeout(60000);
         /**
          * Open the base URL that defined above.
          * OR
