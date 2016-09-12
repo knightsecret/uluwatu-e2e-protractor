@@ -108,7 +108,7 @@ exports.config = {
       // https://github.com/angular/protractor/issues/1467
       browser.driver.manage().window().setSize(1280, 1024);
       //browser.driver.manage().window().maximize();
-      browser.driver.manage().timeouts().implicitlyWait(60000);
+      browser.driver.manage().timeouts().implicitlyWait(20000);
       browser.driver.manage().timeouts().pageLoadTimeout(60000);
       /**
        * Open the base URL that defined above.
