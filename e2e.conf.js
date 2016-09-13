@@ -10,7 +10,7 @@ require('protractor-console');
  * @type {{seleniumAddress: string, capabilities: {browserName: string}, specs: string[], framework: string, jasmineNodeOpts: {onComplete: null, showColors: boolean, includeStackTrace: boolean, isVerbose: boolean, defaultTimeoutInterval: number}, baseUrl: *, onPrepare: exports.config.onPrepare}}
  */
 exports.config = {
-  plugins: [{
+   plugins: [{
       path: 'node_modules/protractor-console',
       package: 'protractor-console',
       logLevels: ['severe']
@@ -61,12 +61,16 @@ exports.config = {
       smoke: [
           'tests/LoginSpec.js',
           'tests/BlueprintSpec.js',
-          'tests/CredentialSpec.js'
+          'tests/CredentialSpec.js',
+          'tests/TemplateSpec.js',
+          'tests/NetworkSpec.js'
       ],
       regression: [
           'tests/LoginSpec.js',
           'tests/BlueprintSpec.js',
           'tests/CredentialSpec.js',
+          'tests/TemplateSpec.js',
+          'tests/NetworkSpec.js',
           'tests/ClusterSpec.js'
       ]
   },

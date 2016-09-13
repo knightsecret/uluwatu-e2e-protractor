@@ -561,6 +561,20 @@ ClusterModule.prototype = Object.create({}, {
         this.selectAmbariServer();
         this.clickReviewAndLaunch();
         this.LaunchCluster();
+    }},
+    createNewOpenStackCluster:         { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {
+        this.typeName(clusterName);
+        this.selectRegion(regionName);
+        this.clickSetupNetworkSecurity();
+
+        this.selectNetwork(networkName);
+        this.clickChooseBlueprint();
+
+        this.selectBlueprint(blueprintName);
+        this.selectSecurityGroup(securityGroup);
+        this.selectAmbariServer();
+        this.clickReviewAndLaunch();
+        this.LaunchCluster();
     }}
 });
 module.exports = ClusterModule;

@@ -4,17 +4,19 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing blueprint creation', function () {
   var dashboardPage;
-  var newName = 'autotest-multi-node-hdfs-yarn';
+  var newAWSName = 'autotest-multi-node-hdfs-yarn';
+  var newOSName = 'autotest-scaling-node-hdfs-yarn';
   var newDescription = 'autotest';
-  var newUrl = 'https://raw.githubusercontent.com/sequenceiq/cloudbreak/master/integration-test/src/main/resources/blueprint/multi-node-hdfs-yarn.bp';
+  var newAWSUrl = 'https://raw.githubusercontent.com/sequenceiq/uluwatu-e2e-protractor/master/blueprints/multi-node-hdfs-yarn.bp';
+  var newOSUrl = 'https://raw.githubusercontent.com/sequenceiq/uluwatu-e2e-protractor/master/blueprints/scaling-node-hdfs-yarn.bp';
 
-  describe('with ' + newName + ' blueprint', function () {
+  describe('with ' + newAWSName + ' HDP 2.5 blueprint', function () {
     dashboardPage = new DashboardPage();
     var defaultBlueprints = 0;
 
     beforeAll(function() {
-      console.log('Blueprint creation test setup has started!');
-      dashboardPage.deleteBlueprint(newName);
+      console.log('HDP 2.5 blueprint creation test setup has started!');
+      dashboardPage.deleteBlueprint(newAWSName);
       dashboardPage.getBadgeValue(3).then(function (value) {
           defaultBlueprints = value;
       });
@@ -24,11 +26,36 @@ describe('Testing blueprint creation', function () {
       expect(dashboardPage.getDefaultBlueprints).toBeTruthy();
     });
 
-    it('Create new blueprint', function () {
-      dashboardPage.createBlueprint(newName, newDescription, newUrl);
+    it('Create new HDP 2.5 blueprint', function () {
+      dashboardPage.createBlueprint(newAWSName, newDescription, newAWSUrl);
       dashboardPage.getBadgeValue(3).then(function (value) {
         expect(value).toBeGreaterThan(defaultBlueprints);
       });
     });
   });
+
+  describe('with ' + newOSName + ' HDP 2.4 blueprint', function () {
+    dashboardPage = new DashboardPage();
+    var defaultBlueprints = 0;
+
+    beforeAll(function() {
+      console.log('HDP 2.4 blueprint creation test setup has started!');
+      dashboardPage.deleteBlueprint(newOSName);
+      dashboardPage.getBadgeValue(3).then(function (value) {
+        defaultBlueprints = value;
+      });
+    });
+
+    it('Default blueprints should be available', function () {
+      expect(dashboardPage.getDefaultBlueprints).toBeTruthy();
+    });
+
+    it('Create new HDP 2.4 blueprint', function () {
+      dashboardPage.createBlueprint(newOSName, newDescription, newOSUrl);
+      dashboardPage.getBadgeValue(3).then(function (value) {
+        expect(value).toBeGreaterThan(defaultBlueprints);
+      });
+    });
+  });
+
 });

@@ -1,6 +1,8 @@
 'use strict';
 var CredentialModule = require('../modules/CredentialModule.js');
 var BlueprintModule = require('../modules/BlueprintModule.js');
+var TemplateModule = require('../modules/TemplateModule.js');
+var NetworkModule = require('../modules/NetworkModule.js');
 
 var DashboardPage = function () {
   browser.waitForAngular();
@@ -13,9 +15,41 @@ var DashboardPage = function () {
 };
 
 DashboardPage.prototype  = Object.create({}, {
+  networksexpandButton:    { get: function ()  { return element(by.css('a#network-btn'));      }},
+  templatesexpandButton:   { get: function ()  { return element(by.css('a#templates-btn'));    }},
   blueprintsexpandButton:  { get: function ()  { return element(by.css('a#blueprints-btn'));   }},
   credentialsexpandButton: { get: function ()  { return element(by.css('a#credentials-btn'));  }},
 
+  expandNetworks:          { value: function ()  {
+    var EC = protractor.ExpectedConditions;
+    var expandButton = this.networksexpandButton;
+    var expandedButton = element(by.css('a#network-btn[aria-expanded="true"]'));
+
+    return browser.driver.wait(EC.stalenessOf(expandedButton), 2000,'Manage Networks has already expanded!').then(function() {
+      return expandButton.click().then(function() {
+        return browser.driver.wait(function() {
+          return expandedButton.isDisplayed();
+        }, 2000, 'Cannot see this element!');
+      });
+    }, function(err) {
+      //console.log('Manage Networks have NOT expanded!');
+    });
+  }},
+  expandTemplates:        { value: function ()  {
+    var EC = protractor.ExpectedConditions;
+    var expandButton = this.templatesexpandButton;
+    var expandedButton = element(by.css('a#templates-btn[aria-expanded="true"]'));
+
+    return browser.driver.wait(EC.stalenessOf(expandedButton), 2000,'Manage Templates has already expanded!').then(function() {
+      return expandButton.click().then(function() {
+        return browser.driver.wait(function() {
+          return expandedButton.isDisplayed();
+        }, 2000, 'Cannot see this element!');
+      });
+    }, function(err) {
+      //console.log('Manage Templates have NOT expanded!');
+    });
+  }},
   expandBlueprints:        { value: function ()  {
     var EC = protractor.ExpectedConditions;
     var expandButton = this.blueprintsexpandButton;
@@ -51,15 +85,20 @@ DashboardPage.prototype  = Object.create({}, {
       return parseInt(value.trim(), 10);
     });
   }},
-  deleteAWSCredential:     { value: function (name)  {
+  deleteCredential:     { value: function (name)  {
     this.expandCredentials();
     var credentialModule = new CredentialModule();
-    return credentialModule.deleteAWSCredential(name);
+    return credentialModule.deleteCredential(name);
   }},
   createAWSCredential:     { value: function (name, description, iamRole, sshKey)  {
     this.expandCredentials();
     var credentialModule = new CredentialModule();
     return credentialModule.createAWSCredential(name, description, iamRole, sshKey);
+  }},
+  createOSCredential:     { value: function (name, description, user, password, tenant, endpoint, apiFacing, sshKey)  {
+    this.expandCredentials();
+    var credentialModule = new CredentialModule();
+    return credentialModule.createOpenStackCredential(name, description, user, password, tenant, endpoint, apiFacing, sshKey);
   }},
   getDefaultBlueprints:    { value: function ()  {
     this.expandBlueprints();
@@ -75,6 +114,36 @@ DashboardPage.prototype  = Object.create({}, {
     this.expandBlueprints();
     var blueprintModule = new BlueprintModule();
     return blueprintModule.createBlueprint(name, description, url);
+  }},
+  getDefaultTemplates:     { value: function ()  {
+    this.expandTemplates();
+    var templateModule = new TemplateModule();
+    return templateModule.isDefaultTemplateAvailable();
+  }},
+  deleteTemplate:          { value: function (name)  {
+    this.expandTemplates();
+    var templateModule = new TemplateModule();
+    return templateModule.deleteTemplate(name);
+  }},
+  createOSTemplate:        { value: function (name, description, instanceType, attachedVolumes, volumeSize)  {
+    this.expandTemplates();
+    var templateModule = new TemplateModule();
+    return templateModule.createOpenStackTemplate(name, description, instanceType, attachedVolumes, volumeSize);
+  }},
+  getDefaultNetworks:      { value: function ()  {
+    this.expandNetworks();
+    var networkModule = new NetworkModule();
+    return networkModule.isDefaultNetworkAvailable();
+  }},
+  deleteNetwork:           { value: function (name)  {
+    this.expandNetworks();
+    var networkModule = new NetworkModule();
+    return networkModule.deleteNetwork(name);
+  }},
+  createOSNetwork:         { value: function (name, description, subnetCIDR, floatingPoolID)  {
+    this.expandNetworks();
+    var networkModule = new NetworkModule();
+    return networkModule.createOpenStackNetwork(name, description, subnetCIDR, floatingPoolID);
   }}
 });
 

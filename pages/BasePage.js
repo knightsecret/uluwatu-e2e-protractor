@@ -71,6 +71,13 @@ BasePage.prototype  = Object.create({}, {
       var widgetModule = new WidgetModule();
       return widgetModule.isClusterPresent(name);
   }},
+  createNewOSCluster:                        { value: function (name, region, network, securityGroup, blueprint) {
+      var clusterModule = new ClusterModule();
+      this.openClusterCreate();
+      clusterModule.createNewOpenStackCluster(name, region, network, securityGroup, blueprint);
+      var widgetModule = new WidgetModule();
+      return widgetModule.isClusterPresent(name);
+  }},
   openClusterPanel:                           { value: function (name)  {
       var widgetModule = new WidgetModule();
       return widgetModule.openClusterPanel(name);

@@ -17,46 +17,46 @@ var CredentialModule = function () {
 
 CredentialModule.prototype = Object.create({}, {
     // Tab pages
-    awsTab:                            { get: function () {      return element(by.css('a#awsChange'));                                      }},
-    azureTab:                          { get: function () {      return element(by.css('a#azureRmChange'));                                  }},
-    gcpTab:                            { get: function () {      return element(by.css('a#gcpChange'));                                      }},
-    openstackTab:                      { get: function () {      return element(by.css('a#openstackChange'));                                }},
+    awsTab:                            { get: function () {      return element(by.css('a#awsChange'));                                                             }},
+    azureTab:                          { get: function () {      return element(by.css('a#azureRmChange'));                                                         }},
+    gcpTab:                            { get: function () {      return element(by.css('a#gcpChange'));                                                             }},
+    openstackTab:                      { get: function () {      return element(by.css('a#openstackChange'));                                                       }},
     // AWS credential pane
-    awscredentialForm:                 { get: function () {      return element(by.css('form[name=awsCredentialForm]'));                     }},
-    awsnameBox:                        { get: function () {      return this.awscredentialForm.element(by.css('input#awscname'));            }},
-    awsdescriptionBox:                 { get: function () {      return this.awscredentialForm.element(by.css('input#awscdescription'));     }},
-    awsiamroleBox:                     { get: function () {      return this.awscredentialForm.element(by.css('input#croleArn'));            }},
-    awssshBox:                         { get: function () {      return this.awscredentialForm.element(by.css('textarea#aws_sshPublicKey')); }},
-    awscreateButton:                   { get: function () {      return this.awscredentialForm.element(by.css('a#createAwsCredential'));     }},
+    awscredentialForm:                 { get: function () {      return element(by.css('form[name=awsCredentialForm]'));                                            }},
+    awsnameBox:                        { get: function () {      return this.awscredentialForm.element(by.css('input#awscname'));                                   }},
+    awsdescriptionBox:                 { get: function () {      return this.awscredentialForm.element(by.css('input#awscdescription'));                            }},
+    awsiamroleBox:                     { get: function () {      return this.awscredentialForm.element(by.css('input#croleArn'));                                   }},
+    awssshBox:                         { get: function () {      return this.awscredentialForm.element(by.css('textarea#aws_sshPublicKey'));                        }},
+    awscreateButton:                   { get: function () {      return this.awscredentialForm.element(by.css('a#createAwsCredential'));                            }},
     // Azure credential pane
-    azurecredentialForm:               { get: function () {      return element(by.css('form[name=azureRmCredentialForm]'));                 }},
-    azurenameBox:                      { get: function () {      return this.azurecredentialForm.element(by.css('form[name=azureRmCredentialForm] input#cname'));  }},
-    azuredescriptionBox:               { get: function () {      return this.azurecredentialForm.element(by.css('input#cdescription'));      }},
-    azuresubscriptionBox:              { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=subscriptionId]'));                     }},
-    azureappBox:                       { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=accesKey]'));     }},
-    azurepasswordBox:                  { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=secretKey]'));    }},
-    azuretenantBox:                    { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=tenantId]'));     }},
-    azuresshBox:                       { get: function () {      return this.azurecredentialForm.element(by.css('textarea#azure_sshPublicKey'));                   }},
-    azurecreateButton:                 { get: function () {      return  this.azurecredentialForm.element(by.css('a#createAzureRmCredential'));                    }},
+    azurecredentialForm:               { get: function () {      return element(by.css('form[name=azureRmCredentialForm]'));                                        }},
+    azurenameBox:                      { get: function () {      return this.azurecredentialForm.element(by.css('form[name=azureRmCredentialForm] input#cname'));   }},
+    azuredescriptionBox:               { get: function () {      return this.azurecredentialForm.element(by.css('input#cdescription'));                             }},
+    azuresubscriptionBox:              { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=subscriptionId]'));                      }},
+    azureappBox:                       { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=accesKey]'));                            }},
+    azurepasswordBox:                  { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=secretKey]'));                           }},
+    azuretenantBox:                    { get: function () {      return this.azurecredentialForm.element(by.css('input[id*=tenantId]'));                            }},
+    azuresshBox:                       { get: function () {      return this.azurecredentialForm.element(by.css('textarea#azure_sshPublicKey'));                    }},
+    azurecreateButton:                 { get: function () {      return  this.azurecredentialForm.element(by.css('a#createAzureRmCredential'));                     }},
     // GCP credential pane
-    gcpcredentialForm:                 { get: function () {      return element(by.css('form[name=gcpCredentialForm]'));                     }},
-    gcpnameBox:                        { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcpcname'));            }},
-    gcpdescriptionBox:                 { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcpcdescription'));     }},
-    gcpprojectBox:                     { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcp_tprojectId'));      }},
-    gcpemailBox:                       { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcpcsubscriptionId'));  }},
-    gcpprivatekeyBox:                  { get: function () {      return this.gcpcredentialForm.element(by.css('input.ng-isolate-scope'));    }},
-    gcpsshBox:                         { get: function () {      return this.gcpcredentialForm.element(by.css('textarea#gcp_sshPublicKey')); }},
-    gcpcreateButton:                   { get: function () {      return this.gcpcredentialForm.element(by.css('a#createGcpCredential'));     }},
+    gcpcredentialForm:                 { get: function () {      return element(by.css('form[name=gcpCredentialForm]'));                                            }},
+    gcpnameBox:                        { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcpcname'));                                   }},
+    gcpdescriptionBox:                 { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcpcdescription'));                            }},
+    gcpprojectBox:                     { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcp_tprojectId'));                             }},
+    gcpemailBox:                       { get: function () {      return this.gcpcredentialForm.element(by.css('input#gcpcsubscriptionId'));                         }},
+    gcpprivatekeyBox:                  { get: function () {      return this.gcpcredentialForm.element(by.css('input.ng-isolate-scope'));                           }},
+    gcpsshBox:                         { get: function () {      return this.gcpcredentialForm.element(by.css('textarea#gcp_sshPublicKey'));                        }},
+    gcpcreateButton:                   { get: function () {      return this.gcpcredentialForm.element(by.css('a#createGcpCredential'));                            }},
     // OpenStack
-    openstackcredentialForm:           { get: function () {      return element(by.css('form[name=openstackCredentialForm]'));               }},
-    openstacknameBox:                  { get: function () {      return this.openstackcredentialForm.element(by.css('input#openstackcname'));}},
-    openstackdescriptionBox:           { get: function () {      return this.openstackcredentialForm.element(by.css('input#openstackcdescription'));               }},
-    openstackuserBox:                  { get: function () {      return this.openstackcredentialForm.element(by.css('input#ouser'));         }},
-    openstackpasswordBox:              { get: function () {      return this.openstackcredentialForm.element(by.css('input#opassword'));     }},
-    openstacktenantBox:                { get: function () {      return this.openstackcredentialForm.element(by.css('input#otenantName'));   }},
-    openstackendpointBox:              { get: function () {      return this.openstackcredentialForm.element(by.css('input#oendpoint'));     }},
-    openstacksshBox:                   { get: function () {      return this.openstackcredentialForm.element(by.css('textarea#openstack_sshPublicKey'));           }},
-    openstackcreateButton:             { get: function () {      return this.openstackcredentialForm.element(by.css('a#createopenstackCredential'));               }},
+    openstackcredentialForm:           { get: function () {      return element(by.css('form[name=openstackCredentialForm]'));                                      }},
+    openstacknameBox:                  { get: function () {      return this.openstackcredentialForm.element(by.css('input#openstackcname'));                       }},
+    openstackdescriptionBox:           { get: function () {      return this.openstackcredentialForm.element(by.css('input#openstackcdescription'));                }},
+    openstackuserBox:                  { get: function () {      return this.openstackcredentialForm.element(by.css('input#ouser'));                                }},
+    openstackpasswordBox:              { get: function () {      return this.openstackcredentialForm.element(by.css('input#opassword'));                            }},
+    openstacktenantBox:                { get: function () {      return this.openstackcredentialForm.element(by.css('input#otenantName'));                          }},
+    openstackendpointBox:              { get: function () {      return this.openstackcredentialForm.element(by.css('input#oendpoint'));                            }},
+    openstacksshBox:                   { get: function () {      return this.openstackcredentialForm.element(by.css('textarea#openstack_sshPublicKey'));            }},
+    openstackcreateButton:             { get: function () {      return this.openstackcredentialForm.element(by.css('a#createopenstackCredential'));                }},
 
     openCreatePanel:                   { value: function () {
         var EC = protractor.ExpectedConditions;
@@ -75,6 +75,9 @@ CredentialModule.prototype = Object.create({}, {
                 return browser.driver.actions().click(createButton).perform();
             });
         });
+    }},
+    selectKeystone:                    { value: function (key) {
+        return this.openstackcredentialForm.element(by.cssContainingText('select#keystoneVersion option', key)).click();
     }},
     typeName:                          { value: function (provider, name) {
         switch (provider) {
@@ -229,7 +232,6 @@ CredentialModule.prototype = Object.create({}, {
         return this.gcpemailBox.sendKeys(email);
     }},
     typeP12Key:                        { value: function (keyPath) {
-        // keyPath: /Users/aszegedi/Downloads/SequenceIQ Hadoop as a Service-3d802ef03fa2.p12
         return this.gcpprivatekeyBox.sendKeys(keyPath);
     }},
     typeUser:                          { value: function (user) {
@@ -238,7 +240,10 @@ CredentialModule.prototype = Object.create({}, {
     typeEndpoint:                      { value: function (endpoint) {
         return this.openstackendpointBox.sendKeys(endpoint);
     }},
-    deleteAWSCredential:               { value: function (name) {
+    selectAPIFacing:                   { value: function (key) {
+        return this.openstackcredentialForm.element(by.cssContainingText('select#facing option', key)).click();
+    }},
+    deleteCredential:                  { value: function (name) {
         try {
             browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
                 browser.element(by.cssContainingText('div>h5>a', name)).click();
@@ -295,15 +300,17 @@ CredentialModule.prototype = Object.create({}, {
         this.clickCreateCredential('GCP', name);
         browser.waitForAngular();
     }},
-    createOpenStackCredential:         { value: function (name, description, user, password, tenantName, endpoint, sshKey) {
+    createOpenStackCredential:         { value: function (name, description, user, password, tenant, endpoint, apiFacing, sshKey) {
         this.openCreatePanel();
         this.openstackTab.click();
+        this.selectKeystone('v2');
         this.typeName('OpenStack', name);
         this.typeDescription('OpenStack', description);
         this.typeUser(user);
         this.typePassword('OpenStack', password);
-        this.typeTenantId('OpenStack', tenantName);
+        this.typeTenantId('OpenStack', tenant);
         this.typeEndpoint(endpoint);
+        this.selectAPIFacing(apiFacing);
         this.typeSSHKey('OpenStack', sshKey);
         this.clickCreateCredential('OpenStack', name);
         browser.waitForAngular();
