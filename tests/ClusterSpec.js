@@ -13,7 +13,7 @@ describe('Testing cluster creation', function () {
   var blueprintOSName = 'autotest-scaling-node-hdfs-yarn';
   var templateOSName = 'autotest-kilo-tmp';
   var clusterAWSName = 'autotest-aws-cls';
-  var clusterOSName = 'autotestoscls';
+  var clusterOSName = 'autotest-os-cls';
   var regionAWSName = 'EU (Ireland)';
   var regionOSName = 'local';
   var networkAWSName = 'default-aws-network';
@@ -116,7 +116,6 @@ describe('Testing cluster creation', function () {
             dashboardPage.deleteBlueprint(blueprintOSName);
             dashboardPage.deleteCredential(credentialOSName);
         });
-
         afterEach(function() {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
         });

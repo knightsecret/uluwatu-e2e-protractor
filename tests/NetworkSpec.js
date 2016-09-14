@@ -7,7 +7,7 @@ describe('Testing network creation', function () {
   var newName = 'autotest-kilo-net';
   var newDescription = 'autotest';
   var newSubnetCIDR = '10.0.0.0/24';
-  var newFloatingPoolID = '999e09bc-cf75-4a19-98fb-c0b4ddee6d93';
+  var newFloatingPoolID = process.env.OSFLOATINGID;
 
   describe('with ' + newName + ' network', function () {
     dashboardPage = new DashboardPage();

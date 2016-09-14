@@ -25,12 +25,12 @@ BasePage.prototype  = Object.create({}, {
 
   selectCredentialByName:                     { value: function (name)  {
     var EC = protractor.ExpectedConditions;
-    var button = this.credentialList.element(by.partialLinkText('select a credential'));
+    var button = this.credentialList.element(by.css('.dropdown-toggle'));
     var isClickable = EC.elementToBeClickable(button);
 
     browser.driver.wait(isClickable, 10000, 'The Credential select drop-down is NOT available!');
 
-    this.credentialList.element(by.partialLinkText('select a credential')).click().then(function() {
+    button.click().then(function() {
       return element(by.cssContainingText('li>a', name)).click().then(function () {
         browser.waitForAngular();
         return browser.driver.wait(function() {

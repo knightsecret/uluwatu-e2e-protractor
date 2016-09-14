@@ -34,12 +34,12 @@ describe('Testing blueprint creation', function () {
     });
   });
 
-  describe('with ' + newOSName + ' HDP 2.4 blueprint', function () {
+  describe('with ' + newOSName + ' custom blueprint', function () {
     dashboardPage = new DashboardPage();
     var defaultBlueprints = 0;
 
     beforeAll(function() {
-      console.log('HDP 2.4 blueprint creation test setup has started!');
+      console.log('Custom blueprint creation test setup has started!');
       dashboardPage.deleteBlueprint(newOSName);
       dashboardPage.getBadgeValue(3).then(function (value) {
         defaultBlueprints = value;
@@ -50,7 +50,7 @@ describe('Testing blueprint creation', function () {
       expect(dashboardPage.getDefaultBlueprints).toBeTruthy();
     });
 
-    it('Create new HDP 2.4 blueprint', function () {
+    it('Create new custom blueprint', function () {
       dashboardPage.createBlueprint(newOSName, newDescription, newOSUrl);
       dashboardPage.getBadgeValue(3).then(function (value) {
         expect(value).toBeGreaterThan(defaultBlueprints);

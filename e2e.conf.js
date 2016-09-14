@@ -50,6 +50,8 @@ exports.config = {
       'tests/LoginSpec.js',
       'tests/BlueprintSpec.js',
       'tests/CredentialSpec.js',
+      'tests/TemplateSpec.js',
+      'tests/NetworkSpec.js',
       'tests/ClusterSpec.js'
   ],
 

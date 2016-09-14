@@ -163,8 +163,8 @@ WaitForUtils.prototype = Object.create({}, {
 
         var successfullyScaledDown = element(by.css('input#notification-n-filtering[value*="successfully downscaled"]'));
 
-        var notifications = ['Scaling down the Ambari', 'from the host group', 'successfully downscaled'];
-        var messages = ['Scaling down has NOT started!', 'Infrastructure reduction has NOT started!', 'Infrastructure down scale has NOT finished!'];
+        var notifications = ['Removing', 'successfully downscaled'];
+        var messages = ['Scaling down has NOT started!', 'Infrastructure down scale has NOT finished!'];
 
         this.checkingNotifications(notifications, messages);
 
