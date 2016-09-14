@@ -11,19 +11,19 @@ var ClusterModule = function () {
 };
 
 ClusterModule.prototype = Object.create({}, {
-    clustercreateForm:                 { get: function () {     return element(by.css('div#create-cluster-panel-collapse'));              }},
+    clustercreateForm:                 { get: function () {     return element(by.css('div#create-cluster-panel-collapse'));                                                                                }},
     // Tab pages
-    configureTab:                      { get: function () {     return element(by.cssContainingText('a', 'Configure Cluster'));           }},
-    networkTab:                        { get: function () {     return element(by.cssContainingText('a', 'Setup Network and Security'));  }},
-    blueprintTab:                      { get: function () {     return element(by.cssContainingText('a', 'Choose Blueprint'));            }},
-    filesystemTab:                     { get: function () {     return element(by.cssContainingText('a', 'Add File System'));             }},
-    reviewlaunchTab:                   { get: function () {     return element(by.cssContainingText('a', 'Review and Launch'));           }},
+    configureTab:                      { get: function () {     return element(by.cssContainingText('a', 'Configure Cluster'));                                                                             }},
+    networkTab:                        { get: function () {     return element(by.cssContainingText('a', 'Setup Network and Security'));                                                                    }},
+    blueprintTab:                      { get: function () {     return element(by.cssContainingText('a', 'Choose Blueprint'));                                                                              }},
+    filesystemTab:                     { get: function () {     return element(by.cssContainingText('a', 'Add File System'));                                                                               }},
+    reviewlaunchTab:                   { get: function () {     return element(by.cssContainingText('a', 'Review and Launch'));                                                                             }},
     // Configure Cluster tab
-    clusternameBox:                    { get: function () {     return element(by.css('div#configure_cluster input#cl_clusterName'));     }},
-    securityButton:                    { get: function () {     return element.all(by.cssContainingText('div#configure_cluster .btn.btn-sm.btn-default.ng-binding', 'Setup Network and Security')); }},
+    clusternameBox:                    { get: function () {     return element(by.css('div#configure_cluster input#cl_clusterName'));                                                                       }},
+    securityButton:                    { get: function () {     return element.all(by.cssContainingText('div#configure_cluster button.btn.btn-sm.btn-default.ng-binding', 'Setup Network and Security'));   }},
     // Setup Network and Security tab
-    networknameSelect:                 { get: function () {     return element(by.css('select#selectClusterNetwork'));                    }},
-    blueprintButton:                   { get: function () {     return element(by.cssContainingText('div#configure_security_group .btn.btn-sm.btn-default.ng-binding', 'Choose Blueprint'));        }},
+    networknameSelect:                 { get: function () {     return element(by.css('select#selectClusterNetwork'));                                                                                      }},
+    blueprintButton:                   { get: function () {     return element(by.cssContainingText('div#configure_security_group button.btn.btn-sm.btn-default.ng-binding', 'Choose Blueprint'));          }},
 
     typeName:                          { value: function (name) {
         return this.clusternameBox.sendKeys(name);
@@ -549,6 +549,20 @@ ClusterModule.prototype = Object.create({}, {
         });
     }},
     createNewAWSCluster:               { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {
+        this.typeName(clusterName);
+        this.selectRegion(regionName);
+        this.clickSetupNetworkSecurity();
+
+        this.selectNetwork(networkName);
+        this.clickChooseBlueprint();
+
+        this.selectBlueprint(blueprintName);
+        this.selectSecurityGroup(securityGroup);
+        this.selectAmbariServer();
+        this.clickReviewAndLaunch();
+        this.LaunchCluster();
+    }},
+    createNewOpenStackCluster:         { value: function (clusterName, regionName, networkName, securityGroup, blueprintName) {
         this.typeName(clusterName);
         this.selectRegion(regionName);
         this.clickSetupNetworkSecurity();

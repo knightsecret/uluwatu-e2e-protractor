@@ -22,16 +22,21 @@ exports.config = {
     // Capabilities to be passed to the WebDriverJS instance.
     capabilities: {
         'browserName': 'firefox',
-/*
-        'browserName': 'chrome',
-        'chromeOptions': {
-            'args': [
-                '--no-sandbox',
-                '--disable-web-security'
-            ]
-        },
-*/
+        /*
+
+         'browserName': 'chrome',
+         'chromeOptions': {
+         'args': [
+         '--no-sandbox',
+         '--disable-web-security'
+         ]
+
+         },
+         */
+        locationContextEnabled: true,
         javascriptEnabled: true,
+        acceptSslCerts: true,
+        trustAllSSLCertificates: true,
         handlesAlerts: true,
         loggingPrefs: { browser: 'SEVERE', driver: 'ALL' }
     },
@@ -45,6 +50,8 @@ exports.config = {
         'tests/LoginSpec.js',
         'tests/BlueprintSpec.js',
         'tests/CredentialSpec.js',
+        'tests/TemplateSpec.js',
+        'tests/NetworkSpec.js',
         'tests/ClusterSpec.js'
     ],
 
@@ -56,12 +63,16 @@ exports.config = {
         smoke: [
             'tests/LoginSpec.js',
             'tests/BlueprintSpec.js',
-            'tests/CredentialSpec.js'
+            'tests/CredentialSpec.js',
+            'tests/TemplateSpec.js',
+            'tests/NetworkSpec.js'
         ],
         regression: [
             'tests/LoginSpec.js',
             'tests/BlueprintSpec.js',
             'tests/CredentialSpec.js',
+            'tests/TemplateSpec.js',
+            'tests/NetworkSpec.js',
             'tests/ClusterSpec.js'
         ]
     },
@@ -100,8 +111,10 @@ exports.config = {
 
         // WebDriver general settings for browsers.
         browser.driver.manage().deleteAllCookies();
-        browser.driver.manage().window().maximize();
-        browser.driver.manage().timeouts().implicitlyWait(60000);
+        // https://github.com/angular/protractor/issues/1467
+        browser.driver.manage().window().setSize(1280, 1024);
+        //browser.driver.manage().window().maximize();
+        browser.driver.manage().timeouts().implicitlyWait(20000);
         browser.driver.manage().timeouts().pageLoadTimeout(60000);
         /**
          * Open the base URL that defined above.
