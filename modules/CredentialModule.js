@@ -266,6 +266,7 @@ CredentialModule.prototype = Object.create({}, {
         }
     }},
     createAWSCredential:               { value: function (name, description, iamRole, sshKey) {
+        browser.waitForAngular();
         this.openCreatePanel();
         this.awsTab.click();
         this.typeName('AWS', name);
@@ -276,6 +277,7 @@ CredentialModule.prototype = Object.create({}, {
         browser.waitForAngular();
     }},
     createAzureCredential:             { value: function (name, description, subscriptionID, appID, password, tenantID, sshKey) {
+        browser.waitForAngular();
         this.openCreatePanel();
         this.azureTab.click();
         this.typeName('Azure', name);
@@ -289,6 +291,7 @@ CredentialModule.prototype = Object.create({}, {
         browser.waitForAngular();
     }},
     createGCPCredential:               { value: function (name, description, projectID, accountEmail, p12KeyPath, sshKey) {
+        browser.waitForAngular();
         this.openCreatePanel();
         this.gcpTab.click();
         this.typeName('GCP', newName);
@@ -301,6 +304,7 @@ CredentialModule.prototype = Object.create({}, {
         browser.waitForAngular();
     }},
     createOpenStackCredential:         { value: function (name, description, user, password, tenant, endpoint, apiFacing, sshKey) {
+        browser.waitForAngular();
         this.openCreatePanel();
         this.openstackTab.click();
         this.selectKeystone('v2');
