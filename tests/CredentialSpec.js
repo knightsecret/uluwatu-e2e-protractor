@@ -4,8 +4,8 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing credential creation', function () {
   var dashboardPage;
-  var newAWSName = 'autotest-aws-cred';
-  var newOSName = 'autotest-kilo-cred';
+  var newAWSName = 'autotest-aws-cred-' + browser.params.nameTag;
+  var newOSName = 'autotest-kilo-cred-' + browser.params.nameTag;
   var newDescription = 'autotest';
   var userOS = process.env.OSUSER;
   var passwordOS = process.env.OSPASSWORD;

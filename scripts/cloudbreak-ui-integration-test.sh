@@ -24,12 +24,7 @@ docker run -i \
 --privileged \
 --rm \
 --name $TEST_CONTAINER_NAME \
---net=host \
--e "BASE_URL=$BASE_URL" \
--e "USERNAME=$USERNAME" \
--e "PASSWORD=$PASSWORD" \
--e "IAMROLE=$IAMROLE" \
--e "SSHKEY=$SSHKEY" \
+--env-file /var/lib/jenkins/guitest/env-$ENVIRONMENT \
 -v $WORKSPACE:/protractor/project \
 -v /dev/shm:/dev/shm \
 hortonworks/docker-e2e-protractor e2e.conf.js

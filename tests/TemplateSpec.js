@@ -4,7 +4,7 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing template creation', function () {
   var dashboardPage;
-  var newName = 'autotest-kilo-tmp';
+  var newName = 'autotest-kilo-tmp-' + browser.params.nameTag;
   var newDescription = 'autotest';
   var newInstanceType = 'm1.medium';
   var newAttachedVolumes = '1';

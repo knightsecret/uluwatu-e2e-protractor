@@ -4,8 +4,8 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing blueprint creation', function () {
   var dashboardPage;
-  var newAWSName = 'autotest-multi-node-hdfs-yarn';
-  var newOSName = 'autotest-scaling-node-hdfs-yarn';
+  var newAWSName = 'autotest-multi-' + browser.params.nameTag;
+  var newOSName = 'autotest-scaling-'  + browser.params.nameTag;
   var newDescription = 'autotest';
   var newAWSUrl = 'https://raw.githubusercontent.com/sequenceiq/uluwatu-e2e-protractor/master/blueprints/multi-node-hdfs-yarn.bp';
   var newOSUrl = 'https://raw.githubusercontent.com/sequenceiq/uluwatu-e2e-protractor/master/blueprints/scaling-node-hdfs-yarn.bp';

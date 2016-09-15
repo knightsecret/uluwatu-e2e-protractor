@@ -4,7 +4,7 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing network creation', function () {
   var dashboardPage;
-  var newName = 'autotest-kilo-net';
+  var newName = 'autotest-kilo-net-' + browser.params.nameTag;
   var newDescription = 'autotest';
   var newSubnetCIDR = '10.0.0.0/24';
   var newFloatingPoolID = process.env.OSFLOATINGID;

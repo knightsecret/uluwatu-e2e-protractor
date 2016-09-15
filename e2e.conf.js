@@ -10,6 +10,9 @@ require('protractor-console');
  * @type {{seleniumAddress: string, capabilities: {browserName: string}, specs: string[], framework: string, jasmineNodeOpts: {onComplete: null, showColors: boolean, includeStackTrace: boolean, isVerbose: boolean, defaultTimeoutInterval: number}, baseUrl: *, onPrepare: exports.config.onPrepare}}
  */
 exports.config = {
+    params: {
+        nameTag: process.env.ENVIRONMENT + Date.now()
+    },
     plugins: [{
         path: 'node_modules/protractor-console',
         package: 'protractor-console',
@@ -21,18 +24,13 @@ exports.config = {
     directConnect: true,
     // Capabilities to be passed to the WebDriverJS instance.
     capabilities: {
-        'browserName': 'firefox',
-        /*
-
-         'browserName': 'chrome',
-         'chromeOptions': {
-         'args': [
-         '--no-sandbox',
-         '--disable-web-security'
-         ]
-
-         },
-         */
+        'browserName': (process.env.BROWSER || 'firefox'),
+        'chromeOptions': {
+            'args': [
+               '--no-sandbox',
+               '--disable-web-security'
+            ]
+        },
         locationContextEnabled: true,
         javascriptEnabled: true,
         acceptSslCerts: true,
@@ -116,6 +114,13 @@ exports.config = {
         //browser.driver.manage().window().maximize();
         browser.driver.manage().timeouts().implicitlyWait(20000);
         browser.driver.manage().timeouts().pageLoadTimeout(60000);
+
+        browser.getCapabilities().then(function (browserCapabilities) {
+            console.log("Browser name is: " + browserCapabilities.get('browserName'));
+            console.log("Browser version is: " + browserCapabilities.get('version'));
+            console.log("Browser version is: " + browserCapabilities.get('platform'));
+        });
+
         /**
          * Open the base URL that defined above.
          * OR
@@ -131,7 +136,7 @@ exports.config = {
                     currentURL = url;
                     return /dashboard/g.test(url) || /confirm/g.test(url) || /#/g.test(url);
                 });
-            }, 20000).then(function() {
+            }, 60000).then(function() {
                 console.log(currentURL);
                 var pageName = currentURL.split("/").pop();
 

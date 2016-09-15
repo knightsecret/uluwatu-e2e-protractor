@@ -7,17 +7,17 @@ var originalJasmineTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 describe('Testing cluster creation', function () {
     var basePage;
     var dashboardPage;
-    var credentialAWSName = 'autotest-aws-cred';
-    var credentialOSName = 'autotest-kilo-cred';
-    var blueprintAWSName = 'autotest-multi-node-hdfs-yarn';
-    var blueprintOSName = 'autotest-scaling-node-hdfs-yarn';
-    var templateOSName = 'autotest-kilo-tmp';
-    var clusterAWSName = 'autotest-aws-cls';
-    var clusterOSName = 'autotest-os-cls';
+    var credentialAWSName = 'autotest-aws-cred-' + browser.params.nameTag;
+    var credentialOSName = 'autotest-kilo-cred-' + browser.params.nameTag;
+    var blueprintAWSName = 'autotest-multi-' + browser.params.nameTag;
+    var blueprintOSName = 'autotest-scaling-' + browser.params.nameTag;
+    var templateOSName = 'autotest-kilo-tmp-' + browser.params.nameTag;
+    var clusterAWSName = 'autotest-aws-cls-' + browser.params.nameTag;
+    var clusterOSName = 'autotest-os-cls-' + browser.params.nameTag;
     var regionAWSName = 'EU (Ireland)';
     var regionOSName = 'local';
     var networkAWSName = 'default-aws-network';
-    var networkOSName = 'autotest-kilo-net';
+    var networkOSName = 'autotest-kilo-net-' + browser.params.nameTag;
     var securityGroup = 'all-services-port';
 
     describe('on a new AWS cluster where', function () {
