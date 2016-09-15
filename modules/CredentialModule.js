@@ -66,7 +66,12 @@ CredentialModule.prototype = Object.create({}, {
         // We need to fix the GUI here. Something goes wrong with Angular here.
         return browser.driver.wait(EC.elementToBeClickable(createButton), 5000, 'Create button is NOT click able!').then(function() {
             //    console.log('Create button is clicked 1st!');
-            return browser.driver.actions().doubleClick(createButton).perform();
+            return createButton.click().then(function() {
+                browser.waitForAngular();
+                return browser.driver.wait(function () {
+                    return element(by.css('a#awsChange')).isEnabled();
+                }, 20000);
+            });
         }).then(function() {
             return browser.driver.wait(EC.elementToBeClickable(closeButton), 5000, 'Create button has NOT clicked at 1st!').then(function() {
                 //    console.log('Create button has already clicked at 1st!');

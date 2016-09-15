@@ -72,6 +72,7 @@ DashboardPage.prototype  = Object.create({}, {
 
     return browser.driver.wait(EC.stalenessOf(expandedButton), 2000,'Manage Credentials has already expanded!').then(function() {
       return expandButton.click().then(function() {
+        browser.waitForAngular();
         return browser.driver.wait(function() {
           return expandedButton.isDisplayed();
         }, 2000, 'Cannot see this element!');

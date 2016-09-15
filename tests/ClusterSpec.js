@@ -99,6 +99,7 @@ describe('Testing cluster creation', function () {
             done();
         }, 40 * 60000);
     });
+/*
 
     describe('on a new OpenStack cluster where', function () {
         basePage = new BasePage();
@@ -178,4 +179,5 @@ describe('Testing cluster creation', function () {
             done();
         }, 40 * 60000);
     });
+*/
 });
