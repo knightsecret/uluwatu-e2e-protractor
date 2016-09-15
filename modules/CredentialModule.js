@@ -68,9 +68,9 @@ CredentialModule.prototype = Object.create({}, {
             //    console.log('Create button is clicked 1st!');
             return createButton.click().then(function() {
                 browser.waitForAngular();
-                return browser.driver.wait(function () {
+                return browser.driver.wait(EC.elementToBeClickable(element(by.css('a#awsChange'))), 20000, 'Create Credential tab is NOT available!').then(function() {
                     return element(by.css('a#awsChange')).isEnabled();
-                }, 20000);
+                });
             });
         }).then(function() {
             return browser.driver.wait(EC.elementToBeClickable(closeButton), 5000, 'Create button has NOT clicked at 1st!').then(function() {
