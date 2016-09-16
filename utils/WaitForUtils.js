@@ -100,7 +100,7 @@ WaitForUtils.prototype = Object.create({}, {
 
         var successfullyStopped = element(by.css('input#notification-n-filtering[value*="successfully stopped"]'));
 
-        var notifications = ['Stopping Ambari services', 'Infrastructure is now stopping', 'Infrastructure successfully stopped'];
+        var notifications = ['stop', 'Infrastructure is now stopping', 'successfully stopped'];
         var messages = ['Ambari services has NOT stopping!', 'Infrastructure has NOT stopping!', 'Cluster stopping has NOT finished!'];
 
         this.checkingNotifications(notifications, messages);

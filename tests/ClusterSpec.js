@@ -99,7 +99,6 @@ describe('Testing cluster creation', function () {
             done();
         }, 40 * 60000);
     });
-/*
 
     describe('on a new OpenStack cluster where', function () {
         basePage = new BasePage();
@@ -115,6 +114,8 @@ describe('Testing cluster creation', function () {
         afterAll(function() {
             console.log('OpenStack test suit teardown has started!');
             dashboardPage.deleteBlueprint(blueprintOSName);
+            dashboardPage.deleteTemplate(templateOSName);
+            dashboardPage.deleteNetwork(networkOSName);
             dashboardPage.deleteCredential(credentialOSName);
         });
         afterEach(function() {
@@ -179,5 +180,4 @@ describe('Testing cluster creation', function () {
             done();
         }, 40 * 60000);
     });
-*/
 });

@@ -1,7 +1,16 @@
 # https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables-e-env-env-file
+BROWSER
+ENVIRONMENT
+GIT_BRANCH
+HOST
+API_URL
 BASE_URL
 USERNAME
 PASSWORD
 IAMROLE
+OSENDPOINT
+OSTENANT
+OSPASSWORD
+OSUSER
+OSFLOATINGID
 SSHKEY
-TESTCONF

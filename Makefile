@@ -1,6 +1,11 @@
 ENVFILE=utils/testenv
 TESTCONF=e2e.conf.js
 
+all:    refresh-image run-with-envfile
+
+refresh-image:
+				docker pull hortonworks/docker-e2e-protractor
+
 run-with-envfile:
 				docker run -it \
 				--privileged \
