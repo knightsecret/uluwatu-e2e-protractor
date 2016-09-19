@@ -481,15 +481,15 @@ ClusterModule.prototype = Object.create({}, {
     createAlert:                       { value: function () {
         var EC = protractor.ExpectedConditions;
         var createAlertButton = element(by.css('a#panel-create-periscope-alert-btn'));
-        var createAlertLink = createAlertButton.$('span.ng-binding');
+        var closeAlertButton = element(by.css('a#panel-create-periscope-alert-btn[aria-expanded="true"]'));
 
-        return browser.driver.wait(EC.elementToBeClickable(createAlertLink), 5000, 'Create Alert button is NOT click able!').then(function() {
-            return createAlertLink.click();
+        return browser.driver.wait(EC.elementToBeClickable(createAlertButton), 10000, 'Create Alert button is NOT click able!').then(function() {
+            return createAlertButton.click();
         }).then(function() {
-            return browser.driver.wait(EC.invisibilityOf(createAlertLink), 5000,'Create Alert button has NOT clicked at 1st!').then(function() {
+            return browser.driver.wait(EC.elementToBeClickable(closeAlertButton), 10000,'Create Alert button has NOT clicked at 1st!').then(function() {
 
             }, function(err) {
-                return browser.driver.actions().click(createAlertLink).perform();
+                return browser.driver.actions().click(createAlertButton).perform();
             });
         });
     }},
