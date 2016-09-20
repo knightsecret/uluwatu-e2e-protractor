@@ -516,15 +516,15 @@ ClusterModule.prototype = Object.create({}, {
     createPolicy:                       { value: function () {
         var EC = protractor.ExpectedConditions;
         var createPolicyButton = element(by.css('a#create-policy-collapse-btn'));
-        var createPolicyLink = createPolicyButton.$('span.ng-binding');
+        var closePolicyButton = element(by.css('a#create-policy-collapse-btn[aria-expanded="true"]'));
 
-        return browser.driver.wait(EC.elementToBeClickable(createPolicyLink), 5000, 'Create Scaling Policy button is NOT click able!').then(function() {
-            return createPolicyLink.click();
+        return browser.driver.wait(EC.elementToBeClickable(createPolicyButton), 10000, 'Create Scaling Policy button is NOT click able!').then(function() {
+            return createPolicyButton.click();
         }).then(function() {
-            return browser.driver.wait(EC.invisibilityOf(createPolicyLink), 5000,'Create Scaling Policy button has NOT clicked at 1st!').then(function() {
+            return browser.driver.wait(EC.elementToBeClickable(closePolicyButton), 10000,'Create Scaling Policy button has NOT clicked at 1st!').then(function() {
 
             }, function(err) {
-                return browser.driver.actions().click(createPolicyLink).perform();
+                return browser.driver.actions().click(createPolicyButton).perform();
             });
         });
     }},
