@@ -56,12 +56,10 @@ describe('Testing cluster creation', function () {
             expect(basePage.isClusterDetailsControllers(clusterAWSName)).toBeTruthy();
         });
 
-        it('the Cluster AutoScaling should be available', function (done) {
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 10 * 60000;
+        it('the Cluster AutoScaling should be available', function () {
             expect(basePage.isAmbariAutoScalingAvailable(clusterAWSName)).toBeTruthy();
             expect(basePage.isScalingHostGroupsAvailable(clusterAWSName)).toBeTruthy();
-            done();
-        }, 5 * 60000);
+        });
 
         it('the Cluster should be stopped', function (done) {
             expect(basePage.stopCluster(clusterAWSName)).toBeTruthy();
@@ -139,10 +137,12 @@ describe('Testing cluster creation', function () {
             expect(basePage.isClusterDetailsControllers(clusterOSName)).toBeTruthy();
         });
 
-        it('the Cluster AutoScaling should be available', function () {
+        it('the Cluster AutoScaling should be available', function (done) {
+            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
             expect(basePage.isAmbariAutoScalingAvailable(clusterOSName)).toBeTruthy();
             expect(basePage.isScalingHostGroupsAvailable(clusterOSName)).toBeTruthy();
-        });
+            done();
+        }, 40 * 60000);
 
         it('the Cluster should be stopped', function (done) {
             expect(basePage.stopCluster(clusterOSName)).toBeTruthy();
