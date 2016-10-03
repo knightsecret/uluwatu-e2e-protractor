@@ -20,7 +20,7 @@ describe('Testing cluster creation', function () {
     var networkOSName = 'autotest-kilo-net-' + browser.params.nameTag;
     var securityGroup = 'all-services-port';
     var testResult;
-    var isSkip;
+    var isSkip = false;
 
     describe('on a new AWS cluster where', function () {
         basePage = new BasePage();
@@ -43,6 +43,7 @@ describe('Testing cluster creation', function () {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
 
             if (JSON.stringify(testResult).indexOf("passed: false") !== -1) {
+                console.log(testResult);
                 isSkip = true;
             }
         });
@@ -140,6 +141,7 @@ describe('Testing cluster creation', function () {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
 
             if (JSON.stringify(testResult).indexOf("passed: false") !== -1) {
+                console.log(testResult);
                 isSkip = true;
             }
         });
