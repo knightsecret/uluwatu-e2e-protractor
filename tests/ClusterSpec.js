@@ -19,6 +19,8 @@ describe('Testing cluster creation', function () {
     var networkAWSName = 'default-aws-network';
     var networkOSName = 'autotest-kilo-net-' + browser.params.nameTag;
     var securityGroup = 'all-services-port';
+    var testResult;
+    var isSkip;
 
     describe('on a new AWS cluster where', function () {
         basePage = new BasePage();
@@ -39,6 +41,10 @@ describe('Testing cluster creation', function () {
 
         afterEach(function() {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
+
+            if (JSON.stringify(testResult).indexOf("passed: false") !== -1) {
+                isSkip = true;
+            }
         });
 
         it('the new AWS cluster should be installed', function () {
@@ -52,52 +58,64 @@ describe('Testing cluster creation', function () {
             done();
         }, 40 * 60000);
 
-        it('the Cluster Details should be available', function () {
+        testResult = it('the Cluster Details should be available', function () {
             expect(basePage.isClusterDetailsControllers(clusterAWSName)).toBeTruthy();
-        });
+        }).result;
 
-        it('the Cluster AutoScaling should be available', function () {
-            expect(basePage.isAmbariAutoScalingAvailable(clusterAWSName)).toBeTruthy();
-            expect(basePage.isScalingHostGroupsAvailable(clusterAWSName)).toBeTruthy();
-        });
+        if(isSkip) {
+            xit('the Cluster AutoScaling should be available', function () {});
 
-        it('the Cluster should be stopped', function (done) {
-            expect(basePage.stopCluster(clusterAWSName)).toBeTruthy();
+            xit('the Cluster should be stopped', function () {});
+            xit('the Cluster should be started', function () {});
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterStopped()).toBeTruthy();
-            done();
-        }, 40 * 60000);
-        it('the Cluster should be started', function (done) {
-            expect(basePage.startCluster(clusterAWSName)).toBeTruthy();
+            xit('the Cluster should be up scaled', function () {});
+            xit('the Cluster should be down scaled', function () {});
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterStarted()).toBeTruthy();
-            done();
-        }, 40 * 60000);
+            xit('the Cluster should be terminated', function () {});
+        } else {
+            it('the Cluster AutoScaling should be available', function () {
+                expect(basePage.isAmbariAutoScalingAvailable(clusterAWSName)).toBeTruthy();
+                expect(basePage.isScalingHostGroupsAvailable(clusterAWSName)).toBeTruthy();
+            });
 
-        it('the Cluster should be up scaled', function (done) {
-            expect(basePage.upScaleCluster(clusterAWSName, hostGroup, nodeScalingUp)).toBeTruthy();
+            it('the Cluster should be stopped', function (done) {
+                expect(basePage.stopCluster(clusterAWSName)).toBeTruthy();
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterUpScaled()).toBeTruthy();
-            done();
-        }, 40 * 60000);
-        it('the Cluster should be down scaled', function (done) {
-            expect(basePage.downScaleCluster(clusterAWSName, hostGroup, nodeScalingDown)).toBeTruthy();
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterStopped()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+            it('the Cluster should be started', function (done) {
+                expect(basePage.startCluster(clusterAWSName)).toBeTruthy();
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterDownScaled()).toBeTruthy();
-            done();
-        }, 40 * 60000);
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterStarted()).toBeTruthy();
+                done();
+            }, 40 * 60000);
 
-        it('the Cluster should be terminated', function (done) {
-            expect(basePage.terminateCluster(clusterAWSName)).toBeTruthy();
+            it('the Cluster should be up scaled', function (done) {
+                expect(basePage.upScaleCluster(clusterAWSName, hostGroup, nodeScalingUp)).toBeTruthy();
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterRemoved()).toBeTruthy();
-            done();
-        }, 40 * 60000);
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterUpScaled()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+            it('the Cluster should be down scaled', function (done) {
+                expect(basePage.downScaleCluster(clusterAWSName, hostGroup, nodeScalingDown)).toBeTruthy();
+
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterDownScaled()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+
+            it('the Cluster should be terminated', function (done) {
+                expect(basePage.terminateCluster(clusterAWSName)).toBeTruthy();
+
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterRemoved()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+        }
     });
 
     describe('on a new OpenStack cluster where', function () {
@@ -120,6 +138,10 @@ describe('Testing cluster creation', function () {
         });
         afterEach(function() {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
+
+            if (JSON.stringify(testResult).indexOf("passed: false") !== -1) {
+                isSkip = true;
+            }
         });
 
         it('the new OpenStack cluster should be installed', function () {
@@ -133,53 +155,65 @@ describe('Testing cluster creation', function () {
             done();
         }, 40 * 60000);
 
-        it('the Cluster Details should be available', function () {
+        testResult = it('the Cluster Details should be available', function () {
             expect(basePage.isClusterDetailsControllers(clusterOSName)).toBeTruthy();
-        });
+        }).result;
 
-        it('the Cluster AutoScaling should be available', function (done) {
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isAmbariAutoScalingAvailable(clusterOSName)).toBeTruthy();
-            expect(basePage.isScalingHostGroupsAvailable(clusterOSName)).toBeTruthy();
-            done();
-        }, 40 * 60000);
+        if(isSkip) {
+            xit('the Cluster AutoScaling should be available', function () {});
 
-        it('the Cluster should be stopped', function (done) {
-            expect(basePage.stopCluster(clusterOSName)).toBeTruthy();
+            xit('the Cluster should be stopped', function () {});
+            xit('the Cluster should be started', function () {});
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterStopped()).toBeTruthy();
-            done();
-        }, 40 * 60000);
-        it('the Cluster should be started', function (done) {
-            expect(basePage.startCluster(clusterOSName)).toBeTruthy();
+            xit('the Cluster should be up scaled', function () {});
+            xit('the Cluster should be down scaled', function () {});
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterStarted()).toBeTruthy();
-            done();
-        }, 40 * 60000);
+            xit('the Cluster should be terminated', function () {});
+        } else {
+            it('the Cluster AutoScaling should be available', function (done) {
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isAmbariAutoScalingAvailable(clusterOSName)).toBeTruthy();
+                expect(basePage.isScalingHostGroupsAvailable(clusterOSName)).toBeTruthy();
+                done();
+            }, 40 * 60000);
 
-        it('the Cluster should be up scaled', function (done) {
-            expect(basePage.upScaleCluster(clusterOSName, hostGroup, nodeScalingUp)).toBeTruthy();
+            it('the Cluster should be stopped', function (done) {
+                expect(basePage.stopCluster(clusterOSName)).toBeTruthy();
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterUpScaled()).toBeTruthy();
-            done();
-        }, 40 * 60000);
-        it('the Cluster should be down scaled', function (done) {
-            expect(basePage.downScaleCluster(clusterOSName, hostGroup, nodeScalingDown)).toBeTruthy();
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterStopped()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+            it('the Cluster should be started', function (done) {
+                expect(basePage.startCluster(clusterOSName)).toBeTruthy();
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterDownScaled()).toBeTruthy();
-            done();
-        }, 40 * 60000);
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterStarted()).toBeTruthy();
+                done();
+            }, 40 * 60000);
 
-        it('the Cluster should be terminated', function (done) {
-            expect(basePage.terminateCluster(clusterOSName)).toBeTruthy();
+            it('the Cluster should be up scaled', function (done) {
+                expect(basePage.upScaleCluster(clusterOSName, hostGroup, nodeScalingUp)).toBeTruthy();
 
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-            expect(basePage.isClusterRemoved()).toBeTruthy();
-            done();
-        }, 40 * 60000);
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterUpScaled()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+            it('the Cluster should be down scaled', function (done) {
+                expect(basePage.downScaleCluster(clusterOSName, hostGroup, nodeScalingDown)).toBeTruthy();
+
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterDownScaled()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+
+            it('the Cluster should be terminated', function (done) {
+                expect(basePage.terminateCluster(clusterOSName)).toBeTruthy();
+
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterRemoved()).toBeTruthy();
+                done();
+            }, 40 * 60000);
+        }
     });
 });
