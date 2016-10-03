@@ -4,8 +4,6 @@
 
 export NOWDATE=$(ssh -o StrictHostKeyChecking=no -i $MASTER_SSH_KEY $CLOUDBREAK_CENTOS_SSH_USER@$HOST date +%Y-%m-%d"T"%H:%M:%S)
 
-cat /var/lib/jenkins/guitest/env-$ENVIRONMENT
-
 export TESTCONF=/protractor/project/e2e.conf.js
 export ARTIFACT_POSTFIX=info
 
