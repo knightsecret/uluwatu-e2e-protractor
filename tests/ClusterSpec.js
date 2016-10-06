@@ -19,8 +19,6 @@ describe('Testing', function () {
     var networkAWSName = 'default-aws-network';
     var networkOSName = 'autotest-kilo-net-' + browser.params.nameTag;
     var securityGroup = 'all-services-port';
-    var testResult;
-    var isSkip = false;
 
     describe('a new AWS cluster creation where', function () {
         basePage = new BasePage();
@@ -56,10 +54,8 @@ describe('Testing', function () {
         var nodeScalingUp = '6';
         var nodeScalingDown = '1';
         var hostGroup = 'slave_1';
-
-        beforeEach(function () {
-            console.log('Is cluster install was success: ' + isSkip);
-        });
+        var testResult;
+        var isSkip;
 
         describe('where', function () {
             afterAll(function () {
@@ -73,6 +69,7 @@ describe('Testing', function () {
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
 
                 if ((JSON.stringify(testResult).indexOf('\"passed\":false') !== -1) || (JSON.stringify(testResult).indexOf('\"message\":\"Failed') !== -1)) {
+                    console.log('Test Failed happened');
                     isSkip = true;
                 }
             });
@@ -113,15 +110,11 @@ describe('Testing', function () {
             }, 40 * 60000).result;
 
             it('the Cluster should be terminated', function (done) {
-                if (isSkip) {
-                    expect(basePage.terminateCluster(clusterAWSName)).toBeTruthy();
+                expect(basePage.terminateCluster(clusterAWSName)).toBeTruthy();
 
-                    jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-                    expect(basePage.isClusterRemoved()).toBeTruthy();
-                    done();
-                } else {
-                    done();
-                }
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterRemoved()).toBeTruthy();
+                done();
             }, 40 * 60000);
         });
     });
@@ -160,10 +153,8 @@ describe('Testing', function () {
         var nodeScalingUp = '1';
         var nodeScalingDown = '1';
         var hostGroup = 'slave_2';
-
-        beforeEach(function () {
-            console.log('Is cluster install was success: ' + isSkip);
-        });
+        var testResult;
+        var isSkip;
 
         describe('where', function () {
             afterAll(function () {
@@ -179,6 +170,7 @@ describe('Testing', function () {
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
 
                 if ((JSON.stringify(testResult).indexOf('\"passed\":false') !== -1) || (JSON.stringify(testResult).indexOf('\"message\":\"Failed') !== -1)) {
+                    console.log('Test Failed happened');
                     isSkip = true;
                 }
             });
@@ -221,15 +213,11 @@ describe('Testing', function () {
             }, 40 * 60000).result;
 
             it('the Cluster should be terminated', function (done) {
-                if (isSkip) {
-                    expect(basePage.terminateCluster(clusterOSName)).toBeTruthy();
+                expect(basePage.terminateCluster(clusterOSName)).toBeTruthy();
 
-                    jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
-                    expect(basePage.isClusterRemoved()).toBeTruthy();
-                    done();
-                } else {
-                    done();
-                }
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
+                expect(basePage.isClusterRemoved()).toBeTruthy();
+                done();
             }, 40 * 60000);
         });
     });
