@@ -29,9 +29,9 @@ if [[ "$(docker inspect -f {{.State.Running}} $TEST_CONTAINER_NAME 2> /dev/null)
   docker rm -f $TEST_CONTAINER_NAME
 fi
 
-BASE_URL_RESPONSE=$(curl -k --write-out %{http_code} --silent --output /dev/null $BASE_URL)
+BASE_URL_RESPONSE=$(curl -k --write-out %{http_code} --silent --output /dev/null $BASE_URL/sl)
 echo $BASE_URL " HTTP status code is: $BASE_URL_RESPONSE"
-if [[ $BASE_URL_RESPONSE -ne 302 ]]; then
+if [[ $BASE_URL_RESPONSE -ne 200 ]]; then
     echo $BASE_URL " Web GUI is not accessible!"
     RESULT=1
 else
