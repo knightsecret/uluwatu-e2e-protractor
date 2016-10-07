@@ -6,8 +6,8 @@ describe('Testing network creation', function () {
   var dashboardPage;
   var newName = 'autotest-kilo-net-' + browser.params.nameTag;
   var newDescription = 'autotest';
-  var newSubnetCIDR = '10.0.0.0/24';
-  var newFloatingPoolID = process.env.OSFLOATINGID;
+  var newSubnetCIDR = process.env.SUBNET_ID;
+  var newVirtualNetworkID = process.env.VIRTUAL_NETWORK_ID;
 
   describe('with ' + newName + ' network', function () {
     dashboardPage = new DashboardPage();
@@ -26,7 +26,7 @@ describe('Testing network creation', function () {
     });
 
     it('Create new OpenStack network', function () {
-      dashboardPage.createOSNetwork(newName, newDescription, newSubnetCIDR, newFloatingPoolID);
+      dashboardPage.createOSNetwork(newName, newDescription, newVirtualNetworkID, newSubnetCIDR);
       dashboardPage.getBadgeValue(1).then(function (value) {
         expect(value).toBeGreaterThan(defaultNetworks);
       });

@@ -141,10 +141,10 @@ DashboardPage.prototype  = Object.create({}, {
     var networkModule = new NetworkModule();
     return networkModule.deleteNetwork(name);
   }},
-  createOSNetwork:         { value: function (name, description, subnetCIDR, floatingPoolID)  {
+  createOSNetwork:         { value: function (name, description, virtualNetworkID, subnetCIDR)  {
     this.expandNetworks();
     var networkModule = new NetworkModule();
-    return networkModule.createOpenStackNetwork(name, description, subnetCIDR, floatingPoolID);
+    return networkModule.createOpenStackNetwork(name, description, virtualNetworkID, subnetCIDR);
   }}
 });
 
