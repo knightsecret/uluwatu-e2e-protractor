@@ -16,11 +16,12 @@ var CredentialModule = function () {
 };
 
 CredentialModule.prototype = Object.create({}, {
+    providerTabSelector:               { get: function () {      return element(by.css('div#providerSelector1'));                                                   }},
     // Tab pages
-    awsTab:                            { get: function () {      return element(by.css('a#awsChange'));                                                             }},
-    azureTab:                          { get: function () {      return element(by.css('a#azureRmChange'));                                                         }},
-    gcpTab:                            { get: function () {      return element(by.css('a#gcpChange'));                                                             }},
-    openstackTab:                      { get: function () {      return element(by.css('a#openstackChange'));                                                       }},
+    awsTab:                            { get: function () {      return this.providerTabSelector.element(by.css('a#awsChange'));                                    }},
+    azureTab:                          { get: function () {      return this.providerTabSelector.element(by.css('a#azureRmChange'));                                }},
+    gcpTab:                            { get: function () {      return this.providerTabSelector.element(by.css('a#gcpChange'));                                    }},
+    openstackTab:                      { get: function () {      return this.providerTabSelector.element(by.css('a#openstackChange'));                              }},
     // AWS credential pane
     awscredentialForm:                 { get: function () {      return element(by.css('form[name=awsCredentialForm]'));                                            }},
     awsnameBox:                        { get: function () {      return this.awscredentialForm.element(by.css('input#awscname'));                                   }},
@@ -273,7 +274,6 @@ CredentialModule.prototype = Object.create({}, {
     createAWSCredential:               { value: function (name, description, iamRole, sshKey) {
         browser.waitForAngular();
         this.openCreatePanel();
-        browser.waitForAngular();
         this.awsTab.click();
         this.typeName('AWS', name);
         this.typeDescription('AWS', description);
@@ -285,7 +285,6 @@ CredentialModule.prototype = Object.create({}, {
     createAzureCredential:             { value: function (name, description, subscriptionID, appID, password, tenantID, sshKey) {
         browser.waitForAngular();
         this.openCreatePanel();
-        browser.waitForAngular();
         this.azureTab.click();
         this.typeName('Azure', name);
         this.typeDescription('Azure', description);
@@ -300,7 +299,6 @@ CredentialModule.prototype = Object.create({}, {
     createGCPCredential:               { value: function (name, description, projectID, accountEmail, p12KeyPath, sshKey) {
         browser.waitForAngular();
         this.openCreatePanel();
-        browser.waitForAngular();
         this.gcpTab.click();
         this.typeName('GCP', newName);
         this.typeDescription('GCP', newDescription);
@@ -314,7 +312,6 @@ CredentialModule.prototype = Object.create({}, {
     createOpenStackCredential:         { value: function (name, description, user, password, tenant, endpoint, apiFacing, sshKey) {
         browser.waitForAngular();
         this.openCreatePanel();
-        browser.waitForAngular();
         this.openstackTab.click();
         this.selectKeystone('v2');
         this.typeName('OpenStack', name);

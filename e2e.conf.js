@@ -50,7 +50,8 @@ exports.config = {
         'tests/CredentialSpec.js',
         'tests/TemplateSpec.js',
         'tests/NetworkSpec.js',
-        'tests/ClusterSpec.js'
+        'tests/ClusterSpec.js',
+        'tests/Teardown.js'
     ],
 
     /**
@@ -63,7 +64,8 @@ exports.config = {
             'tests/BlueprintSpec.js',
             'tests/CredentialSpec.js',
             'tests/TemplateSpec.js',
-            'tests/NetworkSpec.js'
+            'tests/NetworkSpec.js',
+            'tests/Teardown.js'
         ],
         regression: [
             'tests/LoginSpec.js',
@@ -71,7 +73,8 @@ exports.config = {
             'tests/CredentialSpec.js',
             'tests/TemplateSpec.js',
             'tests/NetworkSpec.js',
-            'tests/ClusterSpec.js'
+            'tests/ClusterSpec.js',
+            'tests/Teardown.js'
         ]
     },
 

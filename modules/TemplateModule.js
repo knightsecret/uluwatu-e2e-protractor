@@ -10,11 +10,12 @@ var TemplateModule = function () {
 };
 
 TemplateModule.prototype = Object.create({}, {
+    providerTabSelector:               { get: function () {      return element(by.css('div#panel-create-templates-collapse div#providerSelector2'));}},
     // Tab pages
-    awsTab:                            { get: function () {      return element(by.css('a#awsTemplateChange'));                                      }},
-    azureTab:                          { get: function () {      return element(by.css('a#azureTemplateChange'));                                    }},
-    gcpTab:                            { get: function () {      return element(by.css('a#gcpTemplateChange'));                                      }},
-    openstackTab:                      { get: function () {      return element(by.css('a#openstackTemplateChange'));                                }},
+    awsTab:                            { get: function () {      return this.providerTabSelector.element(by.css('a#awsTemplateChange'));             }},
+    azureTab:                          { get: function () {      return this.providerTabSelector.element(by.css('a#azureTemplateChange'));           }},
+    gcpTab:                            { get: function () {      return this.providerTabSelector.element(by.css('a#gcpTemplateChange'));             }},
+    openstackTab:                      { get: function () {      return this.providerTabSelector.element(by.css('a#openstackTemplateChange'));       }},
     // AWS template pane
     awstemplateForm:                   { get: function () {      return element(by.css('form[name=awsTemplateForm]'));                               }},
     awsnameBox:                        { get: function () {      return this.awstemplateForm.element(by.css('input#aws_tclusterName'));              }},

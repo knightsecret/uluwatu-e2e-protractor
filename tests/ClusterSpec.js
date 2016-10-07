@@ -11,7 +11,6 @@ describe('Testing', function () {
     var credentialOSName = 'autotest-kilo-cred-' + browser.params.nameTag;
     var blueprintAWSName = 'autotest-multi-' + browser.params.nameTag;
     var blueprintOSName = 'autotest-scaling-' + browser.params.nameTag;
-    var templateOSName = 'autotest-kilo-tmp-' + browser.params.nameTag;
     var clusterAWSName = 'autotest-aws-cls-' + browser.params.nameTag;
     var clusterOSName = 'autotest-os-cls-' + browser.params.nameTag;
     var regionAWSName = 'EU (Ireland)';
@@ -58,13 +57,6 @@ describe('Testing', function () {
         var isSkip;
 
         describe('where', function () {
-            afterAll(function () {
-                console.log('AWS Test suit teardown has started!');
-
-                dashboardPage.deleteBlueprint(blueprintAWSName);
-                dashboardPage.deleteCredential(credentialAWSName);
-            });
-
             afterEach(function () {
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
 
@@ -157,15 +149,6 @@ describe('Testing', function () {
         var isSkip;
 
         describe('where', function () {
-            afterAll(function () {
-                console.log('OpenStack test suit teardown has started!');
-
-                dashboardPage.deleteBlueprint(blueprintOSName);
-                dashboardPage.deleteTemplate(templateOSName);
-                dashboardPage.deleteNetwork(networkOSName);
-                dashboardPage.deleteCredential(credentialOSName);
-            });
-
             afterEach(function () {
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = originalJasmineTimeout;
 

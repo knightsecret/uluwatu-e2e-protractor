@@ -10,11 +10,12 @@ var NetworkModule = function () {
 };
 
 NetworkModule.prototype = Object.create({}, {
+    providerTabSelector:                    { get: function () {      return element(by.css('div#panel-create-network-collapse div#providerSelector2'));     }},
     // Tab pages
-    awsTab:                                 { get: function () {      return element(by.css('a#awsNetworkChange'));                                          }},
-    azureTab:                               { get: function () {      return element(by.css('a#azureNetworkChange'));                                        }},
-    gcpTab:                                 { get: function () {      return element(by.css('a#gcpNetworkChange'));                                          }},
-    openstackTab:                           { get: function () {      return element(by.css('a#openstackNetworkChange'));                                    }},
+    awsTab:                                 { get: function () {      return this.providerTabSelector.element(by.css('a#awsNetworkChange'));                 }},
+    azureTab:                               { get: function () {      return this.providerTabSelector.element(by.css('a#azureNetworkChange'));               }},
+    gcpTab:                                 { get: function () {      return this.providerTabSelector.element(by.css('a#gcpNetworkChange'));                 }},
+    openstackTab:                           { get: function () {      return this.providerTabSelector.element(by.css('a#openstackNetworkChange'));           }},
     // AWS network pane
     awsnetworkForm:                         { get: function () {      return element(by.css('form[name=awsNetworkForm]'));                                   }},
     awsnameBox:                             { get: function () {      return this.awsnetworkForm.element(by.css('input#aws_networkName'));                   }},
@@ -36,12 +37,12 @@ NetworkModule.prototype = Object.create({}, {
     // OpenStack
     openstacknetworkForm:                   { get: function () {      return element(by.css('form[name=openstackNetworkForm]'));                             }},
     openstackExSubExVPC:                    { get: function () {      return element(by.css('form[name="openStackNetworkForm_3"]'));                         }},
-    openstacknameBox:                       { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkName'));        }},
-    openstackdescriptionBox:                { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkDescription')); }},
-    openstackfloatingBox:                   { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_publicNetId'));        }},
+    openstacknameBox:                       { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_networkName'));       }},
+    openstackdescriptionBox:                { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_networkDescription'));}},
+    openstackfloatingBox:                   { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_publicNetId'));       }},
     openstackvirtualNetBox:                 { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkVPCId'));       }},
-    openstacksubnetBox:                     { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkSubnetId'));    }},
-    openstackcreateButton:                  { get: function () {      return  this.openstackExSubExVPC.element(by.css('a#createAwsTemplate'));               }},
+    openstacksubnetBox:                     { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_networkSubnet'));     }},
+    openstackcreateButton:                  { get: function () {      return this.openstacknetworkForm.element(by.css('a#createOpenStackNetwork'));          }},
 
     openCreatePanel:                        { value: function () {
         var EC = protractor.ExpectedConditions;
@@ -271,13 +272,12 @@ NetworkModule.prototype = Object.create({}, {
         this.clickCreateNetwork('GCP', name);
         browser.waitForAngular();
     }},
-    createOpenStackNetwork:                 { value: function (name, description, virtualNetworkID, subnetCIDR) {
+    createOpenStackNetwork:                 { value: function (name, description, floatingID, subnetCIDR) {
         this.openCreatePanel();
         this.openstackTab.click();
-        this.expandExistingSubNetExistingNetwork();
         this.typeName('OpenStack', name);
         this.typeDescription('OpenStack', description);
-        this.openstackvirtualNetBox.sendKeys(virtualNetworkID);
+        this.typeFloatingID(floatingID);
         this.typeSubnet('OpenStack', subnetCIDR);
         this.clickCreateNetwork('OpenStack', name);
         browser.waitForAngular();
