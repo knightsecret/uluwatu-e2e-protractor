@@ -282,26 +282,32 @@ TemplateModule.prototype = Object.create({}, {
         }
     }},
     deleteTemplate:                    { value: function (name) {
-        try {
-            browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
-                browser.element(by.cssContainingText('div>h5>a', name)).click();
+        var notificationBar = element(by.css('input#notification-n-filtering'));
+
+        return element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
+            var templateLink = element(by.cssContainingText('div>h5>a', name));
+            templateLink.click();
+            browser.waitForAngular();
+
+            var selectedTemplatePanel = element(by.css('div[id^="panel-template-collapse"][aria-expanded="true"]'));
+
+            return selectedTemplatePanel.element(by.css('a[ng-click="deleteTemplate(template)"]')).click().then(function () {
                 browser.waitForAngular();
-
-                var selectedTemplatePanel = browser.element(by.css('div[id^="panel-template-collapse"][aria-expanded="true"]'));
-
-                selectedTemplatePanel.element(by.css('a[ng-click="deleteTemplate(template)"]')).click().then(function () {
-                    browser.waitForAngular();
-                    var EC = protractor.ExpectedConditions;
-                    var templateName = browser.element(by.cssContainingText('div>h5>a', name));
-                    var templateNotPresent = EC.stalenessOf(templateName);
-                    return browser.wait(templateNotPresent, 20000);
+                var EC = protractor.ExpectedConditions;
+                var templateNotPresent = EC.stalenessOf(templateLink);
+                return browser.driver.wait(templateNotPresent, 5000, 'The ' + name + ' template has NOT been deleted!').then(function() {
+                    return notificationBar.getAttribute('value').then(function(message){
+                        console.log(message);
+                        return /deleted successfully/g.test(message);
+                    });
+                }, function(err) {
+                    return false;
                 });
-            }, function(err) {
-                console.log('The template with ' + name + ' name is not present!');
             });
-        } catch(err) {
-            console.log('An error was thrown during delete template ' + name + ': ' + err);
-        }
+        }, function(err) {
+            console.log('The template with ' + name + ' name is not present!');
+            return true;
+        });
     }},
     createAWSTemplate:                 { value: function (name, description, instanceType, volumeType, attachedVolumes, volumeSize, spotPrice) {
         this.openCreatePanel();

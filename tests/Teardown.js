@@ -17,13 +17,15 @@ describe('Testing', function () {
         basePage = new BasePage();
         dashboardPage = new DashboardPage();
 
-        it('should be success', function () {
+        it('should be success', function (done) {
+            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 60000;
             expect(dashboardPage.deleteBlueprint(blueprintAWSName)).toBeTruthy();
-            expect(dashboardPage.deleteCredential(credentialAWSName)).toBeTruthy();
             expect(dashboardPage.deleteBlueprint(blueprintOSName)).toBeTruthy();
             expect(dashboardPage.deleteTemplate(templateOSName)).toBeTruthy();
             expect(dashboardPage.deleteNetwork(networkOSName)).toBeTruthy();
+            expect(dashboardPage.deleteCredential(credentialAWSName)).toBeTruthy();
             expect(dashboardPage.deleteCredential(credentialOSName)).toBeTruthy();
-        });
+            done();
+        }, 40 * 60000);
     });
 });

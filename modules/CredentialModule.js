@@ -250,26 +250,32 @@ CredentialModule.prototype = Object.create({}, {
         return this.openstackcredentialForm.element(by.cssContainingText('select#facing option', key)).click();
     }},
     deleteCredential:                  { value: function (name) {
-        try {
-            browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
-                browser.element(by.cssContainingText('div>h5>a', name)).click();
+        var notificationBar = element(by.css('input#notification-n-filtering'));
+
+        return element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
+            var credentialLink = element(by.cssContainingText('div>h5>a', name));
+            credentialLink.click();
+            browser.waitForAngular();
+
+            var selectedCredentialPanel = element(by.css('div[id^="panel-credential-collapse"][aria-expanded="true"]'));
+
+            return selectedCredentialPanel.element(by.css('a[ng-click="deleteCredential(credential)"]')).click().then(function () {
                 browser.waitForAngular();
-
-                var selectedCredentialPanel = browser.element(by.css('div[id^="panel-credential-collapse"][aria-expanded="true"]'));
-
-                selectedCredentialPanel.element(by.css('a[ng-click="deleteCredential(credential)"]')).click().then(function () {
-                    browser.waitForAngular();
-                    var EC = protractor.ExpectedConditions;
-                    var credentialName = browser.element(by.cssContainingText('div>h5>a', name));
-                    var credentialNotPresent = EC.stalenessOf(credentialName);
-                    return browser.wait(credentialNotPresent, 20000);
+                var EC = protractor.ExpectedConditions;
+                var credentialNotPresent = EC.stalenessOf(credentialLink);
+                return browser.driver.wait(credentialNotPresent, 5000, 'The ' + name + ' credential has NOT been deleted!').then(function() {
+                    return notificationBar.getAttribute('value').then(function(message){
+                        console.log(message);
+                        return /deleted successfully/g.test(message);
+                    });
+                }, function(err) {
+                    return false;
                 });
-            }, function(err) {
-                console.log('The credential with ' + name + ' name is not present!');
             });
-        } catch(err) {
-            console.log('An error was thrown during delete credential ' + name + ': ' + err);
-        }
+        }, function(err) {
+            console.log('The credential with ' + name + ' name is not present!');
+            return true;
+        });
     }},
     createAWSCredential:               { value: function (name, description, iamRole, sshKey) {
         browser.waitForAngular();

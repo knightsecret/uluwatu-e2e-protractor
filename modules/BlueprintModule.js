@@ -32,26 +32,32 @@ BlueprintModule.prototype = Object.create({}, {
         return this.urlBox.sendKeys(url);
     }},
     deleteBlueprint:               { value: function (name) {
-        try {
-            element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function(isDisplayed) {
-                var blueprintLink = element(by.cssContainingText('div>h5>a', name));
-                blueprintLink.click();
+        var notificationBar = element(by.css('input#notification-n-filtering'));
+
+        return element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function(isDisplayed) {
+            var blueprintLink = element(by.cssContainingText('div>h5>a', name));
+            blueprintLink.click();
+            browser.waitForAngular();
+
+            var selectedBlueprintPanel = element(by.css('div[id^="panel-blueprint-collapse"][aria-expanded="true"]'));
+
+            return selectedBlueprintPanel.element(by.css('a[ng-click="deleteBlueprint(blueprint)"]')).click().then(function () {
                 browser.waitForAngular();
-
-                var selectedBlueprintPanel = element(by.css('div[id^="panel-blueprint-collapse"][aria-expanded="true"]'));
-
-                selectedBlueprintPanel.element(by.css('a[ng-click="deleteBlueprint(blueprint)"]')).click().then(function () {
-                    browser.waitForAngular();
-                    var EC = protractor.ExpectedConditions;
-                    var blueprintNotPresent = EC.stalenessOf(blueprintLink);
-                    return browser.driver.wait(blueprintNotPresent, 20000);
+                var EC = protractor.ExpectedConditions;
+                var blueprintNotPresent = EC.stalenessOf(blueprintLink);
+                return browser.driver.wait(blueprintNotPresent, 5000, 'The ' + name + ' blueprint has NOT been deleted!').then(function() {
+                    return notificationBar.getAttribute('value').then(function(message){
+                        console.log(message);
+                        return /deleted successfully/g.test(message);
+                    });
+                }, function(err) {
+                    return false;
                 });
-            }, function(err) {
-                console.log('The blueprint with ' + name + ' name is not present!');
             });
-        } catch(err) {
-            console.log('An error was thrown during delete blueprint ' + name + ': ' + err);
-        }
+        }, function(err) {
+            console.log('The blueprint with ' + name + ' name is not present!');
+            return true;
+        });
     }},
     createBlueprint:               { value: function (name, description, rawurl) {
         browser.waitForAngular();

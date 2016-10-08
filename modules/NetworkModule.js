@@ -224,26 +224,32 @@ NetworkModule.prototype = Object.create({}, {
         }
     }},
     deleteNetwork:                          { value: function (name) {
-        try {
-            browser.element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
-                browser.element(by.cssContainingText('div>h5>a', name)).click();
+        var notificationBar = element(by.css('input#notification-n-filtering'));
+
+        return element(by.cssContainingText('div>h5>a', name)).isDisplayed().then(function() {
+            var networkLink = element(by.cssContainingText('div>h5>a', name));
+            networkLink.click();
+            browser.waitForAngular();
+
+            var selectedNetworkPanel = element(by.css('.panel.panel-default.ng-scope div[id^="panel-network-collapse"][aria-expanded="true"]'));
+
+            return selectedNetworkPanel.element(by.css('a[ng-click="deleteNetwork(network)"]')).click().then(function () {
                 browser.waitForAngular();
-
-                var selectedNetworkPanel = browser.element(by.css('.panel.panel-default.ng-scope div[id^="panel-network-collapse"][aria-expanded="true"]'));
-
-                selectedNetworkPanel.element(by.css('a[ng-click="deleteNetwork(network)"]')).click().then(function () {
-                    browser.waitForAngular();
-                    var EC = protractor.ExpectedConditions;
-                    var networkName = browser.element(by.cssContainingText('div>h5>a', name));
-                    var networkNotPresent = EC.stalenessOf(networkName);
-                    return browser.wait(networkNotPresent, 20000);
+                var EC = protractor.ExpectedConditions;
+                var networkNotPresent = EC.stalenessOf(networkLink);
+                return browser.driver.wait(networkNotPresent, 5000, 'The ' + name + ' network has NOT been deleted!').then(function() {
+                    return notificationBar.getAttribute('value').then(function(message){
+                        console.log(message);
+                        return /deleted successfully/g.test(message);
+                    });
+                }, function(err) {
+                    return false;
                 });
-            }, function(err) {
-                console.log('The network with ' + name + ' name is not present!');
             });
-        } catch(err) {
-            console.log('An error was thrown during delete network ' + name + ': ' + err);
-        }
+        }, function(err) {
+            console.log('The network with ' + name + ' name is not present!');
+            return true;
+        });
     }},
     createAWSNetwork:                       { value: function (name, description, subnetCIDR) {
         this.openCreatePanel();
