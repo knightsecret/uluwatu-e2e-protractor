@@ -41,7 +41,7 @@ NetworkModule.prototype = Object.create({}, {
     openstackdescriptionBox:                { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkDescription')); }},
     openstackfloatingBox:                   { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_publicNetId'));       }},
     openstackvirtualNetBox:                 { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkVPCId'));       }},
-    openstacksubnetBox:                     { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkSubnet'));      }},
+    openstacksubnetBox:                     { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkSubnetId'));    }},
     openstackcreateButton:                  { get: function () {      return this.openstackExSubExVPC.element(by.css('a#createAwsTemplate'));                }},
 
     openCreatePanel:                        { value: function () {

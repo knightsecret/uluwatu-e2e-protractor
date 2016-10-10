@@ -16,7 +16,7 @@ describe('Testing blueprint creation', function () {
 
     beforeAll(function() {
       console.log('HDP 2.5 blueprint creation test setup has started!');
-      dashboardPage.deleteBlueprint(newAWSName);
+      dashboardPage.deleteBlueprint('autotest-multi-');
       dashboardPage.getBadgeValue(3).then(function (value) {
         defaultBlueprints = value;
       });
@@ -40,7 +40,7 @@ describe('Testing blueprint creation', function () {
 
     beforeAll(function() {
       console.log('Custom blueprint creation test setup has started!');
-      dashboardPage.deleteBlueprint(newOSName);
+      dashboardPage.deleteBlueprint('autotest-scaling-');
       dashboardPage.getBadgeValue(3).then(function (value) {
         defaultBlueprints = value;
       });

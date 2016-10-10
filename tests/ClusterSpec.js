@@ -8,7 +8,7 @@ describe('Testing', function () {
     var basePage;
     var dashboardPage;
     var credentialAWSName = 'autotest-aws-cred-' + browser.params.nameTag;
-    var credentialOSName = 'autotest-kilo-cred-' + browser.params.nameTag;
+    var credentialOSName = 'autotest-eng-cred-' + browser.params.nameTag;
     var blueprintAWSName = 'autotest-multi-' + browser.params.nameTag;
     var blueprintOSName = 'autotest-scaling-' + browser.params.nameTag;
     var clusterAWSName = 'autotest-aws-cls-' + browser.params.nameTag;
@@ -16,7 +16,7 @@ describe('Testing', function () {
     var regionAWSName = 'EU (Ireland)';
     var regionOSName = 'local';
     var networkAWSName = 'default-aws-network';
-    var networkOSName = 'autotest-kilo-net-' + browser.params.nameTag;
+    var networkOSName = 'autotest-eng-net-' + browser.params.nameTag;
     var securityGroup = 'all-services-port';
 
     describe('a new AWS cluster creation where', function () {

@@ -5,7 +5,7 @@ var DashboardPage = require('../pages/DashboardPage.js');
 describe('Testing credential creation', function () {
   var dashboardPage;
   var newAWSName = 'autotest-aws-cred-' + browser.params.nameTag;
-  var newOSName = 'autotest-kilo-cred-' + browser.params.nameTag;
+  var newOSName = 'autotest-eng-cred-' + browser.params.nameTag;
   var newDescription = 'autotest';
   var userOS = process.env.OSUSER;
   var passwordOS = process.env.OSPASSWORD;
@@ -21,7 +21,7 @@ describe('Testing credential creation', function () {
 
     beforeAll(function() {
       console.log('AWS credential creation test setup has started!');
-      dashboardPage.deleteCredential(newAWSName);
+      dashboardPage.deleteCredential('autotest-aws-cred-');
       dashboardPage.getBadgeValue(4).then(function (value) {
         defaultCredentials = value;
       });
@@ -41,7 +41,7 @@ describe('Testing credential creation', function () {
 
     beforeAll(function() {
       console.log('OpenStack credential creation test setup has started!');
-      dashboardPage.deleteCredential(newOSName);
+      dashboardPage.deleteCredential('autotest-eng-cred-');
       dashboardPage.getBadgeValue(4).then(function (value) {
         defaultCredentials = value;
       });

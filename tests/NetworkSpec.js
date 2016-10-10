@@ -4,7 +4,7 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing network creation', function () {
     var dashboardPage;
-    var newName = 'autotest-kilo-net-' + browser.params.nameTag;
+    var newName = 'autotest-eng-net-' + browser.params.nameTag;
     var newDescription = 'autotest';
     var newSubnetCIDR = process.env.OSSUBNETCIDR;
     var newSubnetID = process.env.OSSUBNETID;
@@ -17,7 +17,7 @@ describe('Testing network creation', function () {
 
         beforeAll(function () {
             console.log('Network creation test setup has started!');
-            dashboardPage.deleteNetwork(newName);
+            dashboardPage.deleteNetwork('autotest-eng-net-');
             dashboardPage.getBadgeValue(1).then(function (value) {
                 defaultNetworks = value;
             });
