@@ -14,11 +14,24 @@ Cloudbreak web application functional smoke test project.
 
 ## Prerequisites
 The following environment variables should be present for you with valid values:
+
 - BASE_URL
 - USERNAME
 - PASSWORD
-- IAMROLE
 - SSHKEY
+
+### AWS
+- IAMROLE
+
+### OpenStack
+- OSENDPOINT
+- OSTENANT
+- OSPASSWORD
+- OSUSER
+- OSFLOATINGID
+- OSVIRTUALNETWORKID
+- OSSUBNETID
+- OSSUBNETCIDR
 
 > For OS X Yosemite users with IntelliJ IDEA: You should add the required environment variables to your
 `bash_profile` to can run tests directly form IDEA with no issues.
@@ -67,6 +80,14 @@ You can check all the needed information on the [Page Object Pattern page](/page
      - PASSWORD=`password`
      - IAMROLE=`arn:aws:iam::1234567890:role/userrole`
      - SSHKEY=`AAAAB3NzaC1+soon...etc.`
+     - OSENDPOINT=`http://123.12.0.12:5000/v2.0`
+     - OSTENANT=`sequenceiq`
+     - OSPASSWORD=`sequenceiq`
+     - OSUSER=`sequenceiq`
+     - OSFLOATINGID=`123e12bc-cf12-1a12-12fb-c0b1ddee2d34`
+     - OSVIRTUALNETWORKID=`a1ad2a3d-d1a2-1230-1d23-12a34f5fb678`
+     - OSSUBNETID=`0404bf21-db5f-4987-8576-e65a4a99b14e`
+     - OSSUBNETCIDR=`10.0.0.0/24`
 3. Pull the [hortonworks/docker-e2e-protractor](https://hub.docker.com/r/hortonworks/docker-e2e-protractor/) image from DockerHub
 4. Execute the Protractor test configuration for ULUWATU in [Docker container](https://docs.docker.com/engine/installation/):
     ```
