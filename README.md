@@ -65,7 +65,7 @@ protractor e2e.conf.js
 ![](utils/images/UluwatuPageObjects.png)
 
 ### Introduction to Page Object Pattern
-You can check all the needed information on the [Page Object Pattern page](/pages/README.md)
+You can check all the needed information on the [Page Object Pattern page](/pages/PAGEOBJECTPATTERN.md)
 
 # Docker image for ULUWATU functional E2E test project
 
