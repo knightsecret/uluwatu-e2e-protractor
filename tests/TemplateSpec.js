@@ -4,11 +4,12 @@ var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing template creation', function () {
   var dashboardPage;
-  var newName = 'autotest-kilo-tmp-' + browser.params.nameTag;
+  var newOSName = 'autotest-kilo-tmp-' + browser.params.nameTag;
   var newDescription = 'autotest';
-  var newInstanceType = 'm1.medium';
+  var newOSInstanceType = 'm1.medium';
   var newAttachedVolumes = '1';
-  var newVolumeSize = '100';
+  var newAWSVolumeSize = '100';
+  var newOSVolumeSize = '10';
 
   describe('with ' + newName + ' template', function () {
     dashboardPage = new DashboardPage();
@@ -27,7 +28,7 @@ describe('Testing template creation', function () {
     });
 
     it('Create new OpenStack template', function () {
-      dashboardPage.createOSTemplate(newName, newDescription, newInstanceType, newAttachedVolumes, newVolumeSize);
+      dashboardPage.createOSTemplate(newOSName, newDescription, newOSInstanceType, newAttachedVolumes, newOSVolumeSize);
       dashboardPage.getBadgeValue(2).then(function (value) {
         expect(value).toBeGreaterThan(defaultTemplates);
       });

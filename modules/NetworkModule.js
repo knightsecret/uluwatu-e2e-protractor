@@ -37,12 +37,12 @@ NetworkModule.prototype = Object.create({}, {
     // OpenStack
     openstacknetworkForm:                   { get: function () {      return element(by.css('form[name=openstackNetworkForm]'));                             }},
     openstackExSubExVPC:                    { get: function () {      return element(by.css('form[name="openStackNetworkForm_3"]'));                         }},
-    openstacknameBox:                       { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_networkName'));       }},
-    openstackdescriptionBox:                { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_networkDescription'));}},
+    openstacknameBox:                       { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkName'));        }},
+    openstackdescriptionBox:                { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkDescription')); }},
     openstackfloatingBox:                   { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_publicNetId'));       }},
     openstackvirtualNetBox:                 { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkVPCId'));       }},
-    openstacksubnetBox:                     { get: function () {      return this.openstacknetworkForm.element(by.css('input#openstack_networkSubnet'));     }},
-    openstackcreateButton:                  { get: function () {      return this.openstacknetworkForm.element(by.css('a#createOpenStackNetwork'));          }},
+    openstacksubnetBox:                     { get: function () {      return this.openstackExSubExVPC.element(by.css('input#openstack_networkSubnet'));      }},
+    openstackcreateButton:                  { get: function () {      return this.openstackExSubExVPC.element(by.css('a#createAwsTemplate'));                }},
 
     openCreatePanel:                        { value: function () {
         var EC = protractor.ExpectedConditions;
@@ -278,13 +278,14 @@ NetworkModule.prototype = Object.create({}, {
         this.clickCreateNetwork('GCP', name);
         browser.waitForAngular();
     }},
-    createOpenStackNetwork:                 { value: function (name, description, floatingID, subnetCIDR) {
+    createOpenStackNetwork:                 { value: function (name, description, virtualNetworkID, subnetID) {
         this.openCreatePanel();
         this.openstackTab.click();
+        this.expandExistingSubNetExistingNetwork();
         this.typeName('OpenStack', name);
         this.typeDescription('OpenStack', description);
-        this.typeFloatingID(floatingID);
-        this.typeSubnet('OpenStack', subnetCIDR);
+        this.openstackvirtualNetBox.sendKeys(virtualNetworkID);
+        this.typeSubnet('OpenStack', subnetID);
         this.clickCreateNetwork('OpenStack', name);
         browser.waitForAngular();
     }},

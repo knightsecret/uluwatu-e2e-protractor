@@ -3,33 +3,35 @@
 var DashboardPage = require('../pages/DashboardPage.js');
 
 describe('Testing network creation', function () {
-  var dashboardPage;
-  var newName = 'autotest-kilo-net-' + browser.params.nameTag;
-  var newDescription = 'autotest';
-  var newSubnetCIDR = process.env.OSSUBNETCIDR;
-  var newFloatingID = process.env.OSFLOATINGID;
+    var dashboardPage;
+    var newName = 'autotest-kilo-net-' + browser.params.nameTag;
+    var newDescription = 'autotest';
+    var newSubnetCIDR = process.env.OSSUBNETCIDR;
+    var newSubnetID = process.env.OSSUBNETID;
+    var newFloatingID = process.env.OSFLOATINGID;
+    var newVirtualNetworkID = process.env.OSVIRTUALNETWORKID;
 
-  describe('with ' + newName + ' network', function () {
-    dashboardPage = new DashboardPage();
-    var defaultNetworks = 0;
+    describe('with ' + newName + ' network', function () {
+        dashboardPage = new DashboardPage();
+        var defaultNetworks = 0;
 
-    beforeAll(function() {
-      console.log('Network creation test setup has started!');
-      dashboardPage.deleteNetwork(newName);
-      dashboardPage.getBadgeValue(1).then(function (value) {
-          defaultNetworks = value;
-      });
+        beforeAll(function () {
+            console.log('Network creation test setup has started!');
+            dashboardPage.deleteNetwork(newName);
+            dashboardPage.getBadgeValue(1).then(function (value) {
+                defaultNetworks = value;
+            });
+        });
+
+        it('Default networks should be available', function () {
+            expect(dashboardPage.getDefaultNetworks).toBeTruthy();
+        });
+
+        it('Create new OpenStack network', function () {
+            dashboardPage.createOSNetwork(newName, newDescription, newVirtualNetworkID, newSubnetID);
+            dashboardPage.getBadgeValue(1).then(function (value) {
+                expect(value).toBeGreaterThan(defaultNetworks);
+            });
+        });
     });
-
-    it('Default networks should be available', function () {
-      expect(dashboardPage.getDefaultNetworks).toBeTruthy();
-    });
-
-    it('Create new OpenStack network', function () {
-      dashboardPage.createOSNetwork(newName, newDescription, newFloatingID, newSubnetCIDR);
-      dashboardPage.getBadgeValue(1).then(function (value) {
-        expect(value).toBeGreaterThan(defaultNetworks);
-      });
-    });
-  });
 });
