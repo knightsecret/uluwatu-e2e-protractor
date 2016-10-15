@@ -90,6 +90,7 @@ You can check all the needed information on the [Page Object Pattern page](/page
     docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite smoke
     docker run -it --rm --name uluwatu-e2e-runner -e BASE_URL=$(BASE_URL) -e USERNAME=$(USERNAME) -e PASSWORD=$(PASSWORD) -e AWS_ROLE_ARN=$(PASSWORD) -e SSHKEY=$(SSHKEY) -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite regression
     ```
+
      - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
      - `utils/testenv` the location (full path) of the `testenv` file on your machine
      - `USERNAME` a single environment variable that is passed for the new container
