@@ -1,15 +1,13 @@
 'use strict';
 
-var DashboardPage = require('../pages/DashboardPage.js');
+var DashboardPage = require('../../pages/DashboardPage.js');
 
-describe('Testing network creation', function () {
+describe('Testing OpenStack network creation', function () {
     var dashboardPage;
     var newName = 'autotest-eng-net-' + browser.params.nameTag;
     var newDescription = 'autotest';
-    var newSubnetCIDR = process.env.OSSUBNETCIDR;
-    var newSubnetID = process.env.OSSUBNETID;
-    var newFloatingID = process.env.OSFLOATINGID;
-    var newVirtualNetworkID = process.env.OSVIRTUALNETWORKID;
+    var newSubnetID = process.env.OS_SUBNET_ID;
+    var newVirtualNetworkID = process.env.OS_VIRTUAL_NETWORK_ID;
 
     describe('with ' + newName + ' network', function () {
         dashboardPage = new DashboardPage();

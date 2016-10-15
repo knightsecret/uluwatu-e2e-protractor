@@ -46,11 +46,14 @@ exports.config = {
     specs: [
         //'utils/slowdown.conf.js',
         'tests/LoginSpec.js',
-        'tests/BlueprintSpec.js',
-        'tests/CredentialSpec.js',
-        'tests/TemplateSpec.js',
-        'tests/NetworkSpec.js',
-        'tests/ClusterSpec.js',
+        'tests/blueprints/AWSBlueprintSpec.js',
+        'tests/blueprints/OSBlueprintSpec.js',
+        'tests/credentials/AWSCredentialSpec.js',
+        'tests/credentials/OSCredentialSpec.js',
+        'tests/templates/OSTemplateSpec.js',
+        'tests/networks/OSNetworkSpec.js',
+        'tests/clusters/AWSClusterSpec.js',
+        'tests/clusters/OSClusterSpec.js',
         'tests/Teardown.js'
     ],
 
@@ -59,21 +62,33 @@ exports.config = {
      * Note: The spec patterns are relative to this directory (where the configuration file is)!
      */
     suites: {
+        prod: [
+            'tests/LoginSpec.js',
+            'tests/blueprints/AWSBlueprintSpec.js',
+            'tests/credentials/AWSCredentialSpec.js',
+            'tests/clusters/AWSClusterSpec.js',
+            'tests/Teardown.js'
+        ],
         smoke: [
             'tests/LoginSpec.js',
-            'tests/BlueprintSpec.js',
-            'tests/CredentialSpec.js',
-            'tests/TemplateSpec.js',
-            'tests/NetworkSpec.js',
+            'tests/blueprints/AWSBlueprintSpec.js',
+            'tests/blueprints/OSBlueprintSpec.js',
+            'tests/credentials/AWSCredentialSpec.js',
+            'tests/credentials/OSCredentialSpec.js',
+            'tests/templates/OSTemplateSpec.js',
+            'tests/networks/OSNetworkSpec.js',
             'tests/Teardown.js'
         ],
         regression: [
             'tests/LoginSpec.js',
-            'tests/BlueprintSpec.js',
-            'tests/CredentialSpec.js',
-            'tests/TemplateSpec.js',
-            'tests/NetworkSpec.js',
-            'tests/ClusterSpec.js',
+            'tests/blueprints/AWSBlueprintSpec.js',
+            'tests/blueprints/OSBlueprintSpec.js',
+            'tests/credentials/AWSCredentialSpec.js',
+            'tests/credentials/OSCredentialSpec.js',
+            'tests/templates/OSTemplateSpec.js',
+            'tests/networks/OSNetworkSpec.js',
+            'tests/clusters/AWSClusterSpec.js',
+            'tests/clusters/OSClusterSpec.js',
             'tests/Teardown.js'
         ]
     },

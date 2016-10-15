@@ -21,17 +21,15 @@ The following environment variables should be present for you with valid values:
 - SSHKEY
 
 ### AWS
-- IAMROLE
+- AWS_ROLE_ARN
 
 ### OpenStack
-- OSENDPOINT
-- OSTENANT
-- OSPASSWORD
-- OSUSER
-- OSFLOATINGID
-- OSVIRTUALNETWORKID
-- OSSUBNETID
-- OSSUBNETCIDR
+- OS_AUTH_URL
+- OS_TENANT_NAME
+- OS_PASSWORD
+- OS_USERNAME
+- OS_VIRTUAL_NETWORK_ID
+- OS_SUBNET_ID
 
 > For OS X Yosemite users with IntelliJ IDEA: You should add the required environment variables to your
 `bash_profile` to can run tests directly form IDEA with no issues.
@@ -43,8 +41,8 @@ export USERNAME=your@mail.address
 launchctl setenv USERNAME $USERNAME
 export PASSWORD=your.password
 launchctl setenv PASSWORD $PASSWORD
-export IAMROLE=arn:aws:iam::1234567890:role/rolename
-launchctl setenv IAMROLE $IAMROLE
+export AWS_ROLE_ARN=arn:aws:iam::1234567890:role/rolename
+launchctl setenv AWS_ROLE_ARN $AWS_ROLE_ARN
 export SSHKEY=AGab6CB4MUzsqF7vGTF/XU5pYXFUBhi8xzey+37QCKp3+mCqjFzPyQQmIVWpofpjT7BfcCxH877RzC5YMIi65aBc82Dl6tH6OEiP7
 launchctl setenv SSHKEY $SSHKEY
 ```
@@ -78,21 +76,19 @@ You can check all the needed information on the [Page Object Pattern page](/page
      - BASE_URL=`https://pre-prod-accounts.sequenceiq.com/`
      - USERNAME=`testing@something.com`
      - PASSWORD=`password`
-     - IAMROLE=`arn:aws:iam::1234567890:role/userrole`
+     - AWS_ROLE_ARN=`arn:aws:iam::1234567890:role/userrole`
      - SSHKEY=`AAAAB3NzaC1+soon...etc.`
-     - OSENDPOINT=`http://123.12.0.12:5000/v2.0`
-     - OSTENANT=`sequenceiq`
-     - OSPASSWORD=`sequenceiq`
-     - OSUSER=`sequenceiq`
-     - OSFLOATINGID=`123e12bc-cf12-1a12-12fb-c0b1ddee2d34`
-     - OSVIRTUALNETWORKID=`a1ad2a3d-d1a2-1230-1d23-12a34f5fb678`
-     - OSSUBNETID=`0404bf21-db5f-4987-8576-e65a4a99b14e`
-     - OSSUBNETCIDR=`10.0.0.0/24`
+     - OS_AUTH_URL=`http://123.12.0.12:5000/v2.0`
+     - OS_TENANT_NAME=`sequenceiq`
+     - OS_PASSWORD=`sequenceiq`
+     - OS_USERNAME=`sequenceiq`
+     - OS_VIRTUAL_NETWORK_ID=`a1ad2a3d-d1a2-1230-1d23-12a34f5fb678`
+     - OS_SUBNET_ID=`0404bf21-db5f-4987-8576-e65a4a99b14e`
 3. Pull the [hortonworks/docker-e2e-protractor](https://hub.docker.com/r/hortonworks/docker-e2e-protractor/) image from DockerHub
 4. Execute the Protractor test configuration for ULUWATU in [Docker container](https://docs.docker.com/engine/installation/):
     ```
     docker run -it --rm --name uluwatu-e2e-runner --env-file utils/testenv -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite smoke
-    docker run -it --rm --name uluwatu-e2e-runner -e BASE_URL=$(BASE_URL) -e USERNAME=$(USERNAME) -e PASSWORD=$(PASSWORD) -e IAMROLE=$(PASSWORD) -e SSHKEY=$(SSHKEY) -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite regression
+    docker run -it --rm --name uluwatu-e2e-runner -e BASE_URL=$(BASE_URL) -e USERNAME=$(USERNAME) -e PASSWORD=$(PASSWORD) -e AWS_ROLE_ARN=$(PASSWORD) -e SSHKEY=$(SSHKEY) -v $(PWD):/protractor/project hortonworks/docker-e2e-protractor e2e.conf.js --suite regression
     ```
      - `uluwatu-e2e-runner` name of the new Docker container (created from `sequenceiq/protractor-runner` Docker image)
      - `utils/testenv` the location (full path) of the `testenv` file on your machine

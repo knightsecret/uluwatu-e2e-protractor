@@ -42,7 +42,7 @@ else
     --env-file /var/lib/jenkins/guitest/env-$ENVIRONMENT \
     -v $WORKSPACE:/protractor/project \
     -v /dev/shm:/dev/shm \
-    hortonworks/docker-e2e-protractor e2e.conf.js
+    hortonworks/docker-e2e-protractor e2e.conf.js --suite $TEST_SUITE
     RESULT=$?
 fi
 

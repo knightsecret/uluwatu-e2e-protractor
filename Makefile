@@ -25,7 +25,7 @@ run:
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
-				-e IAMROLE=$(IAMROLE) \
+				-e AWS_ROLE_ARN=$(AWS_ROLE_ARN) \
 				-e SSHKEY=$(SSHKEY) \
 				-v $(PWD):/protractor/project \
 				hortonworks/docker-e2e-protractor $(TESTCONF)
@@ -39,7 +39,7 @@ run-regression:
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
-				-e IAMROLE=$(IAMROLE) \
+				-e AWS_ROLE_ARN=$(AWS_ROLE_ARN) \
 				-e SSHKEY=$(SSHKEY) \
 				-v $(PWD):/protractor/project \
 				hortonworks/docker-e2e-protractor $(TESTCONF) --suite regression
@@ -53,7 +53,7 @@ run-smoke:
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
-				-e IAMROLE=$(IAMROLE) \
+				-e AWS_ROLE_ARN=$(AWS_ROLE_ARN) \
 				-e SSHKEY=$(SSHKEY) \
 				-v $(PWD):/protractor/project \
 				hortonworks/docker-e2e-protractor $(TESTCONF) --suite smoke
@@ -67,7 +67,7 @@ run-preprod:
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
-				-e IAMROLE=$(IAMROLE) \
+				-e AWS_ROLE_ARN=$(AWS_ROLE_ARN) \
 				-e SSHKEY=$(SSHKEY) \
 				-v $(PWD):/protractor/project \
 				-v /dev/shm:/dev/shm \
@@ -82,7 +82,7 @@ run-qa:
 				-e BASE_URL=$(BASE_URL) \
 				-e USERNAME=$(USERNAME) \
 				-e PASSWORD=$(PASSWORD) \
-				-e IAMROLE=$(IAMROLE) \
+				-e AWS_ROLE_ARN=$(AWS_ROLE_ARN) \
 				-e SSHKEY=$(SSHKEY) \
 				-v $(PWD):/protractor/project \
 				-v /dev/shm:/dev/shm \
