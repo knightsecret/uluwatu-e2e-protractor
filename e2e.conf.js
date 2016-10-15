@@ -11,7 +11,7 @@ require('protractor-console');
  */
 exports.config = {
     params: {
-        nameTag: process.env.ENVIRONMENT + process.env.ARTIFACT_VERSION.replace(/\./g,'')
+        nameTag: process.env.ENVIRONMENT + process.env.TARGET_CBD_VERSION.replace(/\./g,'')
     },
     plugins: [{
         path: 'node_modules/protractor-console',

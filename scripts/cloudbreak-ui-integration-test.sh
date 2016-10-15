@@ -7,8 +7,8 @@ export NOWDATE=$(ssh -o StrictHostKeyChecking=no -i $MASTER_SSH_KEY $CLOUDBREAK_
 export TESTCONF=/protractor/project/e2e.conf.js
 export ARTIFACT_POSTFIX=info
 
-export ARTIFACT_VERSION=$(curl -sk $API_URL$ARTIFACT_POSTFIX | jq .app.version -r)
-echo artifact version: $ARTIFACT_VERSION
+export TARGET_CBD_VERSION=$(curl -sk $API_URL$ARTIFACT_POSTFIX | jq .app.version -r)
+echo artifact version: $TARGET_CBD_VERSION
 
 echo "Refresh the Test Runner Docker image"
 docker pull hortonworks/docker-e2e-protractor
@@ -49,6 +49,6 @@ fi
 echo " Get the run time Cloudbreak logs!"
 mkdir -pv test_log
 sudo chown -R jenkins .
-ssh -o StrictHostKeyChecking=no -i $MASTER_SSH_KEY $CLOUDBREAK_CENTOS_SSH_USER@$HOST docker logs --since=$NOWDATE cbreak_cloudbreak_1 > test_log/cloudbreak-$ARTIFACT_VERSION.log
+ssh -o StrictHostKeyChecking=no -i $MASTER_SSH_KEY $CLOUDBREAK_CENTOS_SSH_USER@$HOST docker logs --since=$NOWDATE cbreak_cloudbreak_1 > test_log/cloudbreak-$TARGET_CBD_VERSION.log
 
 exit $RESULT
