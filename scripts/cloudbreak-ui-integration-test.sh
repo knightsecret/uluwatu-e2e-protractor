@@ -39,7 +39,7 @@ else
     --privileged \
     --rm \
     --name $TEST_CONTAINER_NAME \
-    --env-file /var/lib/jenkins/guitest/env-$ENVIRONMENT \
+    --env-file $WORKSPACE/artifact.properties \
     -v $WORKSPACE:/protractor/project \
     -v /dev/shm:/dev/shm \
     hortonworks/docker-e2e-protractor e2e.conf.js --suite $TEST_SUITE
