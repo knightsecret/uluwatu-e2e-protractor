@@ -98,6 +98,8 @@ exports.config = {
      * It does not depend on any other JavaScript frameworks.
      */
     framework: 'jasmine2',
+    allScriptsTimeout: 60000,
+    getPageTimeout: 60000,
     // Options to be passed to Jasmine-node.
     jasmineNodeOpts: {
         onComplete: null,
