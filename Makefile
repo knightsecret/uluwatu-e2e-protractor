@@ -1,4 +1,3 @@
-ENVFILE=utils/testenv
 TESTCONF=e2e.conf.js
 
 all:    refresh-image run-with-envfile
