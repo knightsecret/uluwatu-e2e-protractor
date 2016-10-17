@@ -7,8 +7,7 @@ export NOWDATE=$(ssh -o StrictHostKeyChecking=no -i $MASTER_SSH_KEY $CLOUDBREAK_
 export TESTCONF=/protractor/project/e2e.conf.js
 export ARTIFACT_POSTFIX=info
 
-export TARGET_CBD_VERSION=$(curl -sk $API_URL$ARTIFACT_POSTFIX | jq .app.version -r)
-echo artifact version: $TARGET_CBD_VERSION
+echo "CBD version: " $TARGET_CBD_VERSION
 
 echo "Refresh the Test Runner Docker image"
 docker pull hortonworks/docker-e2e-protractor
@@ -23,14 +22,14 @@ else
   echo "There is no Exited or Dead container"
 fi
 
-echo "Checking " + $TEST_CONTAINER_NAME + " container is running"
+echo "Checking " $TEST_CONTAINER_NAME " container is running"
 if [[ "$(docker inspect -f {{.State.Running}} $TEST_CONTAINER_NAME 2> /dev/null)" == "true" ]]; then
-  echo "Delete the running " + $TEST_CONTAINER_NAME + " container"
+  echo "Delete the running " $TEST_CONTAINER_NAME " container"
   docker rm -f $TEST_CONTAINER_NAME
 fi
 
 BASE_URL_RESPONSE=$(curl -k --write-out %{http_code} --silent --output /dev/null $BASE_URL/sl)
-echo $BASE_URL " HTTP status code is: $BASE_URL_RESPONSE"
+echo $BASE_URL " HTTP status code is: " $BASE_URL_RESPONSE
 if [[ $BASE_URL_RESPONSE -ne 200 ]]; then
     echo $BASE_URL " Web GUI is not accessible!"
     RESULT=1
@@ -39,7 +38,7 @@ else
     --privileged \
     --rm \
     --name $TEST_CONTAINER_NAME \
-    --env-file /var/lib/jenkins/guitest/artifact.properties \
+    --env-file $ENVFILE \
     -v $WORKSPACE:/protractor/project \
     -v /dev/shm:/dev/shm \
     hortonworks/docker-e2e-protractor e2e.conf.js --suite $TEST_SUITE
